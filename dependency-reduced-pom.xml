@@ -48,6 +48,12 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>me.lucko.luckperms</groupId>
+      <artifactId>luckperms-api</artifactId>
+      <version>4.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>top.potl.spigot</groupId>
       <artifactId>nspigot</artifactId>
       <version>1.8.8-R0.1-SNAPSHOT</version>

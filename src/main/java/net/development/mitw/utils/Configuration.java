@@ -17,9 +17,11 @@ public class Configuration extends YamlConfiguration {
 	private File file;
 	
 	public Configuration(String name) {
-		file = new File(name + ".yml");
+		this.fileName = name;
 		
 		Mitw plugin = Mitw.getInstance();
+		
+		file = new File(plugin.getDataFolder(), name + ".yml");
 		
 		if(!plugin.getDataFolder().exists()) {
 			plugin.getDataFolder().mkdirs();

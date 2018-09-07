@@ -31,6 +31,8 @@ public class ChatManager implements Listener {
 	public ChatManager(Mitw plugin) {
 		this.plugin = plugin;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+		
+		load();
 	}
 	
 	public void load() {
@@ -96,7 +98,7 @@ public class ChatManager implements Listener {
 		for (String messageSplitted : message.split(" ")) {
 			for (String toxic : LV2_TOXIC) {
 				if (messageSplitted.toUpperCase().contains(toxic.toUpperCase())
-						&& Bukkit.getPlayer(messageSplitted) != null) {
+						&& Bukkit.getPlayer(messageSplitted) == null) {
 					return true;
 				}
 			}

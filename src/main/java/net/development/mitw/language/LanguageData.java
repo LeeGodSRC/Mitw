@@ -33,6 +33,7 @@ public class LanguageData implements Listener{
 		this.plugin = plugin;
 		this.conn = conn;
 		Bukkit.getPluginManager().registerEvents(this, plugin);
+		conn.connect();
 	}
 
 	public String getLang(Player p) {

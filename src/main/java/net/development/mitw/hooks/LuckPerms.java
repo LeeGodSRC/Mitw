@@ -26,13 +26,13 @@ public class LuckPerms {
 		User user = api.getUser(p.getName());
 		MetaData metaData = user.getCachedData().getMetaData(Contexts.global());
 		String prefix = metaData.getPrefix();
-		return ChatColor.translateAlternateColorCodes('&', prefix);
+		return prefix != null ? ChatColor.translateAlternateColorCodes('&', prefix) : null;
 	}
 
 	public static String getSuffix(Player p) {
 		User user = api.getUser(p.getName());
 		MetaData metaData = user.getCachedData().getMetaData(Contexts.global());
 		String suffix = metaData.getSuffix();
-		return ChatColor.translateAlternateColorCodes('&', suffix);
+		return suffix != null ? ChatColor.translateAlternateColorCodes('&', suffix) : "";
 	}
 }

@@ -9,9 +9,11 @@ import org.bukkit.command.Command;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import lombok.Getter;
+import me.skymc.taboolib.mysql.builder.hikari.HikariHandler;
 import net.development.mitw.chat.ChatHandler;
 import net.development.mitw.chat.ChatManager;
 import net.development.mitw.config.ConfigManager;
+import net.development.mitw.hooks.LuckPerms;
 import net.development.mitw.language.LanguageAPI;
 import net.development.mitw.language.LanguageAPI.LangType;
 import net.development.mitw.language.LanguageData;
@@ -46,9 +48,11 @@ public class Mitw extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 		
-		chatManager = new ChatManager(this);
 		configManager = new ConfigManager();
+		chatManager = new ChatManager(this);
 		chatHandlers = new HashSet<>();
+		HikariHandler.init();
+		LuckPerms.hook();
 		
 		LanguageSQLConnection languageSQLConnection = new LanguageSQLConnection(configManager.getMainConfig().getString("database.languagedatabase"));
 		languageData = new LanguageData(this, languageSQLConnection);

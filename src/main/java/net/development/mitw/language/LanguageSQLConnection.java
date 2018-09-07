@@ -44,6 +44,8 @@ public class LanguageSQLConnection {
 		sqlTable = new SQLTable("MitwLang")
 				.addColumn(new SQLColumn(SQLColumnType.VARCHAR, "uuid", SQLColumnOption.UNIQUE_KEY, SQLColumnOption.PRIMARY_KEY))
 				.addColumn(new SQLColumn(SQLColumnType.VARCHAR, "lang", SQLColumnOption.UNIQUE_KEY)); //might be problem
+		
+		sqlTable.executeQuery(sqlTable.createQuery()).run();
 	}
 
 	public boolean isConnect() {

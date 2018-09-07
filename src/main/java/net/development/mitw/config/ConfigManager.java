@@ -20,6 +20,7 @@ public class ConfigManager {
 	
 	public void reloadAll() {
 		chatConfig.reload();
+		mainConfig.reload();
 		Bukkit.getPluginManager().callEvent(new ConfigurationReloadEvent());
 		System.out.println("[Mitw - ConfigManager] all configuration has been reloaded");
 	}

@@ -2,6 +2,8 @@ package net.development.mitw.database;
 
 import javax.sql.DataSource;
 
+import org.bukkit.Bukkit;
+
 import lombok.Getter;
 import me.skymc.taboolib.mysql.builder.SQLHost;
 import me.skymc.taboolib.mysql.builder.hikari.HikariHandler;
@@ -27,6 +29,8 @@ public class Database {
 		User = plugin.getConfigManager().getMainConfig().getString("database.user");
 		Password = plugin.getConfigManager().getMainConfig().getString("database.password");
 		Database = database;
+		
+		Bukkit.getConsoleSender().sendMessage(HostName + " "+Port+" "+User+" "+Password+" "+database);
 		
 		sqlHost = new SQLHost(HostName, User, Port, Password, Database);
 		dataSource = HikariHandler.createDataSource(sqlHost);
