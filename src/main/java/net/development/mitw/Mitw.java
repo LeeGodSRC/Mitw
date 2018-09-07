@@ -20,6 +20,7 @@ import net.development.mitw.language.LanguageData;
 import net.development.mitw.language.LanguageSQLConnection;
 import net.development.mitw.language.impl.LanguageMessages;
 import net.development.mitw.listener.ChatListener;
+import net.development.mitw.scoreboard.Test;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 
 public class Mitw extends JavaPlugin {
@@ -67,7 +68,7 @@ public class Mitw extends JavaPlugin {
 	}
 	
 	public void registerListeners() {
-		Arrays.asList(new ChatListener(this))
+		Arrays.asList(new ChatListener(this), new Test())
 			.forEach(listener -> getServer().getPluginManager().registerEvents(listener, instance));
 	}
 	
