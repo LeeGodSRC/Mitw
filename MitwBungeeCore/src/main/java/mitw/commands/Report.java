@@ -15,16 +15,17 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 
 public class Report extends Command implements TabExecutor {
-	public List<ProxiedPlayer> report = new ArrayList<ProxiedPlayer>();
+	public List<ProxiedPlayer> report = new ArrayList<>();
 
 	public Report() {
 		super("report", (String) null, new String[] { "MReport" });
 	}
 
+	@Override
 	@SuppressWarnings("deprecation")
 	public void execute(CommandSender sender, String[] args) {
 		if (sender instanceof ProxiedPlayer) {
-			ProxiedPlayer p = (ProxiedPlayer) sender;
+			final ProxiedPlayer p = (ProxiedPlayer) sender;
 			if (args.length == 0) {
 				p.sendMessage(
 						ChatColor.translateAlternateColorCodes('&', "&8[&6檢舉系統&8]&7 使用方法: &c/report <玩家名稱> <原因>"));
@@ -34,10 +35,10 @@ public class Report extends Command implements TabExecutor {
 				if (this.report.contains(p)) {
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&6檢舉系統&8]&c 不要spam report指令喔!!"));
 					return;
-				} 
+				}
 
-				StringBuilder sb = new StringBuilder("");
-				ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
+				final StringBuilder sb = new StringBuilder("");
+				final ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
 
 				for (int msg = 1; msg < args.length; ++msg) {
 					sb.append(args[msg]).append(" ");
@@ -48,7 +49,7 @@ public class Report extends Command implements TabExecutor {
 					return;
 				}
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&6檢舉系統&8]&a 成功發送檢舉,請耐心等待處理...."));
-				String var7 = sb.toString();
+				final String var7 = sb.toString();
 				ProxyServer.getInstance().getPlayers().stream().filter((mod) -> {
 					return mod.hasPermission("mitw.admin");
 				}).forEach((mod) -> {
@@ -66,12 +67,7 @@ public class Report extends Command implements TabExecutor {
 					mod.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&m-------------------------"));
 				});
 				this.report.add(p);
-				ProxyServer.getInstance().getScheduler().schedule(Bungee.ins, new Runnable() {
-					@Override
-					public void run() {
-						report.remove(p);
-					}
-				}, 30L, TimeUnit.SECONDS);
+				ProxyServer.getInstance().getScheduler().schedule(Bungee.ins, () -> report.remove(p), 30L, TimeUnit.SECONDS);
 			} else {
 				p.sendMessage(
 						ChatColor.translateAlternateColorCodes('&', "&8[&6檢舉系統&8]&7 使用方法: &c/report <玩家名稱> <原因>"));
@@ -80,18 +76,19 @@ public class Report extends Command implements TabExecutor {
 			}
 		}
 
-	} 
+	}
 
+	@Override
 	public HashSet<String> onTabComplete(CommandSender sender, String[] args) {
-		HashSet<String> matches = new HashSet<String>();
+		final HashSet<String> matches = new HashSet<>();
 		if (args.length == 2) {
-			matches.add("組隊"); 
+			matches.add("組隊");
 			matches.add("外掛");
 		} else if (args.length == 1) {
-			Iterator<?> var5 = ProxyServer.getInstance().getPlayers().iterator();
+			final Iterator<?> var5 = ProxyServer.getInstance().getPlayers().iterator();
 
 			while (var5.hasNext()) {
-				ProxiedPlayer p = (ProxiedPlayer) var5.next();
+				final ProxiedPlayer p = (ProxiedPlayer) var5.next();
 				if (p.getName().startsWith(args[0])) {
 					matches.add(p.getName());
 				}

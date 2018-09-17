@@ -15,7 +15,6 @@ import mitw.commands.Server;
 import mitw.managers.BungeeListener;
 import mitw.managers.YamlManagers;
 import mitw.modules.MotdDisplay;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
@@ -28,17 +27,15 @@ public class Bungee extends Plugin{
 	public static ArrayList<String> servers = new ArrayList<>();
 
 	static {
-		Prefix = ChatColor.AQUA + "【MITW】》 ";
-		CPrefix = ChatColor.AQUA + "【MITW 控制台】》 ";
+		Prefix = "§7[§6Mitw§7] §f";
+		CPrefix = "§7[§6Mitw§f控制台§7] §f";
 	}
 
 	@Override
 	public void onEnable() {
 		ins = this;
 		registerSgAlertServer();
-		this.getLogger().info("Loading " + this.getDescription().getName() + " V" + this.getDescription().getVersion() + " by "
-				+ this.getDescription().getAuthor());
-		getProxy().getConsole().sendMessage("");
+		getProxy().getConsole().sendMessage(Prefix + "§eLoading MitwCore - Bungee..");
 		final PluginManager m = ProxyServer.getInstance().getPluginManager();
 		m.registerListener(this, new MotdDisplay(this));
 		ProxyServer.getInstance().getPluginManager().registerCommand(this, new Lobby(this));
@@ -52,7 +49,7 @@ public class Bungee extends Plugin{
 		m.registerListener(this, new BungeeListener());
 		final YamlManagers YamlManagers = new YamlManagers(this);
 		YamlManagers.SetUp();
-		this.getLogger().info(this.getDescription().getName() + " loaded successfully.");
+		getProxy().getConsole().sendMessage(Prefix + "§eLoad MitwCore - Bungee successfully.");
 	}
 
 	@Override

@@ -20,7 +20,6 @@ public class BungeeListener implements Listener {
 		Bungee.replys.remove(e.getPlayer().getUniqueId());
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onKick(ServerKickEvent ev) {
 		ServerInfo kickedFrom = null;
@@ -30,12 +29,13 @@ public class BungeeListener implements Listener {
 			kickedFrom = Bungee.ins.getProxy().getReconnectHandler().getServer(ev.getPlayer());
 		else {
 			kickedFrom = AbstractReconnectHandler.getForcedHost(ev.getPlayer().getPendingConnection());
-			if (kickedFrom == null)
+			if (kickedFrom == null) {
 				ev.getPlayer().disconnect("找不到預設伺服器 請稍後重登看看");
+			}
 		}
 
 		if (!ev.isCancelled()) {
-			ServerInfo kickTo = Bungee.ins.getProxy().getServerInfo("waiting");
+			final ServerInfo kickTo = Bungee.ins.getProxy().getServerInfo("waiting");
 			if (kickedFrom == null || !kickedFrom.equals(kickTo)) {
 				ev.setCancelled(true);
 				ev.setCancelServer(kickTo);
@@ -46,11 +46,11 @@ public class BungeeListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onConnect(ServerConnectedEvent e) {
-		ProxiedPlayer p = e.getPlayer();
+		final ProxiedPlayer p = e.getPlayer();
 		if (!p.hasPermission("mitw.admin")) {
 			return;
 		}
-		for (ProxiedPlayer to : ProxyServer.getInstance().getPlayers())
+		for (final ProxiedPlayer to : ProxyServer.getInstance().getPlayers())
 			if (to.hasPermission("mitw.admin") && p.getServer() != null)
 				to.sendMessage("§7[§6§lStaff§7]§7 Staff §e" + p.getName() + " §7Connected to §b" + e.getServer().getInfo().getName() + " §7from §c"
 						+ p.getServer().getInfo().getName() + "§7 !");

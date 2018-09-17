@@ -20,7 +20,7 @@ public class Reply extends Command {
 		ProxiedPlayer target = null;
 		if (args.length > 0) {
 			if (sender instanceof ProxiedPlayer) {
-				ProxiedPlayer p = (ProxiedPlayer) sender;
+				final ProxiedPlayer p = (ProxiedPlayer) sender;
 				if (Bungee.replys.containsKey(p.getUniqueId())) {
 					target = ProxyServer.getInstance().getPlayer(Bungee.replys.get(p.getUniqueId()));
 				}
@@ -32,20 +32,20 @@ public class Reply extends Command {
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c" + target.getName() + "目前不接受任何人的訊息"));
 					return;
 				}
-				StringBuilder sb = new StringBuilder("");
+				final StringBuilder sb = new StringBuilder("");
 				for (int i = 0; i < args.length; i++) {
 					sb.append(args[i]).append(" ");
 				}
-				String msg = sb.toString();
+				final String msg = sb.toString();
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&',
 						"&8(&7私訊給&e " + target.getName() + "&7: &f" + msg + " &7)"));
 				target.sendMessage(ChatColor.translateAlternateColorCodes('&',
 						"&8(&7來自&e " + p.getName() + "&7 的私訊:&f " + msg + " &7)"));
 
 			}
-		} 
+		}
 
 	}
-	
+
 
 }

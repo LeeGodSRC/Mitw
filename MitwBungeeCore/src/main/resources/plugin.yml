@@ -1,0 +1,5 @@
+name: MitwCore-Bungee
+main: mitw.Bungee
+version: 0.0.1
+author: LeeGod
+description: the bungee core made only for mitw

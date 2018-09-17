@@ -22,9 +22,9 @@ public class Server extends Command{
 	@SuppressWarnings("deprecation")
 	@Override
 	public void execute(CommandSender sender, String[] args) {
-		 
-		ProxiedPlayer player = (ProxiedPlayer) sender;
-		if(args.length == 0){ 
+
+		final ProxiedPlayer player = (ProxiedPlayer) sender;
+		if(args.length == 0){
 			player.sendMessage(Bungee.Prefix + ChatColor.GRAY + "你現在正處於 " + ChatColor.GOLD + player.getServer().getInfo().getName() + ChatColor.GRAY + " 伺服器");
 			return;
 		}else if(args.length > 0){
@@ -33,17 +33,17 @@ public class Server extends Command{
 				player.sendMessage(Bungee.Prefix + ChatColor.GRAY + "你從伺服器 " + ChatColor.GOLD + player.getServer().getInfo().getName() + ChatColor.GRAY + " 傳送到了伺服器 " + ChatColor.GOLD + ProxyServer.getInstance().getServerInfo(args[0]).getName());
 			}else {
 				player.sendMessage(Bungee.Prefix + ChatColor.GRAY + "伺服器 " + ChatColor.GOLD + args[0] + ChatColor.GRAY + " 並不存在");
-				
-				Map<String, ServerInfo> ServerList = ProxyServer.getInstance().getServers();
-				List<String> ServerNameList = new ArrayList<String>();
-				for(Entry<String, ServerInfo> Server : ServerList.entrySet()) {
+
+				final Map<String, ServerInfo> ServerList = ProxyServer.getInstance().getServers();
+				final List<String> ServerNameList = new ArrayList<>();
+				for(final Entry<String, ServerInfo> Server : ServerList.entrySet()) {
 					ServerNameList.add(Server.getValue().getName());
 				}
 
 				player.sendMessage(Bungee.Prefix + ChatColor.GREEN + "現有伺服器: " + ChatColor.GRAY + ServerNameList.toString());
 			}
-		} 
-	}	
-} 
- 
+		}
+	}
+}
+
 
