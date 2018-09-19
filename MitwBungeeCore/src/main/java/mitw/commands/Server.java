@@ -36,6 +36,7 @@ public class Server extends Command {
 				player.sendMessage(Bungee.Prefix + ChatColor.GRAY + "你從伺服器 " + ChatColor.GOLD + player.getServer().getInfo().getName()
 						+ ChatColor.GRAY + " 傳送到了伺服器 " + ChatColor.GOLD + ProxyServer.getInstance().getServerInfo(args[0]).getName());
 			} else {
+
 				player.sendMessage(Bungee.Prefix + ChatColor.GRAY + "伺服器 " + ChatColor.GOLD + args[0] + ChatColor.GRAY + " 並不存在");
 
 				final Map<String, ServerInfo> ServerList = ProxyServer.getInstance().getServers();
