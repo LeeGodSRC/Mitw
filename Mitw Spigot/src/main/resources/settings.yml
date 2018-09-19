@@ -1,0 +1,14 @@
+Replacemode:
+  Enable: true
+  ReplaceStringList: []
+MuteTime: 180 #以秒數為單位
+Checks:
+  High: []
+  Low: []
+  Single: []
+  Exception: []
+AntiSpam:
+  Cooldown: 2  # 不用的話就設定成false,單位為秒鐘
+  NoSameMessage: true #防止同樣訊息狂刷
+Hooks:
+  Better-Nick: true

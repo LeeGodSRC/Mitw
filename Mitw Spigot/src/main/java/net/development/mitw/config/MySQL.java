@@ -4,16 +4,15 @@ public class MySQL extends SimpleConfig {
 
 	public MySQL(String fileName) {
 		super(fileName);
-		setPathPrefix("database");
 	}
 
 	public void loadVar() {
-		HOSTNAME = getString("hostname");
-		PORT = getString("port");
-		USER = getString("user");
-		PASSWORD = getString("password");
-		DATABASE = getString("database");
-		LANGUAGE_DATABASE = getString("languagedatabase");
+		HOSTNAME = getString("database.hostname");
+		PORT = getString("database.port");
+		USER = getString("database.user");
+		PASSWORD = getString("database.password");
+		DATABASE = getString("database.database");
+		LANGUAGE_DATABASE = getString("database.languagedatabase");
 	}
 
 

@@ -4,7 +4,7 @@
   <groupId>net.development.mitw</groupId>
   <artifactId>Mitw</artifactId>
   <name>Mitw</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <url>http://maven.apache.org</url>
   <build>
     <defaultGoal>clean package</defaultGoal>
@@ -52,6 +52,13 @@
       <artifactId>luckperms-api</artifactId>
       <version>4.2</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.domedd</groupId>
+      <artifactId>BetterNick</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/libs/betternick.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>top.potl.spigot</groupId>
