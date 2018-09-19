@@ -12,6 +12,7 @@ import net.development.mitw.utils.reflection.resolver.FieldResolver;
 public class PacketEvent {
 
 	private final Player player;
+	@SuppressWarnings("rawtypes")
 	private final ChannelWrapper channelWrapper;
 
 	private final Object packet;
@@ -20,6 +21,7 @@ public class PacketEvent {
 
 	protected FieldResolver fieldResolver;
 
+	@SuppressWarnings("rawtypes")
 	public PacketEvent(Object owner, Object packet) {
 		if (owner instanceof Player) {
 			this.player = (Player) owner;

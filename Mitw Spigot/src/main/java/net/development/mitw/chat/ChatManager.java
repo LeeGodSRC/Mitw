@@ -29,10 +29,6 @@ public class ChatManager implements Listener {
 	private final Set<UUID> playerMuted = new HashSet<>();
 	private final Mitw plugin;
 
-	private final Set<String> LV1_TOXIC = new HashSet<>();
-	private final Set<String> LV2_TOXIC = new HashSet<>();
-	private final Set<String> LV3_TOXIC = new HashSet<>();
-
 	private final List<String> TOXIC_REPLACEMENT = new ArrayList<>();
 
 	public ChatManager(Mitw plugin) {

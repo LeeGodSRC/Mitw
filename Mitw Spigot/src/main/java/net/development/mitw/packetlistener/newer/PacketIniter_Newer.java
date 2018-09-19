@@ -60,6 +60,7 @@ public class PacketIniter_Newer extends PacketListenerInit {
 			this.owner = player;
 		}
 
+		@SuppressWarnings("rawtypes")
 		public ChannelHandler(ChannelWrapper channelWrapper) {
 			this.owner = channelWrapper;
 		}
@@ -106,11 +107,13 @@ public class PacketIniter_Newer extends PacketListenerInit {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public IListenerList newListenerList() {
 		return new ListenerList<>();
 	}
 
+	@SuppressWarnings("serial")
 	class ListenerList<E> extends ArrayList<E> implements IListenerList<E> {
 
 		@Override
