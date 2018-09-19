@@ -11,7 +11,6 @@
 package net.development.mitw.security.protector;
 
 import static net.development.mitw.security.protector.utils.MessageUtil.color;
-import static net.development.mitw.security.protector.utils.TabCompletion.registerCompletions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,8 +20,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.lucko.commodore.Commodore;
-import me.lucko.commodore.CommodoreProvider;
 import net.development.mitw.Mitw;
 import net.development.mitw.config.EzProtector;
 import net.development.mitw.security.protector.commands.EZPCommand;
@@ -30,6 +27,7 @@ import net.development.mitw.security.protector.listeners.CommandEventListener;
 import net.development.mitw.security.protector.listeners.PacketEventListener;
 import net.development.mitw.security.protector.listeners.PacketMessageListener;
 import net.development.mitw.security.protector.listeners.PlayerJoinListener;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 
 public class MitwProtector {
 
@@ -95,18 +93,11 @@ public class MitwProtector {
 		server.getMessenger().registerOutgoingPluginChannel(plugin, MCBRAND);
 		server.getMessenger().registerOutgoingPluginChannel(plugin, SCHEMATICA);
 
-		plugin.getCommand("ezp").setExecutor(new EZPCommand());
-
-		// Set up 1.13 tab completion
-		if (CommodoreProvider.isSupported()) {
-			final Commodore commodore = CommodoreProvider.getCommodore(plugin);
-			registerCompletions(commodore, plugin.getCommand("ezp"));
-		}
+		MinecraftServer.getServer().server.getCommandMap().register("protector", "mitw", new EZPCommand());
 
 		server.getPluginManager().registerEvents(new CommandEventListener(), plugin);
 		server.getPluginManager().registerEvents(new PlayerJoinListener(), plugin);
 
-		// Add custom plugin list to the internal ArrayList
 		plugins.addAll(Arrays.asList(EzProtector.getInstance().getString("custom-plugins.plugins").split(", ")));
 
 	}

@@ -26,9 +26,8 @@ public class BlockCrashHandler {
 			public void in(PacketEvent packetEvent) {
 				if (packetEvent.getPacket() instanceof PacketPlayInBlockPlace) {
 					final Player player = packetEvent.getPlayer();
-					final PacketPlayInBlockPlace packet = (PacketPlayInBlockPlace) packetEvent.getPacket();
 					final ItemStack book = (ItemStack) packetEvent.getPacketValue("d");
-					if (book.hasTag() && book.getTag().hasKey("pages")) {
+					if (book != null && book.hasTag() && book.getTag().hasKey("pages")) {
 						final NBTTagList pages = book.getTag().getList("pages", NBTType.String.getType());
 						if (pages.size() > 50) {
 							packetEvent.setCancelled(true);

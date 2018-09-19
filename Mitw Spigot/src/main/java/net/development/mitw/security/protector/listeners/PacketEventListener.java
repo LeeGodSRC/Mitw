@@ -24,55 +24,55 @@ import net.development.mitw.packetlistener.PacketHandler;
 import net.development.mitw.packetlistener.PacketListener;
 import net.development.mitw.security.protector.MitwProtector;
 import net.development.mitw.security.protector.utils.ExecutionUtil;
-import net.development.mitw.utils.reflection.resolver.FieldResolver;
 import net.minecraft.server.v1_8_R3.PacketPlayInTabComplete;
 
 public class PacketEventListener {
 
-    public static void protocolLibHook() {
-    	final SimpleConfig config = EzProtector.getInstance();
-        final List<String> blocked = config.getStringList("tab-completion.blacklisted");
+	public static void protocolLibHook() {
+		final SimpleConfig config = EzProtector.getInstance();
+		final List<String> blocked = config.getStringList("tab-completion.blacklisted");
 
-        PacketHandler.getInstance().register(new PacketListener() {
+		PacketHandler.getInstance().register(new PacketListener() {
 			@Override
 			public void out(PacketEvent arg0) {}
+
 			@Override
 			public void in(PacketEvent packetEvent) {
 				if (packetEvent.getPacket() instanceof PacketPlayInTabComplete) {
 
-					final PacketPlayInTabComplete packet = (PacketPlayInTabComplete) packetEvent.getPacket();
 					final Player player = packetEvent.getPlayer();
 					String message = "";
 
-					try {
-						message = (String) new FieldResolver(packet.getClass()).resolve("a").get(packet);
-					} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException e) {
-						e.printStackTrace();
+					message = (String) packetEvent.getPacketValue("a");
+
+					for (final String command : blocked) {
+						if (!player.hasPermission("ezprotector.bypass.command.tabcomplete")
+								&& (message.equals(command) || (message.startsWith("/") && !message.contains(" ")))) {
+							packetEvent.setCancelled(true);
+							if (config.getBoolean("tab-completion.warn.enabled")) {
+								final String errorMessage = config.getString("tab-completion.warn.message");
+								if (!errorMessage.trim().equals("")) {
+									player.sendMessage(MitwProtector.placeholders(color(errorMessage)));
+								}
+							}
+
+							if (EzProtector.getInstance().getBoolean("tab-completion.punish-player.enabled")) {
+								final String punishCommand = config.getString("tab-completion.punish-player.command");
+								MitwProtector.errorMessage = config.getString("tab-completion.warn.message");
+								Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+										MitwProtector.placeholders(punishCommand));
+							}
+
+							if (MitwProtector.getPlugin().getConfig()
+									.getBoolean("tab-completion.notify-admins.enabled")) {
+								final String notifyMessage = config.getString("tab-completion.notify-admins.message");
+								ExecutionUtil.notifyAdmins(notifyMessage, "ezprotector.notify.command.tabcomplete");
+							}
+							break;
+						}
 					}
-
-					 for (final String command : blocked) {
-                         if (!player.hasPermission("ezprotector.bypass.command.tabcomplete") && (message.equals(command) || (message.startsWith("/") && !message.contains(" ")))) {
-                             packetEvent.setCancelled(true);
-                             if (config.getBoolean("tab-completion.warn.enabled")) {
-                                 final String errorMessage = config.getString("tab-completion.warn.message");
-                                 if (!errorMessage.trim().equals("")) player.sendMessage(MitwProtector.placeholders(color(errorMessage)));
-                             }
-
-                             if (EzProtector.getInstance().getBoolean("tab-completion.punish-player.enabled")) {
-                                 final String punishCommand = config.getString("tab-completion.punish-player.command");
-                                 MitwProtector.errorMessage = config.getString("tab-completion.warn.message");
-                                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MitwProtector.placeholders(punishCommand));
-                             }
-
-                             if (MitwProtector.getPlugin().getConfig().getBoolean("tab-completion.notify-admins.enabled")) {
-                                 final String notifyMessage = config.getString("tab-completion.notify-admins.message");
-                                 ExecutionUtil.notifyAdmins(notifyMessage, "ezprotector.notify.command.tabcomplete");
-                             }
-                             break;
-                         }
-                     }
 				}
 			}
 		});
-    }
+	}
 }

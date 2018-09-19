@@ -12,16 +12,18 @@ package net.development.mitw.security.protector.commands;
 
 import static net.development.mitw.security.protector.utils.MessageUtil.color;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.defaults.BukkitCommand;
 
 import net.development.mitw.config.EzProtector;
-import net.development.mitw.security.protector.MitwProtector;
 
-public class EZPCommand implements CommandExecutor {
+public class EZPCommand extends BukkitCommand {
 
-    /**
+    public EZPCommand() {
+		super("protector");
+	}
+
+	/**
      * Checks if the /ezp command was executed and handles command logic.
      *
      * @param sender The player who sent the command
@@ -31,13 +33,12 @@ public class EZPCommand implements CommandExecutor {
      * @return true if the command got executed successfully, otherwise false
      */
     @Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("ezp") && args.length == 0) {
-            sender.sendMessage(color( "&a&leZProtector &7version &r") + MitwProtector.getPlugin().getDescription().getVersion());
-            sender.sendMessage(color("&b/ezp reload &7- &rReloads the plugin configuration."));
+	public boolean execute(CommandSender sender, String command, String[] args) {
+        if (args.length == 0) {
+            sender.sendMessage(color("&6/protector reload - Reloads the plugin configuration."));
             return true;
         } else if (args[0].equalsIgnoreCase("reload")) {
-            MitwProtector.getPlugin().reloadConfig();
+            EzProtector.getInstance().reloadConfig();
             sender.sendMessage(color(EzProtector.getInstance().getString("prefix")) + " The config was reloaded!");
             return true;
         }
