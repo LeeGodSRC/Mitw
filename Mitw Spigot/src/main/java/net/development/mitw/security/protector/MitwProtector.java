@@ -8,10 +8,10 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.development.mitw.protector;
+package net.development.mitw.security.protector;
 
-import static net.development.mitw.protector.utils.MessageUtil.color;
-import static net.development.mitw.protector.utils.TabCompletion.registerCompletions;
+import static net.development.mitw.security.protector.utils.MessageUtil.color;
+import static net.development.mitw.security.protector.utils.TabCompletion.registerCompletions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,11 +25,11 @@ import me.lucko.commodore.Commodore;
 import me.lucko.commodore.CommodoreProvider;
 import net.development.mitw.Mitw;
 import net.development.mitw.config.EzProtector;
-import net.development.mitw.protector.commands.EZPCommand;
-import net.development.mitw.protector.listeners.CommandEventListener;
-import net.development.mitw.protector.listeners.PacketEventListener;
-import net.development.mitw.protector.listeners.PacketMessageListener;
-import net.development.mitw.protector.listeners.PlayerJoinListener;
+import net.development.mitw.security.protector.commands.EZPCommand;
+import net.development.mitw.security.protector.listeners.CommandEventListener;
+import net.development.mitw.security.protector.listeners.PacketEventListener;
+import net.development.mitw.security.protector.listeners.PacketMessageListener;
+import net.development.mitw.security.protector.listeners.PlayerJoinListener;
 
 public class MitwProtector {
 

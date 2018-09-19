@@ -8,7 +8,7 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.development.mitw.protector.mods;
+package net.development.mitw.security.protector.mods;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import net.development.mitw.protector.MitwProtector;
+import net.development.mitw.security.protector.MitwProtector;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 

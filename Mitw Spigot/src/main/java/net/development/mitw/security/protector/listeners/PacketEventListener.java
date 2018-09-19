@@ -8,9 +8,9 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.development.mitw.protector.listeners;
+package net.development.mitw.security.protector.listeners;
 
-import static net.development.mitw.protector.utils.MessageUtil.color;
+import static net.development.mitw.security.protector.utils.MessageUtil.color;
 
 import java.util.List;
 
@@ -22,8 +22,8 @@ import net.development.mitw.config.SimpleConfig;
 import net.development.mitw.packetlistener.PacketEvent;
 import net.development.mitw.packetlistener.PacketHandler;
 import net.development.mitw.packetlistener.PacketListener;
-import net.development.mitw.protector.MitwProtector;
-import net.development.mitw.protector.utils.ExecutionUtil;
+import net.development.mitw.security.protector.MitwProtector;
+import net.development.mitw.security.protector.utils.ExecutionUtil;
 import net.development.mitw.utils.reflection.resolver.FieldResolver;
 import net.minecraft.server.v1_8_R3.PacketPlayInTabComplete;
 

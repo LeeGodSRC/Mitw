@@ -21,7 +21,7 @@ import net.development.mitw.language.LanguageData;
 import net.development.mitw.language.LanguageSQLConnection;
 import net.development.mitw.language.impl.LanguageMessages;
 import net.development.mitw.listener.ChatListener;
-import net.development.mitw.protector.MitwProtector;
+import net.development.mitw.security.protector.MitwProtector;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 
 public class Mitw extends JavaPlugin {

@@ -8,16 +8,16 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.development.mitw.protector.commands;
+package net.development.mitw.security.protector.commands;
 
-import static net.development.mitw.protector.utils.MessageUtil.color;
+import static net.development.mitw.security.protector.utils.MessageUtil.color;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import net.development.mitw.config.EzProtector;
-import net.development.mitw.protector.MitwProtector;
+import net.development.mitw.security.protector.MitwProtector;
 
 public class EZPCommand implements CommandExecutor {
 

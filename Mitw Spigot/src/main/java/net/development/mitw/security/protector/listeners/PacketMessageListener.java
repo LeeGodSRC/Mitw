@@ -8,7 +8,7 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.development.mitw.protector.listeners;
+package net.development.mitw.security.protector.listeners;
 
 import java.io.UnsupportedEncodingException;
 
@@ -24,9 +24,9 @@ import com.google.common.io.ByteStreams;
 import net.development.mitw.Mitw;
 import net.development.mitw.config.EzProtector;
 import net.development.mitw.config.SimpleConfig;
-import net.development.mitw.protector.MitwProtector;
-import net.development.mitw.protector.mods.Schematica;
-import net.development.mitw.protector.utils.ExecutionUtil;
+import net.development.mitw.security.protector.MitwProtector;
+import net.development.mitw.security.protector.mods.Schematica;
+import net.development.mitw.security.protector.utils.ExecutionUtil;
 
 public class PacketMessageListener implements PluginMessageListener {
 

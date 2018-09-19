@@ -1,4 +1,4 @@
-package net.development.mitw.security.anticrash;
+package net.development.mitw.security;
 
 public enum NBTType
 {

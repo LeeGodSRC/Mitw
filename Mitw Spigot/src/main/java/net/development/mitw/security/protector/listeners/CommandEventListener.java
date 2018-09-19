@@ -8,7 +8,7 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.development.mitw.protector.listeners;
+package net.development.mitw.security.protector.listeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,10 +16,10 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import net.development.mitw.config.EzProtector;
 import net.development.mitw.config.SimpleConfig;
-import net.development.mitw.protector.utils.CustomCommands;
-import net.development.mitw.protector.utils.CustomPlugins;
-import net.development.mitw.protector.utils.CustomVersion;
-import net.development.mitw.protector.utils.HiddenSyntaxes;
+import net.development.mitw.security.protector.utils.CustomCommands;
+import net.development.mitw.security.protector.utils.CustomPlugins;
+import net.development.mitw.security.protector.utils.CustomVersion;
+import net.development.mitw.security.protector.utils.HiddenSyntaxes;
 
 public class CommandEventListener implements Listener {
 

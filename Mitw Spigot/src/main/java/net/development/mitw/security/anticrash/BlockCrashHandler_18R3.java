@@ -1,8 +1,24 @@
-package net.development.mitw.security.anticrash.handler;
+package net.development.mitw.security.anticrash;
 
-public class BlockCrashHandler_18R2 /*implements BlockCrashHandler*/ {
+import net.development.mitw.packetlistener.PacketEvent;
+import net.development.mitw.packetlistener.PacketHandler;
+import net.development.mitw.packetlistener.PacketListener;
 
-	/*	public BlockCrashHandler_18R2() {
+public class BlockCrashHandler_18R3 /*implements BlockCrashHandler*/ {
+
+	public BlockCrashHandler_18R3() {
+		PacketHandler.getInstance().register(new PacketListener() {
+			@Override
+			public void out(PacketEvent packetEvent) {}
+			@Override
+			public void in(PacketEvent packetEvent) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
+	/*	public BlockCrashHandler_18R3() {
 		ProtocolLibrary.getProtocolManager()
 				.addPacketListener((PacketListener) new PacketAdapter(Main.getInstance(), new PacketType[] { PacketType.Play.Client.BLOCK_PLACE }) {
 					public void onPacketReceiving(final PacketEvent event) {

@@ -8,9 +8,9 @@
  * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package net.development.mitw.protector.utils;
+package net.development.mitw.security.protector.utils;
 
-import static net.development.mitw.protector.utils.MessageUtil.color;
+import static net.development.mitw.security.protector.utils.MessageUtil.color;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import net.development.mitw.config.EzProtector;
 import net.development.mitw.config.SimpleConfig;
-import net.development.mitw.protector.MitwProtector;
+import net.development.mitw.security.protector.MitwProtector;
 
 public class HiddenSyntaxes {
 
