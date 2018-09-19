@@ -12,6 +12,7 @@ import lombok.Getter;
 import me.skymc.taboolib.mysql.builder.hikari.HikariHandler;
 import net.development.mitw.chat.ChatHandler;
 import net.development.mitw.chat.ChatManager;
+import net.development.mitw.config.AntiCrash;
 import net.development.mitw.config.EzProtector;
 import net.development.mitw.config.MySQL;
 import net.development.mitw.hooks.LuckPerms;
@@ -21,6 +22,7 @@ import net.development.mitw.language.LanguageData;
 import net.development.mitw.language.LanguageSQLConnection;
 import net.development.mitw.language.impl.LanguageMessages;
 import net.development.mitw.listener.ChatListener;
+import net.development.mitw.security.anticrash.BlockCrashHandler;
 import net.development.mitw.security.protector.MitwProtector;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 
@@ -48,12 +50,15 @@ public class Mitw extends JavaPlugin {
 		instance = this;
 
 		MySQL.init();
+		AntiCrash.init();
+		EzProtector.init();
+
+		new BlockCrashHandler();
 		chatManager = new ChatManager(this);
 		chatHandlers = new HashSet<>();
 
 		HikariHandler.init();
 		LuckPerms.hook();
-		EzProtector.init();
 
 		final LanguageSQLConnection languageSQLConnection = new LanguageSQLConnection(MySQL.LANGUAGE_DATABASE);
 		languageData = new LanguageData(this, languageSQLConnection);
