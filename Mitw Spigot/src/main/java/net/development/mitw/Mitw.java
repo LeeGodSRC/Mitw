@@ -12,7 +12,7 @@ import lombok.Getter;
 import me.skymc.taboolib.mysql.builder.hikari.HikariHandler;
 import net.development.mitw.chat.ChatHandler;
 import net.development.mitw.chat.ChatManager;
-import net.development.mitw.config.ConfigManager;
+import net.development.mitw.config.MySQL;
 import net.development.mitw.hooks.LuckPerms;
 import net.development.mitw.language.LanguageAPI;
 import net.development.mitw.language.LanguageAPI.LangType;
@@ -33,9 +33,6 @@ public class Mitw extends JavaPlugin {
 	@Getter
 	private ChatManager chatManager;
 	@Getter
-	private ConfigManager configManager;
-
-	@Getter
 	private LanguageData languageData;
 
 	@Getter
@@ -48,13 +45,13 @@ public class Mitw extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 
-		configManager = new ConfigManager();
+		MySQL.init();
 		chatManager = new ChatManager(this);
 		chatHandlers = new HashSet<>();
 		HikariHandler.init();
 		LuckPerms.hook();
 
-		final LanguageSQLConnection languageSQLConnection = new LanguageSQLConnection(configManager.getMainConfig().getString("database.languagedatabase"));
+		final LanguageSQLConnection languageSQLConnection = new LanguageSQLConnection(MySQL.LANGUAGE_DATABASE);
 		languageData = new LanguageData(this, languageSQLConnection);
 		coreLanguage = new LanguageAPI(LangType.CLASS, this, languageData, new LanguageMessages());
 
@@ -63,12 +60,11 @@ public class Mitw extends JavaPlugin {
 	}
 
 	public void registerCommands() {
-//		Arrays.asList().forEach(command -> registerCommand(command, getName()));
+		//		Arrays.asList().forEach(command -> registerCommand(command, getName()));
 	}
 
 	public void registerListeners() {
-		Arrays.asList(new ChatListener(this))
-			.forEach(listener -> getServer().getPluginManager().registerEvents(listener, instance));
+		Arrays.asList(new ChatListener(this)).forEach(listener -> getServer().getPluginManager().registerEvents(listener, instance));
 	}
 
 	public void addChatHandler(ChatHandler chatHandler) {

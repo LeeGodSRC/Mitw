@@ -2,39 +2,23 @@ package net.development.mitw.database;
 
 import javax.sql.DataSource;
 
-import org.bukkit.Bukkit;
-
 import lombok.Getter;
 import me.skymc.taboolib.mysql.builder.SQLHost;
 import me.skymc.taboolib.mysql.builder.hikari.HikariHandler;
 import net.development.mitw.Mitw;
+import net.development.mitw.config.MySQL;
 
 public class Database {
-	
+
 	@Getter
-	private SQLHost sqlHost;
+	private final SQLHost sqlHost;
 	@Getter
-	private DataSource dataSource;
-	
-	private String HostName;
-	private String Port;
-	private String User;
-	private String Password;
-	private String Database;
+	private final DataSource dataSource;
 
 	public Database(Mitw plugin, String database) {
-		
-		HostName = plugin.getConfigManager().getMainConfig().getString("database.hostname");
-		Port = plugin.getConfigManager().getMainConfig().getString("database.port");
-		User = plugin.getConfigManager().getMainConfig().getString("database.user");
-		Password = plugin.getConfigManager().getMainConfig().getString("database.password");
-		Database = database;
-		
-		Bukkit.getConsoleSender().sendMessage(HostName + " "+Port+" "+User+" "+Password+" "+database);
-		
-		sqlHost = new SQLHost(HostName, User, Port, Password, Database);
+		sqlHost = new SQLHost(MySQL.HOSTNAME, MySQL.USER, MySQL.PORT, MySQL.PASSWORD, database);
 		dataSource = HikariHandler.createDataSource(sqlHost);
-		
+
 	}
 
 }
