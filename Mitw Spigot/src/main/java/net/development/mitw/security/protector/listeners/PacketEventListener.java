@@ -45,6 +45,11 @@ public class PacketEventListener {
 
 					message = (String) packetEvent.getPacketValue("a");
 
+					if (player == null) {
+						Bukkit.broadcastMessage("the player is null!!");
+						return;
+					}
+
 					for (final String command : blocked) {
 						if (!player.hasPermission("ezprotector.bypass.command.tabcomplete")
 								&& (message.equals(command) || (message.startsWith("/") && !message.contains(" ")))) {
