@@ -25,6 +25,8 @@ public class Server extends Command {
 
 		if (!sender.hasPermission("mitw.admin"))
 			return;
+
+
 		final ProxiedPlayer player = (ProxiedPlayer) sender;
 		if (args.length == 0) {
 			player.sendMessage(

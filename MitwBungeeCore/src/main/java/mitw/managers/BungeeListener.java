@@ -52,7 +52,7 @@ public class BungeeListener implements Listener {
 		}
 		for (final ProxiedPlayer to : ProxyServer.getInstance().getPlayers())
 			if (to.hasPermission("mitw.admin") && p.getServer() != null)
-				to.sendMessage("§7[§6§lStaff§7]§7 Staff §e" + p.getName() + " §7Connected to §b" + e.getServer().getInfo().getName() + " §7from §c"
+				to.sendMessage("§7[§6§lStaff§7]§7 Staff §e" + p.getName() + " §7連結到 §b" + e.getServer().getInfo().getName() + " §7從 §c"
 						+ p.getServer().getInfo().getName() + "§7 !");
 	}
 }
