@@ -36,16 +36,16 @@ public class ChatListener implements org.bukkit.event.Listener {
 		if (cache.isMute()) {
 			if (cooldownTime < Settings.MUTE_TIME) {
 				e.setCancelled(true);
-				Common.tell(p,Mitw.getInstance().getCoreLanguage()
-						.translate(p, "inMute".replaceAll("<sec>", Settings.MUTE_TIME - cooldownTime + "")));
+				Common.tell(p,
+						Mitw.getInstance().getCoreLanguage().translate(p, "inMute").replaceAll("<sec>", Settings.MUTE_TIME - cooldownTime + ""));
 				return;
 			}
 			cache.setMute(false);
 		}
 		if (cooldownTime < Settings.CHAT_COOLDOWN) { // 還沒冷卻結束
 			e.setCancelled(true);
-			Common.tell(p, Mitw.getInstance().getCoreLanguage()
-					.translate(p,"cooldownChat".replaceAll("<sec>", Settings.CHAT_COOLDOWN - cooldownTime + "")));
+			Common.tell(p, Mitw.getInstance().getCoreLanguage().translate(p, "cooldownChat").replaceAll("<sec>",
+					Settings.CHAT_COOLDOWN - cooldownTime + ""));
 			return;
 		}
 		if (Settings.IS_NO_SAME_MESSAGE && message.equalsIgnoreCase(cache.getLastMessage())) {

@@ -16,6 +16,9 @@ import com.google.common.cache.CacheBuilder;
 
 import lombok.Getter;
 import net.development.mitw.Mitw;
+import net.development.mitw.chat.check.HighCheck;
+import net.development.mitw.chat.check.LowCheck;
+import net.development.mitw.chat.check.SingleCheck;
 import net.development.mitw.config.Settings;
 import net.development.mitw.events.ConfigurationReloadEvent;
 import net.development.mitw.hooks.LuckPerms;
@@ -39,6 +42,9 @@ public class ChatManager implements Listener {
 
 	public void load() {
 		Settings.init();
+		new HighCheck(Settings.CHECK_HIGH);
+		new LowCheck(Settings.CHECK_LOW);
+		new SingleCheck(Settings.CHECK_SINGLE);
 	}
 
 	public String getChatPrefix(Player player) {
