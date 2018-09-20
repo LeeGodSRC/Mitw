@@ -32,23 +32,25 @@ public class ChatListener implements org.bukkit.event.Listener {
 		final UUID u = p.getUniqueId();
 		final PlayerCache cache = ChatManager.getPlayerCaches(u);
 		String message = e.getMessage();
-		final double cooldownTime = (System.currentTimeMillis() - cache.getLastTalkTime()) / 1000d;
+		final int cooldownTime = (int) ((System.currentTimeMillis() - cache.getLastTalkTime()) / 1000);
 		if (cache.isMute()) {
 			if (cooldownTime < Settings.MUTE_TIME) {
 				e.setCancelled(true);
-				Common.tell(p, "&c抱歉 你目前處於禁言狀態,你還需要約&f " + (Settings.MUTE_TIME - (int) cooldownTime) + " &c秒後才能說話");
+				Common.tell(p,Mitw.getInstance().getCoreLanguage()
+						.translate(p, "inMute".replaceAll("<sec>", Settings.MUTE_TIME - cooldownTime + "")));
 				return;
 			}
 			cache.setMute(false);
 		}
 		if (cooldownTime < Settings.CHAT_COOLDOWN) { // 還沒冷卻結束
 			e.setCancelled(true);
-			Common.tell(p, "&6請放慢你的說話速度,你還要&e " + (Settings.CHAT_COOLDOWN - (int) cooldownTime) + " 秒後才能說話");
+			Common.tell(p, Mitw.getInstance().getCoreLanguage()
+					.translate(p,"cooldownChat".replaceAll("<sec>", Settings.CHAT_COOLDOWN - cooldownTime + "")));
 			return;
 		}
 		if (Settings.IS_NO_SAME_MESSAGE && message.equalsIgnoreCase(cache.getLastMessage())) {
 			e.setCancelled(true);
-			Common.tell(p, "&c請不要嘗試發送的同樣訊息");
+			Common.tell(p, Mitw.getInstance().getCoreLanguage().translate(p, "noSpam"));
 			return;
 		}
 		if (!(message.toLowerCase().equals("gg") || message.toLowerCase().equals("gf")))
@@ -57,7 +59,7 @@ public class ChatListener implements org.bukkit.event.Listener {
 
 		if (!Check.isSafeMessage(message)) {
 			e.setCancelled(true);
-			Common.tell(p, "&c請不要說難聽的話,謝謝你");
+			Common.tell(p, Mitw.getInstance().getCoreLanguage().translate(p, "muted"));
 			cache.setMute(true);
 			return;
 		}

@@ -16,7 +16,6 @@ import com.google.common.cache.CacheBuilder;
 
 import lombok.Getter;
 import net.development.mitw.Mitw;
-import net.development.mitw.chat.check.Check;
 import net.development.mitw.config.Settings;
 import net.development.mitw.events.ConfigurationReloadEvent;
 import net.development.mitw.hooks.LuckPerms;
@@ -66,28 +65,8 @@ public class ChatManager implements Listener {
 		return builder.toString();
 	}
 
-	public boolean isPlayerMuted(Player player) {
-		return isPlayerMuted(player.getUniqueId());
-	}
-
-	public boolean isPlayerMuted(UUID uuid) {
-		return playerMuted.contains(uuid);
-	}
-
-	public void mute(Player player) {
-		playerMuted.add(player.getUniqueId());
-		player.sendMessage(plugin.getCoreLanguage().translate(player, "muted"));
-	}
-
 	public String getRandomMessages() {
 		return TOXIC_REPLACEMENT.get(Mitw.getRandom().nextInt(TOXIC_REPLACEMENT.size()));
-	}
-
-	public boolean containsToxicWords(String message) {
-		if (Check.isSafeMessage(message))
-			return true;
-		return false;
-
 	}
 
 	public static PlayerCache getPlayerCaches(UUID id) {
