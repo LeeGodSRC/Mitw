@@ -32,6 +32,7 @@ public class PacketEventListener {
 		final SimpleConfig config = EzProtector.getInstance();
 		final List<String> blocked = config.getStringList("tab-completion.blacklisted");
 
+
 		PacketHandler.getInstance().register(new PacketListener() {
 			@Override
 			public void out(PacketEvent arg0) {}
@@ -40,10 +41,12 @@ public class PacketEventListener {
 			public void in(PacketEvent packetEvent) {
 				if (packetEvent.getPacket() instanceof PacketPlayInTabComplete) {
 
-					final Player player = packetEvent.getPlayer();
-					String message = "";
+					if (!packetEvent.hasPlayer()) {
+						return;
+					}
 
-					message = (String) packetEvent.getPacketValue("a");
+					final Player player = packetEvent.getPlayer();
+					final String message = (String) packetEvent.getPacketValue("a");
 
 					for (final String command : blocked) {
 						if (!player.hasPermission("ezprotector.bypass.command.tabcomplete")
