@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.bukkit.command.Command;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import lombok.Getter;
 import me.skymc.taboolib.mysql.builder.hikari.HikariHandler;
@@ -28,8 +27,6 @@ import net.development.mitw.listener.ChatListener;
 import net.development.mitw.packetlistener.PacketHandler;
 import net.development.mitw.security.anticrash.BlockCrashHandler;
 import net.development.mitw.security.protector.MitwProtector;
-import net.development.mitw.utils.reflection.ReflectionUtils;
-import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 
 public class Mitw extends JavaPlugin {
@@ -84,17 +81,6 @@ public class Mitw extends JavaPlugin {
 		registerCommands();
 
 		new MitwProtector().onEnable();
-
-		new BukkitRunnable() {
-
-			@Override
-			public void run() {
-				final BlockPosition position = new BlockPosition(0, 0, 0);
-				position.getX();
-
-				ReflectionUtils.callMethod(ReflectionUtils.makeMethod(position.getClass(), "getX"), position);
-			}
-		}.runTaskLater(instance, 100L);
 	}
 
 	public void registerCommands() {
