@@ -16,19 +16,19 @@ import lombok.Setter;
 import net.md_5.bungee.api.ChatColor;
 
 public class LanguageAPI {
-	
+
 	public static enum LangType {
 		CONFIG, CLASS
 	};
-	
+
 	@Getter @Setter private Map<String, List<String>> savedMessages = new HashMap<>();
-	
+
 	@Getter @Setter private Plugin plugin;
 	@Getter @Setter private LangType type;
 	@Getter @Setter private YamlConfiguration config;
 	@Getter @Setter private Object clazz;
-	@Getter private LanguageData languageData;
-	
+	@Getter private final LanguageData languageData;
+
 	public LanguageAPI(LangType type, Plugin plugin, LanguageData languageData, YamlConfiguration config) {
 		this.type = type;
 		this.config = config;
@@ -48,7 +48,7 @@ public class LanguageAPI {
 		this.languageData = languageData;
 		try {
 			this.clazz = clazz.getConstructor(methods).newInstance();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -60,14 +60,14 @@ public class LanguageAPI {
 		this.languageData = languageData;
 		try {
 			this.clazz = clazz.getConstructor(methods).newInstance();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String translate(Player p, String ofrom) {
-		String lang = languageData.getLang(p);
-		String from = lang+"."+ofrom;
+		final String lang = languageData.getLang(p);
+		final String from = lang+"."+ofrom;
 		if(savedMessages.containsKey(from)) {
 			return savedMessages.get(from).get(0);
 		} else {
@@ -86,7 +86,7 @@ public class LanguageAPI {
 						found = true;
 					}
 					to = (String)object;
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					Bukkit.getConsoleSender().sendMessage("§cCant get string field "+from.replace(".", "_")+" from "+clazz.getClass().getName()+" from player "+p.getName()+" !");
 					return "null";
 				}
@@ -108,11 +108,11 @@ public class LanguageAPI {
 			return to;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<String> translateArrays(Player p, String ofrom) {
-		String lang = languageData.getLang(p);
-		String from = lang+"."+ofrom;
+		final String lang = languageData.getLang(p);
+		final String from = lang+"."+ofrom;
 		if(savedMessages.containsKey(from)) {
 			return savedMessages.get(from);
 		} else {
@@ -131,7 +131,7 @@ public class LanguageAPI {
 						found = true;
 					}
 					to = (List<String>)object;
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					Bukkit.getConsoleSender().sendMessage("§cCant get string field "+from.replace(".", "_")+" from "+clazz.getClass().getName()+" from player "+p.getName()+" !");
 					return Arrays.asList("null");
 				}

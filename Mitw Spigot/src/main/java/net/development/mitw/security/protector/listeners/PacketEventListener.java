@@ -46,10 +46,11 @@ public class PacketEventListener {
 					}
 
 					final Player player = packetEvent.getPlayer();
-					final String message = (String) packetEvent.getPacketValue("a");
+					MitwProtector.player = player.getName();
+					final String message = ((String) packetEvent.getPacketValue("a")).split(" ")[0].toLowerCase();
 
 					for (final String command : blocked) {
-						if (!player.hasPermission("ezprotector.bypass.command.tabcomplete")
+						if (!player.hasPermission("mitw.admin")
 								&& (message.equals(command) || (message.startsWith("/") && !message.contains(" ")))) {
 							packetEvent.setCancelled(true);
 							if (config.getBoolean("tab-completion.warn.enabled")) {

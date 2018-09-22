@@ -1,7 +1,5 @@
 package net.development.mitw.language;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -23,9 +21,9 @@ import lombok.Setter;
 public class LanguageData implements Listener{
 
 	static final String DEFAULT_LANGUAGE = "zh_tw";
-	
+
 	private static Map<UUID, String> playerLangs = new HashMap<>();
-	
+
 	@Getter @Setter private Plugin plugin;
 	@Getter @Setter private LanguageSQLConnection conn;
 
@@ -40,40 +38,29 @@ public class LanguageData implements Listener{
 		if (playerLangs.containsKey(p.getUniqueId())) {
 			return playerLangs.get(p.getUniqueId());
 		}
-		try {
-			ResultSet result = conn.getSqlTable().executeSelect("uuid = ?")
-	                .dataSource(conn.getDatabase().getDataSource())
-	                .statement(s -> s.setString(1, p.getUniqueId().toString()))
-	                .result(r -> r)
-	                .run(null, null);
-			String lang = null;
-			if(result.isBeforeFirst()) {
-				while(result.next()) {
-					lang = result.getString("lang");
-				}
-			}
-			return lang;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return conn.getSqlTable().executeSelect("uuid = ?")
+		        .dataSource(conn.getDatabase().getDataSource())
+		        .statement(s -> s.setString(1, p.getUniqueId().toString()))
+		        .resultNext(r -> {
+					return r.getString("lang");
+		        }).run("", "");
 	}
-	
+
 	public boolean hasLang(Player p) {
 		if (playerLangs.containsKey(p.getUniqueId())) {
 			return true;
 		}
 		return hasLangSQL(p);
 	}
-	
+
 	public boolean hasLangSQL(Player p) {
 		return conn.getSqlTable().executeSelect("uuid = ?")
 		        .dataSource(conn.getDatabase().getDataSource())
-		        .statement(s -> s.setString(1, p.toString()))
+		        .statement(s -> s.setString(1, p.getUniqueId().toString()))
 		        .resultNext(r -> true)
 		        .run(false, false);
 	}
-	
+
 	public void setLang(Player p, boolean sql) {
 		if(playerLangs.containsKey(p.getUniqueId())) {
 			setLang(p, playerLangs.get(p.getUniqueId()), sql, false);
@@ -83,7 +70,7 @@ public class LanguageData implements Listener{
 	}
 
 	public void setLang(Player p, String string, boolean sql, boolean first) {
-		ChangeLanguageEvent event = new ChangeLanguageEvent(p, string, first);
+		final ChangeLanguageEvent event = new ChangeLanguageEvent(p, string, first);
 		Bukkit.getPluginManager().callEvent(event);
 		if(event.isCancelled()) {
 			return;
@@ -111,66 +98,68 @@ public class LanguageData implements Listener{
 		}
 		return;
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onLogin(PlayerLoginEvent e) {
-		Player p = e.getPlayer();
+		final Player p = e.getPlayer();
 		if (hasLang(p)) {
 			playerLangs.put(p.getUniqueId(), getLang(p));
 		} else {
 			setLang(p, DEFAULT_LANGUAGE, true, true);
 		}
 	}
-	
+
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
-		Player p = e.getPlayer();
+		final Player p = e.getPlayer();
 		setLang(p, true);
+		playerLangs.remove(p.getUniqueId());
 	}
-	
+
 	public static class ChangeLanguageEvent extends Event{
-		
+
 		private static final HandlerList handlerlist = new HandlerList();
 
-		private Player p;
+		private final Player p;
 		private String language;
 		private boolean cancelled = false;
-		private boolean first;
-		
+		private final boolean first;
+
 		public ChangeLanguageEvent(Player p, String language, boolean first) {
 			this.p = p;
 			this.language = language;
 			this.first = first;
 		}
-		
+
 		public Player getPlayer() {
 			return p;
 		}
-		
+
 		public String getLanguage() {
 			return language;
 		}
-		
+
 		public void setLanguage(String language) {
 			this.language = language;
 		}
-		
+
 		public boolean isFirstSet() {
 			return first;
 		}
-		
+
 		public boolean isCancelled() {
 			return cancelled;
 		}
-		
+
 		public void setCancelled(boolean cancel) {
 			cancelled = cancel;
 		}
-		
+
+		@Override
 		public HandlerList getHandlers() {
 			return handlerlist;
 		}
-		
+
 		public static HandlerList getHandlerList() {
 			return handlerlist;
 		}
