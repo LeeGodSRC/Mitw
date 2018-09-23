@@ -16,10 +16,12 @@ import mitw.managers.BungeeListener;
 import mitw.managers.YamlManagers;
 import mitw.modules.MotdDisplay;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.plugin.Command;
+import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 
-public class Bungee extends Plugin{
+public class Bungee extends Plugin {
 	public static Bungee ins;
 	public static HashMap<UUID, UUID> replys = new HashMap<>();
 	public static String Prefix;
@@ -35,33 +37,29 @@ public class Bungee extends Plugin{
 	public void onEnable() {
 		ins = this;
 		registerSgAlertServer();
-		getProxy().getConsole().sendMessage(Prefix + "§eLoading MitwCore - Bungee..");
-		final PluginManager m = ProxyServer.getInstance().getPluginManager();
-		m.registerListener(this, new MotdDisplay(this));
-		ProxyServer.getInstance().getPluginManager().registerCommand(this, new Lobby(this));
-		m.registerCommand(this, new Server(this));
-		m.registerCommand(this, new Message());
-		m.registerCommand(this, new Reply());
-		m.registerCommand(this, new Report());
-		m.registerCommand(this, new AC());
-		m.registerCommand(this, new Ignore());
-		m.registerCommand(this, new Broadcast());
-		m.registerListener(this, new BungeeListener());
+		registerCommand(
+				new Lobby(this),
+				new Server(this),
+				new Message(),
+				new Reply(),
+				new Report(),
+				new AC(),
+				new Ignore(),
+				new Broadcast());
+		registerListener(
+				new MotdDisplay(this),
+				new BungeeListener());
 		final YamlManagers YamlManagers = new YamlManagers(this);
 		YamlManagers.SetUp();
-		getProxy().getConsole().sendMessage(Prefix + "§eLoad MitwCore - Bungee successfully.");
 	}
 
 	@Override
 	public void onDisable() {
-		this.getLogger().info("Closing " + this.getDescription().getName() + " V" + this.getDescription().getVersion() + " by "
-				+ this.getDescription().getAuthor());
 		final ArrayList<String> tempUUID = new ArrayList<>();
 		for (final UUID u : YamlManagers.Ignores) {
 			tempUUID.add(u.toString());
 		}
 		YamlManagers.General.set("ignore", tempUUID);
-
 		YamlManagers.saveConfig();
 	}
 
@@ -69,5 +67,19 @@ public class Bungee extends Plugin{
 		servers.add("waiting");
 		servers.add("duel");
 		servers.add("ffa");
+	}
+
+	private void registerCommand(Command... cmds) {
+		final PluginManager pm = ProxyServer.getInstance().getPluginManager();
+		for (final Command cmd : cmds) {
+			pm.registerCommand(this, cmd);
+		}
+	}
+
+	private void registerListener(Listener... listeners) {
+		final PluginManager pm = ProxyServer.getInstance().getPluginManager();
+		for (final Listener l : listeners) {
+			pm.registerListener(this, l);
+		}
 	}
 }
