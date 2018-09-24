@@ -19,14 +19,8 @@ public class Server extends Command {
 		super("server");
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void execute(CommandSender sender, String[] args) {
-
-		if (!sender.hasPermission("mitw.admin"))
-			return;
-
-
 		final ProxiedPlayer player = (ProxiedPlayer) sender;
 		if (args.length == 0) {
 			player.sendMessage(

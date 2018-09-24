@@ -15,6 +15,7 @@ import net.development.mitw.chat.ChatManager;
 import net.development.mitw.config.AntiCrash;
 import net.development.mitw.config.EzProtector;
 import net.development.mitw.config.MySQL;
+import net.development.mitw.config.Security;
 import net.development.mitw.helpmessage.HelpCommand;
 import net.development.mitw.helpmessage.HelpHandler;
 import net.development.mitw.hooks.LuckPerms;
@@ -24,6 +25,7 @@ import net.development.mitw.language.LanguageData;
 import net.development.mitw.language.LanguageSQLConnection;
 import net.development.mitw.language.impl.LanguageMessages;
 import net.development.mitw.listener.ChatListener;
+import net.development.mitw.listener.PlayerLoginListener;
 import net.development.mitw.packetlistener.PacketHandler;
 import net.development.mitw.security.anticrash.BlockCrashHandler;
 import net.development.mitw.security.protector.MitwProtector;
@@ -59,16 +61,14 @@ public class Mitw extends JavaPlugin {
 		MySQL.init();
 		AntiCrash.init();
 		EzProtector.init();
+		Security.init();
 
 		new BlockCrashHandler();
 		chatManager = new ChatManager(this);
 		chatHandlers = new HashSet<>();
 		helpHandlers = new HashSet<>();
-
 		/** 基礎 Help 訊息 **/
-		helpHandlers.add(() -> Arrays.asList(
-				"Help1",
-				"Help2"));
+		helpHandlers.add(() -> Arrays.asList("Help1", "Help2"));
 
 		HikariHandler.init();
 		LuckPerms.hook();
@@ -88,7 +88,10 @@ public class Mitw extends JavaPlugin {
 	}
 
 	public void registerListeners() {
-		Arrays.asList(new ChatListener(this)).forEach(listener -> getServer().getPluginManager().registerEvents(listener, instance));
+		Arrays.asList(
+				new ChatListener(this),
+				new PlayerLoginListener())
+		.forEach(listener -> getServer().getPluginManager().registerEvents(listener, instance));
 	}
 
 	public void addChatHandler(ChatHandler chatHandler) {
