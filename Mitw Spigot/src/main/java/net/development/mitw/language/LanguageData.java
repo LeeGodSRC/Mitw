@@ -17,6 +17,7 @@ import org.bukkit.plugin.Plugin;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.development.mitw.utils.FastUUID;
 
 public class LanguageData implements Listener{
 
@@ -35,12 +36,16 @@ public class LanguageData implements Listener{
 	}
 
 	public String getLang(Player p) {
-		if (playerLangs.containsKey(p.getUniqueId())) {
-			return playerLangs.get(p.getUniqueId());
+		return getLang(p.getUniqueId());
+	}
+
+	public String getLang(UUID uuid) {
+		if (playerLangs.containsKey(uuid)) {
+			return playerLangs.get(uuid);
 		}
 		return conn.getSqlTable().executeSelect("uuid = ?")
 		        .dataSource(conn.getDatabase().getDataSource())
-		        .statement(s -> s.setString(1, p.getUniqueId().toString()))
+		        .statement(s -> s.setString(1, FastUUID.toString(uuid)))
 		        .resultNext(r -> {
 					return r.getString("lang");
 		        }).run("", "");
