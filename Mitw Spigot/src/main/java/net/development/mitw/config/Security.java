@@ -9,7 +9,7 @@ public class Security extends SimpleConfig {
 	}
 
 	public void loadVar() {
-		KICK_MESSAGE = getString("OnlyProxyJoin.KickMessage", "?");
+		KICK_MESSAGE = getString("OnlyProxyJoin.KickMessage");
 		ALLOW_IPS = getStringList("OnlyProxyJoin.AllowIP");
 	}
 

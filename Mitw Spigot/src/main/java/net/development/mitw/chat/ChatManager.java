@@ -22,6 +22,7 @@ import net.development.mitw.chat.check.SingleCheck;
 import net.development.mitw.config.Settings;
 import net.development.mitw.events.ConfigurationReloadEvent;
 import net.development.mitw.hooks.LuckPerms;
+import net.development.mitw.utils.Common;
 
 public class ChatManager implements Listener {
 
@@ -50,25 +51,26 @@ public class ChatManager implements Listener {
 	public String getChatPrefix(Player player) {
 		final String luckpermsPrefix = LuckPerms.getPrefix(player);
 
-		final StringBuilder builder = new StringBuilder(luckpermsPrefix);
+		final StringBuilder builder = new StringBuilder();
 
 		for (final ChatHandler chatHandler : plugin.getChatHandlers()) {
 			builder.append(chatHandler.getPrefix(player));
 		}
+		builder.append(luckpermsPrefix);
 
-		return builder.toString();
+		return Common.colored(builder.toString());
 	}
 
 	public String getSuffixPrefix(Player player) {
 		final String luckpermsPrefix = LuckPerms.getSuffix(player);
 
-		final StringBuilder builder = new StringBuilder(luckpermsPrefix);
+		final StringBuilder builder = new StringBuilder();
 
 		for (final ChatHandler chatHandler : plugin.getChatHandlers()) {
 			builder.append(chatHandler.getSuffix(player));
 		}
-
-		return builder.toString();
+		builder.append(luckpermsPrefix);
+		return Common.colored(builder.toString());
 	}
 
 	public String getRandomMessages() {
