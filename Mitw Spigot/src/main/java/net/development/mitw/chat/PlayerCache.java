@@ -5,30 +5,29 @@ import java.util.UUID;
 import net.development.mitw.config.SimpleConfig;
 
 public class PlayerCache {
-	private final SimpleConfig cfg;
+	private final SimpleConfig cfg = new SimpleConfig("cache.dat", false);;
 	private String lastMessage = "";
 	private long lastTalkTime = 0;
 	private boolean isMute = false;
 	private String suffix = "";
+	private final String path;
 
 	public PlayerCache(UUID u) {
-		cfg = new SimpleConfig("cache.dat", false);
-		cfg.setPathPrefix(u.toString());
 		onLoad();
+		path = u.toString();
 	}
-
 	private void onLoad() {
-		suffix = cfg.getString("suffix", "");
-		isMute = cfg.getBoolean("is-mute", false);
-		lastMessage = cfg.getString("last-chat-msg", "");
-		lastTalkTime = cfg.getLong("last-talk-time", 0L);
+		suffix = cfg.getString(path + ".suffix", "");
+		isMute = cfg.getBoolean(path + ".is-mute", false);
+		lastMessage = cfg.getString(path + ".last-chat-msg", "");
+		lastTalkTime = cfg.getLong(path + ".last-talk-time", 0L);
 	}
 
 	public void save() {
-		cfg.set("suffix", suffix);
-		cfg.set("is-mute", isMute);
-		cfg.set("last-chat-msg", lastMessage);
-		cfg.set("last-talk-time", lastTalkTime);
+		cfg.set(path + ".suffix", suffix);
+		cfg.set(path + ".is-mute", isMute);
+		cfg.set(path + ".last-chat-msg", lastMessage);
+		cfg.set(path + ".last-talk-time", lastTalkTime);
 		cfg.saveConfig();
 	}
 

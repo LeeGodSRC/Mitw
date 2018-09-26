@@ -65,17 +65,18 @@ public class ChatListener implements org.bukkit.event.Listener {
 		}
 
 		message = message.replaceAll("LOL", "哈哈").replaceAll("<3", "\u2764");
+		final String prefix = plugin.getChatManager().getChatPrefix(p);
+		final String suffix = plugin.getChatManager().getSuffixPrefix(p);
 
 		if (Settings.IS_BETTER_NICK) {
 			final NickedPlayer nickP = new NickedPlayer(p);
 			if (nickP.isNicked()) {
-				e.setFormat("§7[§b1000§7]" + nickP.getName() + "§f: " + message);
+				e.setFormat(prefix + nickP.getName() + "§f: " + message);
 				return;
 			}
 		}
 
-		final String prefix = plugin.getChatManager().getChatPrefix(p);
-		final String suffix = plugin.getChatManager().getSuffixPrefix(p);
+
 		e.setMessage(message);
 		if (((message.toLowerCase().equals("gg") || message.toLowerCase().equals("gf")) && e.getPlayer().hasPermission("mChat.goldgg"))) {
 			e.setFormat(prefix + e.getPlayer().getName() + suffix + "§f: " + ChatColor.GOLD + message);
