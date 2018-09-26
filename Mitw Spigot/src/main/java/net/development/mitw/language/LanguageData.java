@@ -3,6 +3,8 @@ package net.development.mitw.language;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -28,45 +30,45 @@ public class LanguageData implements Listener{
 	@Getter @Setter private Plugin plugin;
 	@Getter @Setter private LanguageSQLConnection conn;
 
-	public LanguageData(Plugin plugin, LanguageSQLConnection conn) {
+	private final ExecutorService langExecutor = Executors.newSingleThreadExecutor();
+
+	public LanguageData(final Plugin plugin, final LanguageSQLConnection conn) {
 		this.plugin = plugin;
 		this.conn = conn;
 		Bukkit.getPluginManager().registerEvents(this, plugin);
 		conn.connect();
 	}
 
-	public String getLang(Player p) {
+	public String getLang(final Player p) {
 		return getLang(p.getUniqueId());
 	}
 
-	public String getLang(UUID uuid) {
-		if (playerLangs.containsKey(uuid)) {
+	public String getLang(final UUID uuid) {
+		if (playerLangs.containsKey(uuid))
 			return playerLangs.get(uuid);
-		}
 		return conn.getSqlTable().executeSelect("uuid = ?")
-		        .dataSource(conn.getDatabase().getDataSource())
-		        .statement(s -> s.setString(1, FastUUID.toString(uuid)))
-		        .resultNext(r -> {
+				.dataSource(conn.getDatabase().getDataSource())
+				.statement(s -> s.setString(1, FastUUID.toString(uuid)))
+				.resultNext(r -> {
 					return r.getString("lang");
-		        }).run("", "");
+				}).run("", "");
 	}
 
-	public boolean hasLang(Player p) {
-		if (playerLangs.containsKey(p.getUniqueId())) {
+	public boolean hasLang(final Player p) {
+		if (playerLangs.containsKey(p.getUniqueId()))
 			return true;
-		}
 		return hasLangSQL(p);
 	}
 
-	public boolean hasLangSQL(Player p) {
+	public boolean hasLangSQL(final Player p) {
 		return conn.getSqlTable().executeSelect("uuid = ?")
-		        .dataSource(conn.getDatabase().getDataSource())
-		        .statement(s -> s.setString(1, p.getUniqueId().toString()))
-		        .resultNext(r -> true)
-		        .run(false, false);
+				.dataSource(conn.getDatabase().getDataSource())
+				.statement(s -> s.setString(1, p.getUniqueId().toString()))
+				.resultNext(r -> true)
+				.run(false, false);
 	}
 
-	public void setLang(Player p, boolean sql) {
+	public void setLang(final Player p, final boolean sql) {
 		if(playerLangs.containsKey(p.getUniqueId())) {
 			setLang(p, playerLangs.get(p.getUniqueId()), sql, false);
 		} else {
@@ -74,51 +76,53 @@ public class LanguageData implements Listener{
 		}
 	}
 
-	public void setLang(Player p, String string, boolean sql, boolean first) {
+	public void setLang(final Player p, String string, final boolean sql, final boolean first) {
 		final ChangeLanguageEvent event = new ChangeLanguageEvent(p, string, first);
 		Bukkit.getPluginManager().callEvent(event);
-		if(event.isCancelled()) {
+		if(event.isCancelled())
 			return;
-		}
 		if(!event.getLanguage().equals(string)) {
 			string = event.getLanguage();
 		}
 		playerLangs.put(p.getUniqueId(), string);
-		if(!sql) {
+		if(!sql)
 			return;
-		}
 		if(hasLangSQL(p)) {
 			conn.getSqlTable().executeUpdate("UPDATE `MitwLang` SET `lang` = ? WHERE `uuid` = ?;")
-				.dataSource(conn.getDatabase().getDataSource()).statement(s -> {
-					s.setString(1, playerLangs.get(p.getUniqueId()));
-					s.setString(2, p.getUniqueId().toString());
-				}).run();
+			.dataSource(conn.getDatabase().getDataSource()).statement(s -> {
+				s.setString(1, playerLangs.get(p.getUniqueId()));
+				s.setString(2, p.getUniqueId().toString());
+			}).run();
 		} else {
 			conn.getSqlTable().executeInsert("?, ?")
-				.dataSource(conn.getDatabase().getDataSource())
-				.statement(s -> {
-					s.setString(1, p.getUniqueId().toString());
-					s.setString(2, playerLangs.get(p.getUniqueId()));
-				}).run();
+			.dataSource(conn.getDatabase().getDataSource())
+			.statement(s -> {
+				s.setString(1, p.getUniqueId().toString());
+				s.setString(2, playerLangs.get(p.getUniqueId()));
+			}).run();
 		}
 		return;
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onLogin(PlayerLoginEvent e) {
+	public void onLogin(final PlayerLoginEvent e) {
 		final Player p = e.getPlayer();
-		if (hasLang(p)) {
-			playerLangs.put(p.getUniqueId(), getLang(p));
-		} else {
-			setLang(p, DEFAULT_LANGUAGE, true, true);
-		}
+		langExecutor.execute(() -> {
+			if (hasLang(p)) {
+				playerLangs.put(p.getUniqueId(), getLang(p));
+			} else {
+				setLang(p, DEFAULT_LANGUAGE, true, true);
+			}
+		});
 	}
 
 	@EventHandler
-	public void onQuit(PlayerQuitEvent e) {
+	public void onQuit(final PlayerQuitEvent e) {
 		final Player p = e.getPlayer();
-		setLang(p, true);
-		playerLangs.remove(p.getUniqueId());
+		langExecutor.execute(() -> {
+			setLang(p, true);
+			playerLangs.remove(p.getUniqueId());
+		});
 	}
 
 	public static class ChangeLanguageEvent extends Event{
@@ -130,7 +134,7 @@ public class LanguageData implements Listener{
 		private boolean cancelled = false;
 		private final boolean first;
 
-		public ChangeLanguageEvent(Player p, String language, boolean first) {
+		public ChangeLanguageEvent(final Player p, final String language, final boolean first) {
 			this.p = p;
 			this.language = language;
 			this.first = first;
@@ -144,7 +148,7 @@ public class LanguageData implements Listener{
 			return language;
 		}
 
-		public void setLanguage(String language) {
+		public void setLanguage(final String language) {
 			this.language = language;
 		}
 
@@ -156,7 +160,7 @@ public class LanguageData implements Listener{
 			return cancelled;
 		}
 
-		public void setCancelled(boolean cancel) {
+		public void setCancelled(final boolean cancel) {
 			cancelled = cancel;
 		}
 
