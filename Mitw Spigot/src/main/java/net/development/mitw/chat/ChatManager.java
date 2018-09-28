@@ -54,9 +54,13 @@ public class ChatManager implements Listener {
 		final StringBuilder builder = new StringBuilder();
 
 		for (final ChatHandler chatHandler : plugin.getChatHandlers()) {
+			final String prefix = chatHandler.getPrefix(player);
+			if (prefix == null || prefix.isEmpty())
+				continue;
 			builder.append(chatHandler.getPrefix(player));
 		}
-		builder.append(luckpermsPrefix);
+		if (luckpermsPrefix != null)
+			builder.append(luckpermsPrefix);
 
 		return Common.colored(builder.toString());
 	}
@@ -67,6 +71,9 @@ public class ChatManager implements Listener {
 		final StringBuilder builder = new StringBuilder();
 
 		for (final ChatHandler chatHandler : plugin.getChatHandlers()) {
+			final String suffix = chatHandler.getSuffix(player);
+			if (suffix == null || suffix.isEmpty())
+				continue;
 			builder.append(chatHandler.getSuffix(player));
 		}
 		builder.append(luckpermsPrefix);
