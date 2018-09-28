@@ -23,7 +23,7 @@ public class Broadcast extends Command {
 		super("broadcast", "mitw.admin", "ba");
 		broadcasts.put("meetup", "&e模擬UHC&7(Meetup)");
 		broadcasts.put("castlewars", "&c堡壘攻防戰&7(CastleWars)");
-		broadcasts.put("event", "&6晉級大賽&7(Events)");
+		broadcasts.put("events", "&6晉級大賽&7(Events)");
 	}
 
 	@Override
