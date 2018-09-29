@@ -5,7 +5,7 @@ import java.util.UUID;
 import net.development.mitw.config.SimpleConfig;
 
 public class PlayerCache {
-	private final SimpleConfig cfg = new SimpleConfig("cache.dat", false);;
+	private static SimpleConfig cfg = new SimpleConfig("cache.dat", false);;
 	private String lastMessage = "";
 	private long lastTalkTime = 0;
 	private boolean isMute = false;
@@ -13,8 +13,8 @@ public class PlayerCache {
 	private final String path;
 
 	public PlayerCache(UUID u) {
-		onLoad();
 		path = u.toString();
+		onLoad();
 	}
 	private void onLoad() {
 		suffix = cfg.getString(path + ".suffix", "");
