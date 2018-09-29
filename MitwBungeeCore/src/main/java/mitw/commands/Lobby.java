@@ -9,7 +9,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class Lobby extends Command {
 
 	public Lobby(Bungee main) {
-		super("lobby", null, "hub", "spawn");
+		super("lobby", null, "hub");
 	}
 
 	@Override
