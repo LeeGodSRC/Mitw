@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
+import de.domedd.betternick.api.nickedplayer.NickedPlayer;
 import lombok.Getter;
 import net.development.mitw.Mitw;
 import net.development.mitw.chat.check.HighCheck;
@@ -49,7 +50,13 @@ public class ChatManager implements Listener {
 	}
 
 	public String getChatPrefix(Player player) {
-		final String luckpermsPrefix = LuckPerms.getPrefix(player);
+		final NickedPlayer nickP = new NickedPlayer(player);
+		final String luckpermsPrefix;
+		if(Settings.IS_BETTER_NICK && nickP.isNicked()) {
+			luckpermsPrefix = "&7";
+		}else {
+			luckpermsPrefix = LuckPerms.getPrefix(player);
+		}
 
 		final StringBuilder builder = new StringBuilder();
 
