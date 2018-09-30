@@ -52,9 +52,9 @@ public class ChatManager implements Listener {
 	public String getChatPrefix(Player player) {
 		final NickedPlayer nickP = new NickedPlayer(player);
 		final String luckpermsPrefix;
-		if(Settings.IS_BETTER_NICK && nickP.isNicked()) {
+		if (Settings.IS_BETTER_NICK && nickP.isNicked()) {
 			luckpermsPrefix = "&7";
-		}else {
+		} else {
 			luckpermsPrefix = LuckPerms.getPrefix(player);
 		}
 
@@ -73,8 +73,13 @@ public class ChatManager implements Listener {
 	}
 
 	public String getSuffixPrefix(Player player) {
-		final String luckpermsPrefix = LuckPerms.getSuffix(player);
-
+		final NickedPlayer nickP = new NickedPlayer(player);
+		final String luckpermsPrefix;
+		if (Settings.IS_BETTER_NICK && nickP.isNicked()) {
+			luckpermsPrefix = null;
+		} else {
+			luckpermsPrefix = LuckPerms.getSuffix(player);
+		}
 		final StringBuilder builder = new StringBuilder();
 
 		for (final ChatHandler chatHandler : plugin.getChatHandlers()) {
