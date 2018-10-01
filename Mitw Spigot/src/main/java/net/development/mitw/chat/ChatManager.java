@@ -27,7 +27,7 @@ import net.development.mitw.utils.Common;
 
 public class ChatManager implements Listener {
 
-	private static Cache<UUID, PlayerCache> playerCaches = CacheBuilder.newBuilder().maximumSize(1000).expireAfterWrite(20, TimeUnit.SECONDS).build();
+	private static Cache<UUID, PlayerCache> playerCaches = CacheBuilder.newBuilder().maximumSize(1000).expireAfterAccess(20, TimeUnit.MINUTES).build();
 
 	@Getter
 	private final Set<UUID> playerMuted = new HashSet<>();

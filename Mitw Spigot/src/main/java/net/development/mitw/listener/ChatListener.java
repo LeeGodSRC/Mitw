@@ -55,6 +55,7 @@ public class ChatListener implements org.bukkit.event.Listener {
 		}
 		if (!(message.toLowerCase().equals("gg") || message.toLowerCase().equals("gf")))
 			cache.setLastMessage(message);
+
 		cache.setLastTalkTime(System.currentTimeMillis());
 
 		if (!Check.isSafeMessage(message)) {
