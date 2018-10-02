@@ -9,6 +9,7 @@ import mitw.commands.Broadcast;
 import mitw.commands.Ignore;
 import mitw.commands.Lobby;
 import mitw.commands.Message;
+import mitw.commands.Reload;
 import mitw.commands.Reply;
 import mitw.commands.Report;
 import mitw.commands.Server;
@@ -45,7 +46,8 @@ public class Bungee extends Plugin {
 				new Report(),
 				new AC(),
 				new Ignore(),
-				new Broadcast());
+				new Broadcast(),
+				new Reload(this));
 		registerListener(
 				new MotdDisplay(this),
 				new BungeeListener());

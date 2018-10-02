@@ -27,6 +27,7 @@ public class YamlManagers {
 	}
 
 	public static List<UUID> Ignores = new ArrayList<>();
+	public static List<String> motd = new ArrayList<>();
 
 	public void SetUp() {
 		if (!this.main.getDataFolder().exists()) {
@@ -58,6 +59,10 @@ public class YamlManagers {
 		}
 		for (final String str : General.getStringList("ignore")) {
 			Ignores.add(UUID.fromString(str));
+		}
+
+		for (final String str : General.getStringList("motd")) {
+			motd.add(str);
 		}
 	}
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mitw.Bungee;
+import mitw.managers.YamlManagers;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.ServerPing.PlayerInfo;
@@ -25,9 +26,9 @@ public class MotdDisplay implements Listener {
 		final ServerPing serverPing = e.getResponse();
 
 		final StringBuilder str = new StringBuilder();
-		str.append(ChatColor.translateAlternateColorCodes('&', "&6&lMitw&f 伺服器 &7[4.0] &e正式上線!"));
+		str.append(ChatColor.translateAlternateColorCodes('&', YamlManagers.motd.get(0)));
 		str.append(ChatColor.RESET + "\n");
-		str.append(ChatColor.translateAlternateColorCodes('&', "&e亞洲PvP玩家最好的歸宿 &7- &e追求穩定, 品質"));
+		str.append(ChatColor.translateAlternateColorCodes('&', YamlManagers.motd.get(1)));
 
 		final String response = str.toString();
 
