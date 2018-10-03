@@ -15,7 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -108,7 +108,7 @@ public abstract class Protocol_Newer extends IProtocol {
 		endInitProtocol = new ChannelInitializer<Channel>() {
 
 			@Override
-			protected void initChannel(Channel channel) throws Exception {
+			protected void initChannel(final Channel channel) throws Exception {
 				try {
 					// This can take a while, so we need to stop the main thread from interfering
 					synchronized (networkManagers) {
@@ -128,7 +128,7 @@ public abstract class Protocol_Newer extends IProtocol {
 		beginInitProtocol = new ChannelInitializer<Channel>() {
 
 			@Override
-			protected void initChannel(Channel channel) throws Exception {
+			protected void initChannel(final Channel channel) throws Exception {
 				channel.pipeline().addLast(endInitProtocol);
 			}
 
@@ -137,7 +137,7 @@ public abstract class Protocol_Newer extends IProtocol {
 		serverChannelHandler = new ChannelInboundHandlerAdapter() {
 
 			@Override
-			public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+			public void channelRead(final ChannelHandlerContext ctx, final Object msg) throws Exception {
 				final Channel channel = (Channel) msg;
 
 				// Prepare to initialize ths channel
@@ -155,7 +155,7 @@ public abstract class Protocol_Newer extends IProtocol {
 		listener = new Listener() {
 
 			@EventHandler(priority = EventPriority.LOWEST)
-			public final void onPlayerLogin(PlayerLoginEvent e) {
+			public final void onPlayerJoin(final PlayerJoinEvent e) {
 				if (closed)
 					return;
 
@@ -168,7 +168,7 @@ public abstract class Protocol_Newer extends IProtocol {
 			}
 
 			@EventHandler
-			public final void onPluginDisable(PluginDisableEvent e) {
+			public final void onPluginDisable(final PluginDisableEvent e) {
 				if (e.getPlugin().equals(plugin)) {
 					close();
 				}
@@ -194,8 +194,9 @@ public abstract class Protocol_Newer extends IProtocol {
 			final List<Object> list = Reflection.getField(serverConnection.getClass(), List.class, i).get(serverConnection);
 
 			for (final Object item : list) {
-				if (!ChannelFuture.class.isInstance(item))
+				if (!ChannelFuture.class.isInstance(item)) {
 					break;
+				}
 
 				// Channel future that contains the server connection
 				final Channel serverChannel = ((ChannelFuture) item).channel();
@@ -225,7 +226,7 @@ public abstract class Protocol_Newer extends IProtocol {
 		}
 	}
 
-	private void registerPlayers(Plugin plugin) {
+	private void registerPlayers(final Plugin plugin) {
 		for (final Player player : plugin.getServer().getOnlinePlayers()) {
 			injectPlayer(player);
 		}
@@ -242,7 +243,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @return The packet to send instead, or NULL to cancel the transmission.
 	 */
 	@Override
-	public Object onPacketOutAsync(Player receiver, ChannelWrapper channelWrapper, Object packet) {
+	public Object onPacketOutAsync(final Player receiver, final ChannelWrapper channelWrapper, final Object packet) {
 		return packet;
 	}
 
@@ -257,7 +258,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @return The packet to recieve instead, or NULL to cancel.
 	 */
 	@Override
-	public Object onPacketInAsync(Player sender, ChannelWrapper channelWrapper, Object packet) {
+	public Object onPacketInAsync(final Player sender, final ChannelWrapper channelWrapper, final Object packet) {
 		return packet;
 	}
 
@@ -269,7 +270,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @param player - the destination player.
 	 * @param packet - the packet to send.
 	 */
-	public void sendPacket(Player player, Object packet) {
+	public void sendPacket(final Player player, final Object packet) {
 		sendPacket(getChannel(player), packet);
 	}
 
@@ -281,7 +282,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @param channel - client identified by a channel.
 	 * @param packet - the packet to send.
 	 */
-	public void sendPacket(Channel channel, Object packet) {
+	public void sendPacket(final Channel channel, final Object packet) {
 		channel.pipeline().writeAndFlush(packet);
 	}
 
@@ -293,7 +294,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @param player - the player that sent the packet.
 	 * @param packet - the packet that will be received by the server.
 	 */
-	public void receivePacket(Player player, Object packet) {
+	public void receivePacket(final Player player, final Object packet) {
 		receivePacket(getChannel(player), packet);
 	}
 
@@ -305,7 +306,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @param channel - client identified by a channel.
 	 * @param packet - the packet that will be received by the server.
 	 */
-	public void receivePacket(Channel channel, Object packet) {
+	public void receivePacket(final Channel channel, final Object packet) {
 		channel.pipeline().context("encoder").fireChannelRead(packet);
 	}
 
@@ -327,7 +328,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 *
 	 * @param player - the player to inject.
 	 */
-	public void injectPlayer(Player player) {
+	public void injectPlayer(final Player player) {
 		injectChannelInternal(getChannel(player)).player = player;
 	}
 
@@ -337,7 +338,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @param channel - the channel to inject.
 	 * @return The intercepted channel, or NULL if it has already been injected.
 	 */
-	public void injectChannel(Channel channel) {
+	public void injectChannel(final Channel channel) {
 		injectChannelInternal(channel);
 	}
 
@@ -347,7 +348,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @param channel - the channel to inject.
 	 * @return The packet interceptor.
 	 */
-	private PacketInterceptor injectChannelInternal(Channel channel) {
+	private PacketInterceptor injectChannelInternal(final Channel channel) {
 		try {
 			PacketInterceptor interceptor = (PacketInterceptor) channel.pipeline().get(handlerName);
 
@@ -371,7 +372,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @param player - the player.
 	 * @return The Netty channel.
 	 */
-	public Channel getChannel(Player player) {
+	public Channel getChannel(final Player player) {
 		Channel channel = channelLookup.get(player.getName());
 
 		// Lookup channel again
@@ -390,7 +391,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 *
 	 * @param player - the injected player.
 	 */
-	public void uninjectPlayer(Player player) {
+	public void uninjectPlayer(final Player player) {
 		uninjectChannel(getChannel(player));
 	}
 
@@ -417,7 +418,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @param player - the player.
 	 * @return TRUE if it is, FALSE otherwise.
 	 */
-	public boolean hasInjected(Player player) {
+	public boolean hasInjected(final Player player) {
 		return hasInjected(getChannel(player));
 	}
 
@@ -427,7 +428,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @param channel - the channel.
 	 * @return TRUE if it is, FALSE otherwise.
 	 */
-	public boolean hasInjected(Channel channel) {
+	public boolean hasInjected(final Channel channel) {
 		return channel.pipeline().get(handlerName) != null;
 	}
 
@@ -459,7 +460,7 @@ public abstract class Protocol_Newer extends IProtocol {
 		public volatile Player player;
 
 		@Override
-		public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		public void channelRead(final ChannelHandlerContext ctx, Object msg) throws Exception {
 			// Intercept channel
 			final Channel channel = ctx.channel();
 			handleLoginStart(channel, msg);
@@ -476,7 +477,7 @@ public abstract class Protocol_Newer extends IProtocol {
 		}
 
 		@Override
-		public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+		public void write(final ChannelHandlerContext ctx, Object msg, final ChannelPromise promise) throws Exception {
 			try {
 				msg = onPacketOutAsync(player, new INCChannelWrapper(ctx.channel()), msg);
 			} catch (final Exception e) {
@@ -488,7 +489,7 @@ public abstract class Protocol_Newer extends IProtocol {
 			}
 		}
 
-		private void handleLoginStart(Channel channel, Object packet) {
+		private void handleLoginStart(final Channel channel, final Object packet) {
 			if (PACKET_LOGIN_IN_START.isInstance(packet)) {
 				final GameProfile profile = getGameProfile.get(packet);
 				channelLookup.put(profile.getName(), channel);
@@ -498,7 +499,7 @@ public abstract class Protocol_Newer extends IProtocol {
 
 	class INCChannelWrapper extends ChannelWrapper<io.netty.channel.Channel> implements IChannelWrapper {
 
-		public INCChannelWrapper(io.netty.channel.Channel channel) {
+		public INCChannelWrapper(final io.netty.channel.Channel channel) {
 			super(channel);
 		}
 

@@ -29,6 +29,9 @@ import net.development.mitw.listener.PlayerLoginListener;
 import net.development.mitw.packetlistener.PacketHandler;
 import net.development.mitw.security.anticrash.BlockCrashHandler;
 import net.development.mitw.security.protector.MitwProtector;
+import net.development.mitw.utils.holograms.Hologram;
+import net.development.mitw.utils.holograms.HologramAPI;
+import net.development.mitw.utils.holograms.HologramListeners;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 
 public class Mitw extends JavaPlugin {
@@ -83,6 +86,13 @@ public class Mitw extends JavaPlugin {
 		new MitwProtector().onEnable();
 	}
 
+	@Override
+	public void onDisable() {
+		super.onDisable();
+
+		HologramAPI.getHolograms().forEach(Hologram::despawn);
+	}
+
 	public void registerCommands() {
 		Arrays.asList(new HelpCommand()).forEach(command -> registerCommand(command, getName()));
 	}
@@ -90,27 +100,28 @@ public class Mitw extends JavaPlugin {
 	public void registerListeners() {
 		Arrays.asList(
 				new ChatListener(this),
-				new PlayerLoginListener())
+				new PlayerLoginListener(),
+				new HologramListeners())
 		.forEach(listener -> getServer().getPluginManager().registerEvents(listener, instance));
 	}
 
-	public void addChatHandler(ChatHandler chatHandler) {
+	public void addChatHandler(final ChatHandler chatHandler) {
 		chatHandlers.add(chatHandler);
 	}
 
-	public void removeChatHandler(ChatHandler chatHandler) {
+	public void removeChatHandler(final ChatHandler chatHandler) {
 		chatHandlers.remove(chatHandler);
 	}
 
-	public void addHelpHandler(HelpHandler helpHandler) {
+	public void addHelpHandler(final HelpHandler helpHandler) {
 		helpHandlers.add(helpHandler);
 	}
 
-	public void removeHelpHandler(HelpHandler helpHandler) {
+	public void removeHelpHandler(final HelpHandler helpHandler) {
 		helpHandlers.remove(helpHandler);
 	}
 
-	public void registerCommand(Command cmd, String fallbackPrefix) {
+	public void registerCommand(final Command cmd, final String fallbackPrefix) {
 		MinecraftServer.getServer().server.getCommandMap().register(cmd.getName(), fallbackPrefix, cmd);
 	}
 
