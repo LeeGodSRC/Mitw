@@ -65,7 +65,7 @@ public class ChatListener implements org.bukkit.event.Listener {
 			return;
 		}
 
-		message = message.replaceAll("LOL", "哈哈").replaceAll("<3", "\u2764");
+		message = message.replaceAll("LOL", "哈哈").replaceAll("<3", "\u2764").replaceAll("%", "%%");
 		final String prefix = plugin.getChatManager().getChatPrefix(p);
 		final String suffix = plugin.getChatManager().getSuffixPrefix(p);
 
