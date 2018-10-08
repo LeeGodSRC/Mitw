@@ -27,7 +27,8 @@ import net.development.mitw.utils.Common;
 
 public class ChatManager implements Listener {
 
-	private static Cache<UUID, PlayerCache> playerCaches = CacheBuilder.newBuilder().maximumSize(1000).expireAfterAccess(20, TimeUnit.MINUTES).build();
+	private static Cache<UUID, PlayerCache> playerCaches = CacheBuilder.newBuilder().maximumSize(10000).expireAfterAccess(20, TimeUnit.MINUTES)
+			.build();
 
 	@Getter
 	private final Set<UUID> playerMuted = new HashSet<>();
@@ -50,10 +51,13 @@ public class ChatManager implements Listener {
 	}
 
 	public String getChatPrefix(Player player) {
-		final NickedPlayer nickP = new NickedPlayer(player);
 		final String luckpermsPrefix;
-		if (Settings.IS_BETTER_NICK && nickP.isNicked()) {
-			luckpermsPrefix = "&7";
+		if (Settings.IS_BETTER_NICK) {
+			final NickedPlayer nickP = new NickedPlayer(player);
+			if (nickP.isNicked())
+				luckpermsPrefix = "&7";
+			else
+				luckpermsPrefix = LuckPerms.getPrefix(player);
 		} else {
 			luckpermsPrefix = LuckPerms.getPrefix(player);
 		}
@@ -75,8 +79,11 @@ public class ChatManager implements Listener {
 	public String getSuffixPrefix(Player player) {
 		final NickedPlayer nickP = new NickedPlayer(player);
 		final String luckpermsPrefix;
-		if (Settings.IS_BETTER_NICK && nickP.isNicked()) {
-			luckpermsPrefix = null;
+		if (Settings.IS_BETTER_NICK) {
+			if (nickP.isNicked())
+				luckpermsPrefix = "&7";
+			else
+				luckpermsPrefix = LuckPerms.getSuffix(player);
 		} else {
 			luckpermsPrefix = LuckPerms.getSuffix(player);
 		}
