@@ -26,6 +26,8 @@ import net.development.mitw.language.LanguageSQLConnection;
 import net.development.mitw.language.impl.LanguageMessages;
 import net.development.mitw.listener.ChatListener;
 import net.development.mitw.listener.PlayerLoginListener;
+import net.development.mitw.namemc.NameMC;
+import net.development.mitw.namemc.NameMCVoteCommand;
 import net.development.mitw.packetlistener.PacketHandler;
 import net.development.mitw.security.anticrash.BlockCrashHandler;
 import net.development.mitw.security.protector.MitwProtector;
@@ -46,6 +48,8 @@ public class Mitw extends JavaPlugin {
 	private ChatManager chatManager;
 	@Getter
 	private LanguageData languageData;
+	@Getter
+	private NameMC nameMC;
 
 	@Getter
 	private LanguageAPI coreLanguage;
@@ -68,6 +72,7 @@ public class Mitw extends JavaPlugin {
 
 		new BlockCrashHandler();
 		chatManager = new ChatManager(this);
+		nameMC = new NameMC(this);
 		chatHandlers = new HashSet<>();
 		helpHandlers = new HashSet<>();
 		/** 基礎 Help 訊息 **/
@@ -94,7 +99,10 @@ public class Mitw extends JavaPlugin {
 	}
 
 	public void registerCommands() {
-		Arrays.asList(new HelpCommand()).forEach(command -> registerCommand(command, getName()));
+		Arrays.asList(
+				new HelpCommand(),
+				new NameMCVoteCommand()
+				).forEach(command -> registerCommand(command, getName()));
 	}
 
 	public void registerListeners() {
