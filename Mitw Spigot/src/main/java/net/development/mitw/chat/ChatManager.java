@@ -77,9 +77,9 @@ public class ChatManager implements Listener {
 	}
 
 	public String getSuffixPrefix(Player player) {
-		final NickedPlayer nickP = new NickedPlayer(player);
 		final String luckpermsPrefix;
 		if (Settings.IS_BETTER_NICK) {
+			final NickedPlayer nickP = new NickedPlayer(player);
 			if (nickP.isNicked())
 				luckpermsPrefix = "&7";
 			else
