@@ -10,7 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import de.domedd.betternick.api.nickedplayer.NickedPlayer;
+import de.domedd.betternick.api.BetterNickAPI;
 import net.development.mitw.Mitw;
 import net.development.mitw.chat.ChatManager;
 import net.development.mitw.chat.PlayerCache;
@@ -69,14 +69,10 @@ public class ChatListener implements org.bukkit.event.Listener {
 		final String prefix = plugin.getChatManager().getChatPrefix(p);
 		final String suffix = plugin.getChatManager().getSuffixPrefix(p);
 
-		if (Settings.IS_BETTER_NICK) {
-			final NickedPlayer nickP = new NickedPlayer(p);
-			if (nickP.isNicked()) {
-				e.setFormat(prefix + nickP.getName() + "§f: " + message);
-				return;
-			}
+		if (Settings.IS_BETTER_NICK && BetterNickAPI.getApi().isNicked(p)) {
+			e.setFormat(prefix + p.getName() + "§f: " + message);
+			return;
 		}
-
 
 		e.setMessage(message);
 		if (((message.toLowerCase().equals("gg") || message.toLowerCase().equals("gf")) && e.getPlayer().hasPermission("mChat.goldgg"))) {

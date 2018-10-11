@@ -22,6 +22,8 @@ public class Server extends Command {
 	@Override
 	public void execute(CommandSender sender, String[] args) {
 		final ProxiedPlayer player = (ProxiedPlayer) sender;
+		if(!player.hasPermission("mitw.admin"))
+			return;
 		if (args.length == 0) {
 			player.sendMessage(
 					Bungee.Prefix + ChatColor.GRAY + "你現在正處於 " + ChatColor.GOLD + player.getServer().getInfo().getName() + ChatColor.GRAY + " 伺服器");

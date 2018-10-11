@@ -59,13 +59,14 @@
 			<version>1.18.0</version>
 			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
-			<groupId>de.domedd</groupId>
+			<groupId>de.demomedd.betternick</groupId>
 			<artifactId>BetterNick</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/betternick.jar</systemPath>
+			<version>1.0.0</version>
+			<scope>compile</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>

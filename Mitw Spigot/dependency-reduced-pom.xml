@@ -60,13 +60,6 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>de.domedd</groupId>
-      <artifactId>BetterNick</artifactId>
-      <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/libs/betternick.jar</systemPath>
-    </dependency>
-    <dependency>
       <groupId>top.potl.spigot</groupId>
       <artifactId>nspigot</artifactId>
       <version>1.8.8-R0.1-SNAPSHOT</version>

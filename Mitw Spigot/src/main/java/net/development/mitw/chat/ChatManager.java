@@ -14,7 +14,7 @@ import org.bukkit.event.Listener;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
-import de.domedd.betternick.api.nickedplayer.NickedPlayer;
+import de.domedd.betternick.api.BetterNickAPI;
 import lombok.Getter;
 import net.development.mitw.Mitw;
 import net.development.mitw.chat.check.HighCheck;
@@ -52,12 +52,8 @@ public class ChatManager implements Listener {
 
 	public String getChatPrefix(Player player) {
 		final String luckpermsPrefix;
-		if (Settings.IS_BETTER_NICK) {
-			final NickedPlayer nickP = new NickedPlayer(player);
-			if (nickP.isNicked())
-				luckpermsPrefix = "&7";
-			else
-				luckpermsPrefix = LuckPerms.getPrefix(player);
+		if (Settings.IS_BETTER_NICK && BetterNickAPI.getApi().isNicked(player)) {
+			luckpermsPrefix = "&7";
 		} else {
 			luckpermsPrefix = LuckPerms.getPrefix(player);
 		}
@@ -78,12 +74,8 @@ public class ChatManager implements Listener {
 
 	public String getSuffixPrefix(Player player) {
 		final String luckpermsPrefix;
-		if (Settings.IS_BETTER_NICK) {
-			final NickedPlayer nickP = new NickedPlayer(player);
-			if (nickP.isNicked())
-				luckpermsPrefix = "&7";
-			else
-				luckpermsPrefix = LuckPerms.getSuffix(player);
+		if (Settings.IS_BETTER_NICK && BetterNickAPI.getApi().isNicked(player)) {
+			luckpermsPrefix = "&7";
 		} else {
 			luckpermsPrefix = LuckPerms.getSuffix(player);
 		}
