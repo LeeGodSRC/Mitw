@@ -4,7 +4,7 @@ import java.util.List;
 
 public class HighCheck extends Check {
 	public HighCheck(List<String> list) {
-		super(list);
+		super("high", list);
 	}
 
 	@Override

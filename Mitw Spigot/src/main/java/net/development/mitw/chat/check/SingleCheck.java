@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SingleCheck extends Check {
 	public SingleCheck(List<String> list) {
-		super(list);
+		super("single", list);
 	}
 
 	@Override

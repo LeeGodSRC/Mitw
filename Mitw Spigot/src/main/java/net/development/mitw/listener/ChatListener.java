@@ -4,7 +4,9 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -33,7 +35,7 @@ public class ChatListener implements org.bukkit.event.Listener {
 		final PlayerCache cache = ChatManager.getPlayerCaches(u);
 		String message = e.getMessage();
 		final int cooldownTime = (int) ((System.currentTimeMillis() - cache.getLastTalkTime()) / 1000);
-		if (cache.isMute()) {
+		/*if (cache.isMute()) {
 			if (cooldownTime < Settings.MUTE_TIME) {
 				e.setCancelled(true);
 				Common.tell(p,
@@ -41,7 +43,7 @@ public class ChatListener implements org.bukkit.event.Listener {
 				return;
 			}
 			cache.setMute(false);
-		}
+		}*/
 		if (cooldownTime < Settings.CHAT_COOLDOWN) { // 還沒冷卻結束
 			e.setCancelled(true);
 			Common.tell(p, Mitw.getInstance().getCoreLanguage().translate(p, "cooldownChat").replaceAll("<sec>",
@@ -58,13 +60,26 @@ public class ChatListener implements org.bukkit.event.Listener {
 
 		cache.setLastTalkTime(System.currentTimeMillis());
 
-		if (!Check.isSafeMessage(message)) {
+		final Check c = Check.isSafeMessage(message);
+		if (c != null) {
 			e.setCancelled(true);
-			Common.tell(p, Mitw.getInstance().getCoreLanguage().translate(p, "muted"));
-			cache.setMute(true);
+			final CommandSender sender = Bukkit.getConsoleSender();
+			switch (c.getName().toLowerCase()) {
+			case "high":
+				Bukkit.dispatchCommand(sender, "bungee mute " + p.getName() + " 3h saying" + message + ". -s");
+				System.out.println("bungee mute " + p.getName() + " 3h saying" + message + ". -s");
+				break;
+			case "low":
+				Bukkit.dispatchCommand(sender, "bungee mute " + p.getName() + " 1h saying" + message + ". -s");
+				System.out.println("bungee mute " + p.getName() + " 1h saying" + message + ". -s");
+				break;
+			case "single":
+				Bukkit.dispatchCommand(sender, "bungee mute " + p.getName() + " 3h saying" + message + ". -s");
+				System.out.println("bungee mute " + p.getName() + " 3h saying" + message + ". -s");
+				break;
+			}
 			return;
 		}
-
 		message = message.replaceAll("LOL", "哈哈").replaceAll("<3", "\u2764").replaceAll("%", "%%");
 		final String prefix = plugin.getChatManager().getChatPrefix(p);
 		final String suffix = plugin.getChatManager().getSuffixPrefix(p);
