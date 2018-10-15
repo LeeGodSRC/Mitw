@@ -66,16 +66,13 @@ public class ChatListener implements org.bukkit.event.Listener {
 			final CommandSender sender = Bukkit.getConsoleSender();
 			switch (c.getName().toLowerCase()) {
 			case "high":
-				Bukkit.dispatchCommand(sender, "bungee mute " + p.getName() + " 3h saying" + message + ". -s");
-				System.out.println("bungee mute " + p.getName() + " 3h saying" + message + ". -s");
+				Bukkit.dispatchCommand(sender, "bungee mute " + p.getName() + " 3h saying [" + message + "] -s");
 				break;
 			case "low":
-				Bukkit.dispatchCommand(sender, "bungee mute " + p.getName() + " 1h saying" + message + ". -s");
-				System.out.println("bungee mute " + p.getName() + " 1h saying" + message + ". -s");
+				Bukkit.dispatchCommand(sender, "bungee mute " + p.getName() + " 1h saying [" + message + "] -s");
 				break;
 			case "single":
-				Bukkit.dispatchCommand(sender, "bungee mute " + p.getName() + " 3h saying" + message + ". -s");
-				System.out.println("bungee mute " + p.getName() + " 3h saying" + message + ". -s");
+				Bukkit.dispatchCommand(sender, "bungee mute " + p.getName() + " 3h saying [" + message + "] -s");
 				break;
 			}
 			return;

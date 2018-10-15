@@ -17,7 +17,7 @@ public class LowCheck extends Check {
 		final String[] strs = str.split(" ");
 		for (final String s : strs) {
 			for (final Player p : Bukkit.getOnlinePlayers()) {
-				if (p.getName().contains(s))
+				if (p.getName().toLowerCase().contains(s))
 					return true;
 			}
 			for (final String check : checkExams) {

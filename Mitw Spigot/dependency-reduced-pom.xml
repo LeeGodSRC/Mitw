@@ -3,9 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.development.mitw</groupId>
   <artifactId>Mitw</artifactId>
-  <name>Mitw</name>
   <version>1.0.0</version>
-  <url>http://maven.apache.org</url>
   <build>
     <defaultGoal>clean package</defaultGoal>
     <resources>
@@ -68,7 +66,9 @@
     </dependency>
   </dependencies>
   <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 </project>
 

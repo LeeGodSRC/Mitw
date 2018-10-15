@@ -12,6 +12,7 @@ public abstract class Check {
 		for (final String s : exam)
 			checkExams.add(s.toLowerCase());
 		checks.add(this);
+		this.name = name;
 	}
 
 	public abstract boolean isLegit(String str);
