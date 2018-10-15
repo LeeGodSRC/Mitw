@@ -5,6 +5,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,6 +17,8 @@ import org.bukkit.plugin.Plugin;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.development.mitw.utils.RV;
+import net.development.mitw.utils.StringUtil;
 import net.md_5.bungee.api.ChatColor;
 
 public class LanguageAPI {
@@ -29,20 +35,20 @@ public class LanguageAPI {
 	@Getter @Setter private Object clazz;
 	@Getter private final LanguageData languageData;
 
-	public LanguageAPI(LangType type, Plugin plugin, LanguageData languageData, YamlConfiguration config) {
+	public LanguageAPI(final LangType type, final Plugin plugin, final LanguageData languageData, final YamlConfiguration config) {
 		this.type = type;
 		this.config = config;
 		this.plugin = plugin;
 		this.languageData = languageData;
 	}
 
-	public LanguageAPI(LangType type, Plugin plugin, LanguageData languageData, Object clazz) {
+	public LanguageAPI(final LangType type, final Plugin plugin, final LanguageData languageData, final Object clazz) {
 		this.type = type;
 		this.clazz = clazz;
 		this.languageData = languageData;
 	}
 
-	public LanguageAPI(LangType type, Plugin plugin, LanguageData languageData, Class<?> clazz, Class<?>... methods) {
+	public LanguageAPI(final LangType type, final Plugin plugin, final LanguageData languageData, final Class<?> clazz, final Class<?>... methods) {
 		this.type = type;
 		this.plugin = plugin;
 		this.languageData = languageData;
@@ -53,7 +59,7 @@ public class LanguageAPI {
 		}
 	}
 
-	public LanguageAPI(LangType type, Plugin plugin, LanguageData languageData, YamlConfiguration config, Class<?> clazz, Class<?>... methods) {
+	public LanguageAPI(final LangType type, final Plugin plugin, final LanguageData languageData, final YamlConfiguration config, final Class<?> clazz, final Class<?>... methods) {
 		this.type = type;
 		this.config = config;
 		this.plugin = plugin;
@@ -65,12 +71,60 @@ public class LanguageAPI {
 		}
 	}
 
-	public String translate(Player p, String ofrom) {
+	public void send(final Player p, final String translateMessage) {
+		p.sendMessage(translate(p, translateMessage));
+	}
+
+	public void send(final Player p, final String translateMessage, final RV... replaceValue) {
+		p.sendMessage(StringUtil.replace(translate(p, translateMessage), replaceValue));
+	}
+
+	public void send(final String translateMessage) {
+		Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(translate(p, translateMessage)));
+	}
+
+	public void send(final String translateMessage, final RV... replaceValue) {
+		Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(StringUtil.replace(translate(p, translateMessage), replaceValue)));
+	}
+
+	public void send(final Set<Player> player, final String translateMessage) {
+		player.forEach(p -> p.sendMessage(translate(p, translateMessage)));
+	}
+
+	public void send(final Set<Player> player, final String translateMessage, final RV... replaceValue) {
+		player.forEach(p -> p.sendMessage(StringUtil.replace(translate(p, translateMessage), replaceValue)));
+	}
+
+	public void send(final List<Player> player, final String translateMessage) {
+		player.forEach(p -> p.sendMessage(translate(p, translateMessage)));
+	}
+
+	public void send(final List<Player> player, final String translateMessage, final RV... replaceValue) {
+		player.forEach(p -> p.sendMessage(StringUtil.replace(translate(p, translateMessage), replaceValue)));
+	}
+
+	public void send2(final Set<UUID> player, final String translateMessage) {
+		send(player.stream().map(Bukkit::getPlayer).filter(Objects::nonNull).collect(Collectors.toSet()), translateMessage);
+	}
+
+	public void send2(final Set<UUID> player, final String translateMessage, final RV... replaceValue) {
+		send(player.stream().map(Bukkit::getPlayer).filter(Objects::nonNull).collect(Collectors.toSet()), translateMessage, replaceValue);
+	}
+
+	public void send2(final List<UUID> player, final String translateMessage) {
+		send(player.stream().map(Bukkit::getPlayer).filter(Objects::nonNull).collect(Collectors.toSet()), translateMessage);
+	}
+
+	public void send2(final List<UUID> player, final String translateMessage, final RV... replaceValue) {
+		send(player.stream().map(Bukkit::getPlayer).filter(Objects::nonNull).collect(Collectors.toSet()), translateMessage, replaceValue);
+	}
+
+	public String translate(final Player p, final String ofrom) {
 		final String lang = languageData.getLang(p);
 		final String from = lang+"."+ofrom;
-		if(savedMessages.containsKey(from)) {
+		if(savedMessages.containsKey(from))
 			return savedMessages.get(from).get(0);
-		} else {
+		else {
 			String to = null;
 			boolean found = false;
 			switch(type) {
@@ -110,12 +164,12 @@ public class LanguageAPI {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<String> translateArrays(Player p, String ofrom) {
+	public List<String> translateArrays(final Player p, final String ofrom) {
 		final String lang = languageData.getLang(p);
 		final String from = lang+"."+ofrom;
-		if(savedMessages.containsKey(from)) {
+		if(savedMessages.containsKey(from))
 			return savedMessages.get(from);
-		} else {
+		else {
 			List<String> to = null;
 			boolean found = false;
 			switch(type) {
