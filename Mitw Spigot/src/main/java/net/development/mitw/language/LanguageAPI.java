@@ -119,6 +119,10 @@ public class LanguageAPI {
 		send(player.stream().map(Bukkit::getPlayer).filter(Objects::nonNull).collect(Collectors.toSet()), translateMessage, replaceValue);
 	}
 
+	public String translate(final Player p, final String ofrom, final RV... replaceValues) {
+		return StringUtil.replace(translate(p, ofrom), replaceValues);
+	}
+
 	public String translate(final Player p, final String ofrom) {
 		final String lang = languageData.getLang(p);
 		final String from = lang+"."+ofrom;
@@ -155,12 +159,17 @@ public class LanguageAPI {
 				to = notsure;
 				break;
 			}
-			to = ChatColor.translateAlternateColorCodes('&', to);
 			if(found) {
 				savedMessages.put(from, Arrays.asList(to));
+			} else {
+				to = ChatColor.translateAlternateColorCodes('&', to);
 			}
 			return to;
 		}
+	}
+
+	public List<String> translateArrays(final Player p, final String ofrom, final RV... replaceValues) {
+		return translateArrays(p, ofrom).stream().map(string -> StringUtil.replace(string, replaceValues)).collect(Collectors.toList());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -200,11 +209,12 @@ public class LanguageAPI {
 				to = notsure;
 				break;
 			}
-			for(int i = 0; i < to.size() ; i++) {
-				to.set(i, ChatColor.translateAlternateColorCodes('&', to.get(i)));
-			}
 			if(found) {
 				savedMessages.put(from, to);
+			} else {
+				for(int i = 0; i < to.size() ; i++) {
+					to.set(i, ChatColor.translateAlternateColorCodes('&', to.get(i)));
+				}
 			}
 			return to;
 		}
