@@ -32,12 +32,9 @@ public abstract class SimpleLanguageAPI {
 	@Getter
 	@Setter
 	private Plugin plugin;
-	@Getter
-	@Setter
-	private Object clazz;
 
-	public SimpleLanguageAPI(final Plugin plugin, final Object clazz) {
-		this.clazz = clazz;
+	public SimpleLanguageAPI(final Plugin plugin) {
+		this.plugin = plugin;
 	}
 
 	public void send(final Player p, final String translateMessage) {
@@ -106,20 +103,20 @@ public abstract class SimpleLanguageAPI {
 			String to = null;
 			boolean found = false;
 			try {
-				Field field = clazz.getClass().getDeclaredField(from.replace(".", "_"));
-				Object object = field.get(clazz);
+				Field field = this.getClass().getDeclaredField(from.replace(".", "_"));
+				Object object = field.get(this.getClass());
 				if (object == null) {
-					field = clazz.getClass()
+					field = this.getClass().getClass()
 							.getDeclaredField((LanguageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
 					field.setAccessible(true);
-					object = field.get(clazz);
+					object = field.get(this.getClass());
 				} else {
 					found = true;
 				}
 				to = (String) object;
 			} catch (final Exception e) {
 				Bukkit.getConsoleSender().sendMessage("§cCant get string field " + from.replace(".", "_") + " from "
-						+ clazz.getClass().getName() + " from player " + p.getName() + " !");
+						+ this.getClass().getClass().getName() + " from player " + p.getName() + " !");
 				return "null";
 			}
 			if (found) {
@@ -146,20 +143,20 @@ public abstract class SimpleLanguageAPI {
 			List<String> to = null;
 			boolean found = false;
 			try {
-				Field field = clazz.getClass().getDeclaredField(from.replace(".", "_"));
-				Object object = field.get(clazz);
+				Field field = this.getClass().getDeclaredField(from.replace(".", "_"));
+				Object object = field.get(this.getClass());
 				if (object == null) {
-					field = clazz.getClass()
+					field = this.getClass().getClass()
 							.getDeclaredField((LanguageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
 					field.setAccessible(true);
-					object = field.get(clazz);
+					object = field.get(this.getClass());
 				} else {
 					found = true;
 				}
 				to = (List<String>) object;
 			} catch (final Exception e) {
 				Bukkit.getConsoleSender().sendMessage("§cCant get string field " + from.replace(".", "_") + " from "
-						+ clazz.getClass().getName() + " from player " + p.getName() + " !");
+						+ this.getClass().getClass().getName() + " from player " + p.getName() + " !");
 				return Arrays.asList("null");
 			}
 			if (found) {
