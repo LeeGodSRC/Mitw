@@ -13,12 +13,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import net.development.mitw.Mitw;
 import net.development.mitw.utils.reflection.NMSClass;
 import net.development.mitw.utils.reflection.Reflection;
+import net.development.mitw.utils.reflection.minecraft.DataWatcher;
 import net.development.mitw.utils.reflection.minecraft.Minecraft;
 import net.development.mitw.utils.reflection.resolver.FieldResolver;
 import net.development.mitw.utils.reflection.util.AccessUtil;
 
 public abstract class CraftHologram implements Hologram {
-	/* 48 */ static FieldResolver PacketPlayOutSpawnEntityLivingFieldResolver = new FieldResolver(
+	static FieldResolver PacketPlayOutSpawnEntityLivingFieldResolver = new FieldResolver(
 			NMSClass.PacketPlayOutSpawnEntityLiving);
 
 	protected int[] hologramIDs;
@@ -91,6 +92,7 @@ public abstract class CraftHologram implements Hologram {
 		if ((rebuild) && (!this.packetsBuilt))
 			throw new IllegalStateException("cannot rebuild packets before building once");
 		final Object world = Reflection.getHandle(getLocation().getWorld());
+
 		final Object horse_1_7 = ClassBuilder.buildEntityHorse_1_7(world, getLocation().add(0.0D, 54.56D, 0.0D),
 				getText());
 		final Object horse_1_8 = ClassBuilder.buildEntityHorse_1_8(world, getLocation().add(0.0D, -2.25D, 0.0D),
@@ -170,39 +172,166 @@ public abstract class CraftHologram implements Hologram {
 
 		}
 
+		/* 178 */
 		this.teleportPacketSkull = ClassBuilder.buildTeleportPacket(this.hologramIDs[0],
 				getLocation().add(0.0D, 54.56D, 0.0D), true, false);
-
+		/* 179 */
 		this.teleportPacketHorse_1_7 = ClassBuilder.buildTeleportPacket(this.hologramIDs[1],
 				getLocation().add(0.0D, 54.56D, 0.0D), true, false);
-
+		/* 181 */
 		this.teleportPacketHorse_1_8 = ClassBuilder.buildTeleportPacket(this.hologramIDs[2],
 				getLocation().add(0.0D, -2.25D, 0.0D), true, false);
 
-		/* 260 */
-		this.ridingAttachPacket = NMSClass.PacketPlayOutMount.newInstance();
-		/* 261 */
-		this.ridingEjectPacket = NMSClass.PacketPlayOutMount.newInstance();
+		/* 185 */
+		if (isTouchable()) {
+			/* 186 */
+			final int size = getText() == null ? 1 : getText().length() / 2 / 3;
+			/* 187 */
+			final Object touchSlime = ClassBuilder.buildEntitySlime(world, getLocation().add(0.0D, -0.4D, 0.0D), size);
+			/* 188 */
+			this.dataWatcherTouchSlime = AccessUtil.setAccessible(NMSClass.Entity.getDeclaredField("datawatcher"))
+					.get(touchSlime);
 
-		/* 263 */
-		AccessUtil.setAccessible(NMSClass.PacketPlayOutMount.getDeclaredField("a")).set(this.ridingAttachPacket,
-				Integer.valueOf((((DefaultHologram) this).isAttached()) && (getAttachedTo() != null)
-						? getAttachedTo().getEntityId()
-								: -1));
-		/* 264 */
-		AccessUtil.setAccessible(NMSClass.PacketPlayOutMount.getDeclaredField("a")).set(this.ridingEjectPacket,
-				Integer.valueOf((((DefaultHologram) this).isAttached()) && (getAttachedTo() != null)
-						? getAttachedTo().getEntityId()
-								: -1));
+			/* 190 */
+			Object touchVehicle = null;
 
-		/* 266 */
-		AccessUtil.setAccessible(NMSClass.PacketPlayOutMount.getDeclaredField("b")).set(this.ridingAttachPacket,
-				new int[] { this.hologramIDs[0] });
-		/* 267 */
-		AccessUtil.setAccessible(NMSClass.PacketPlayOutMount.getDeclaredField("b")).set(this.ridingEjectPacket,
-				new int[0]);
+			/* 198 */
+			touchVehicle = ClassBuilder.buildEntityWitherSkull(world, getLocation().add(0.0D, -0.4D, 0.0D));
+			/* 199 */
+			this.dataWatcherTouchVehicle = AccessUtil.setAccessible(NMSClass.Entity.getDeclaredField("datawatcher"))
+					.get(touchVehicle);
 
+			/* 201 */
+			DataWatcher.setValue(this.dataWatcherTouchVehicle, 0, DataWatcher.V1_9.ValueType.ENTITY_FLAG,
+					Byte.valueOf((byte) 32));
 
+			/* 204 */
+			if (rebuild) {
+				/* 205 */
+				AccessUtil.setAccessible(NMSClass.Entity.getDeclaredField("id")).set(touchSlime,
+						Integer.valueOf(this.touchIDs[0]));
+				/* 206 */
+				AccessUtil.setAccessible(NMSClass.Entity.getDeclaredField("id")).set(touchVehicle,
+						Integer.valueOf(this.touchIDs[1]));
+
+				/* 208 */
+				final Field entityCountField = AccessUtil
+						.setAccessible(NMSClass.Entity.getDeclaredField("entityCount"));
+				/* 209 */
+				entityCountField.set(null, Integer.valueOf(((Integer) entityCountField.get(null)).intValue() - 2));
+
+			}
+
+			else {
+				/* 214 */
+				this.touchIDs = new int[] {
+						AccessUtil.setAccessible(NMSClass.Entity.getDeclaredField("id")).getInt(touchSlime),
+						AccessUtil.setAccessible(NMSClass.Entity.getDeclaredField("id")).getInt(touchVehicle) };
+
+			}
+
+			/* 217 */
+			this.spawnPacketTouchSlime = ClassBuilder.buildSlimeSpawnPacket(touchSlime);
+			/* 221 */
+			this.spawnPacketTouchVehicle = ClassBuilder.buildWitherSkullSpawnPacket(touchVehicle);
+
+			/* 224 */
+			if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_9_R1)) {
+				/* 225 */
+				this.attachPacketTouch = NMSClass.PacketPlayOutAttachEntity
+						.getConstructor(new Class[] { Integer.TYPE, NMSClass.Entity, NMSClass.Entity })
+						.newInstance(Integer.valueOf(0), touchSlime, touchVehicle);
+				/* 226 */
+				AccessUtil.setAccessible(NMSClass.PacketPlayOutAttachEntity.getDeclaredField("b"))
+				.set(this.attachPacketTouch, Integer.valueOf(this.touchIDs[0]));
+				/* 227 */
+				AccessUtil.setAccessible(NMSClass.PacketPlayOutAttachEntity.getDeclaredField("c"))
+				.set(this.attachPacketTouch, Integer.valueOf(this.touchIDs[1]));
+
+			} else {
+				/* 229 */
+				this.attachPacketTouch = NMSClass.PacketPlayOutAttachEntity.newInstance();
+				/* 230 */
+				AccessUtil.setAccessible(NMSClass.PacketPlayOutAttachEntity.getDeclaredField("a"))
+				.set(this.attachPacketTouch, Integer.valueOf(this.touchIDs[0]));
+				/* 231 */
+				AccessUtil.setAccessible(NMSClass.PacketPlayOutAttachEntity.getDeclaredField("b"))
+				.set(this.attachPacketTouch, Integer.valueOf(this.touchIDs[1]));
+
+			}
+
+			/* 234 */
+			this.teleportPacketTouchSlime = ClassBuilder.buildTeleportPacket(this.touchIDs[0],
+					getLocation().add(0.0D, -0.4D, 0.0D), true, false);
+
+			/* 238 */
+			this.teleportPacketTouchVehicle = ClassBuilder.buildTeleportPacket(this.touchIDs[1],
+					getLocation().add(0.0D, -0.4D, 0.0D), true, false);
+
+			/* 241 */
+			if (!rebuild) {
+				/* 242 */
+				this.destroyPacketTouch = NMSClass.PacketPlayOutEntityDestroy
+						.getConstructor(new Class[] { int[].class }).newInstance(new Object[] { this.touchIDs });
+
+			}
+
+		}
+
+		/* 247 */
+		if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_9_R1)) {
+			/* 248 */
+			this.ridingAttachPacket = NMSClass.PacketPlayOutAttachEntity.newInstance();
+			/* 249 */
+			this.ridingEjectPacket = NMSClass.PacketPlayOutAttachEntity.newInstance();
+
+			/* 251 */
+			AccessUtil.setAccessible(NMSClass.PacketPlayOutAttachEntity.getDeclaredField("a"))
+			.set(this.ridingAttachPacket, Integer.valueOf(0));
+			/* 252 */
+			AccessUtil.setAccessible(NMSClass.PacketPlayOutAttachEntity.getDeclaredField("a"))
+			.set(this.ridingEjectPacket, Integer.valueOf(0));
+
+			/* 254 */
+			AccessUtil.setAccessible(NMSClass.PacketPlayOutAttachEntity.getDeclaredField("b"))
+			.set(this.ridingAttachPacket, Integer.valueOf(this.hologramIDs[0]));
+			/* 255 */
+			AccessUtil.setAccessible(NMSClass.PacketPlayOutAttachEntity.getDeclaredField("b"))
+			.set(this.ridingEjectPacket, Integer.valueOf(this.hologramIDs[0]));
+
+			/* 257 */
+			AccessUtil.setAccessible(NMSClass.PacketPlayOutAttachEntity.getDeclaredField("c")).set(
+					this.ridingAttachPacket,
+					Integer.valueOf(getAttachedTo() != null ? getAttachedTo().getEntityId() : -1));
+			/* 258 */
+			AccessUtil.setAccessible(NMSClass.PacketPlayOutAttachEntity.getDeclaredField("c"))
+			.set(this.ridingEjectPacket, Integer.valueOf(-1));
+
+		} else {
+			/* 260 */
+			this.ridingAttachPacket = NMSClass.PacketPlayOutMount.newInstance();
+			/* 261 */
+			this.ridingEjectPacket = NMSClass.PacketPlayOutMount.newInstance();
+
+			/* 263 */
+			AccessUtil.setAccessible(NMSClass.PacketPlayOutMount.getDeclaredField("a")).set(this.ridingAttachPacket,
+					Integer.valueOf((((DefaultHologram) this).isAttached()) && (getAttachedTo() != null)
+							? getAttachedTo().getEntityId()
+									: -1));
+			/* 264 */
+			AccessUtil.setAccessible(NMSClass.PacketPlayOutMount.getDeclaredField("a")).set(this.ridingEjectPacket,
+					Integer.valueOf((((DefaultHologram) this).isAttached()) && (getAttachedTo() != null)
+							? getAttachedTo().getEntityId()
+									: -1));
+
+			/* 266 */
+			AccessUtil.setAccessible(NMSClass.PacketPlayOutMount.getDeclaredField("b")).set(this.ridingAttachPacket,
+					new int[] { this.hologramIDs[0] });
+			/* 267 */
+			AccessUtil.setAccessible(NMSClass.PacketPlayOutMount.getDeclaredField("b")).set(this.ridingEjectPacket,
+					new int[0]);
+
+		}
 
 		/* 270 */
 		if (!rebuild) {
@@ -218,7 +347,6 @@ public abstract class CraftHologram implements Hologram {
 			final boolean touch) {
 		/* 276 */
 		if (holo) {
-
 			/* 282 */
 			for (final Player p : receivers) {
 				/* 283 */
@@ -237,7 +365,6 @@ public abstract class CraftHologram implements Hologram {
 				}
 
 			}
-
 
 		}
 		/* 293 */
@@ -280,7 +407,6 @@ public abstract class CraftHologram implements Hologram {
 		for (final Player p : receivers) {
 			/* 314 */
 			if (holo) {
-				/* 315 */
 				/* 316 */
 				if (((CraftPlayer)p).getHandle().playerConnection.networkManager.getProtocolVersion().getProtocol() > 5) {
 					/* 317 */
@@ -294,13 +420,7 @@ public abstract class CraftHologram implements Hologram {
 
 				}
 
-			} else {
-				/* 323 */
-				HologramAPI.sendPacket(p, this.teleportPacketArmorStand);
-
 			}
-
-
 			/* 326 */
 			if ((touch) && (isTouchable())) {
 				/* 327 */
