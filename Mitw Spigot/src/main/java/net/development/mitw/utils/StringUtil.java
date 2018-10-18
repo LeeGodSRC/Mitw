@@ -29,8 +29,7 @@ public final class StringUtil {
 			if (i > 0) {
 				final char prev = string.toCharArray()[i - 1];
 				if (prev == ' ' || prev == '[' || prev == '(') {
-					if (i == string.toCharArray().length - 1 || c != 'x' ||
-							!Character.isDigit(string.toCharArray()[i + 1])) {
+					if (i == string.toCharArray().length - 1 || c != 'x' || !Character.isDigit(string.toCharArray()[i + 1])) {
 						c = Character.toUpperCase(c);
 					}
 				}
@@ -91,7 +90,7 @@ public final class StringUtil {
 
 	public static String replace(String text, final RV... replaceValues) {
 		for (final RV replaceValue : replaceValues) {
-			text = replace(text, replaceValue.getTarget(), replaceValue.getReplacement());
+			text = ChatColor.translateAlternateColorCodes('&', StringUtil.replace(text, replaceValue.getTarget(), replaceValue.getReplacement()));
 		}
 		return text;
 	}
