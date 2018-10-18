@@ -27,13 +27,24 @@ public class LanguageAPI {
 		CONFIG, CLASS
 	};
 
-	@Getter @Setter private Map<String, List<String>> savedMessages = new HashMap<>();
+	@Getter
+	@Setter
+	private Map<String, List<String>> savedMessages = new HashMap<>();
 
-	@Getter @Setter private Plugin plugin;
-	@Getter @Setter private LangType type;
-	@Getter @Setter private YamlConfiguration config;
-	@Getter @Setter private Object clazz;
-	@Getter private final LanguageData languageData;
+	@Getter
+	@Setter
+	private Plugin plugin;
+	@Getter
+	@Setter
+	private LangType type;
+	@Getter
+	@Setter
+	private YamlConfiguration config;
+	@Getter
+	@Setter
+	private Object clazz;
+	@Getter
+	private final LanguageData languageData;
 
 	public LanguageAPI(final LangType type, final Plugin plugin, final LanguageData languageData, final YamlConfiguration config) {
 		this.type = type;
@@ -59,7 +70,8 @@ public class LanguageAPI {
 		}
 	}
 
-	public LanguageAPI(final LangType type, final Plugin plugin, final LanguageData languageData, final YamlConfiguration config, final Class<?> clazz, final Class<?>... methods) {
+	public LanguageAPI(final LangType type, final Plugin plugin, final LanguageData languageData, final YamlConfiguration config,
+			final Class<?> clazz, final Class<?>... methods) {
 		this.type = type;
 		this.config = config;
 		this.plugin = plugin;
@@ -125,44 +137,44 @@ public class LanguageAPI {
 
 	public String translate(final Player p, final String ofrom) {
 		final String lang = languageData.getLang(p);
-		final String from = lang+"."+ofrom;
-		if(savedMessages.containsKey(from))
+		final String from = lang + "." + ofrom;
+		if (savedMessages.containsKey(from)) {
 			return savedMessages.get(from).get(0);
-		else {
+		} else {
 			String to = null;
 			boolean found = false;
-			switch(type) {
+			switch (type) {
 			case CLASS:
 				try {
 					Field field = clazz.getClass().getDeclaredField(from.replace(".", "_"));
 					Object object = field.get(clazz);
-					if(object == null) {
-						field = clazz.getClass().getDeclaredField((LanguageData.DEFAULT_LANGUAGE+"_"+ofrom).replace(".", "_"));
+					if (object == null) {
+						field = clazz.getClass().getDeclaredField((LanguageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
 						field.setAccessible(true);
 						object = field.get(clazz);
 					} else {
 						found = true;
 					}
-					to = (String)object;
+					to = (String) object;
 				} catch (final Exception e) {
-					Bukkit.getConsoleSender().sendMessage("§cCant get string field "+from.replace(".", "_")+" from "+clazz.getClass().getName()+" from player "+p.getName()+" !");
+					Bukkit.getConsoleSender().sendMessage("§cCant get string field " + from.replace(".", "_") + " from " + clazz.getClass().getName()
+							+ " from player " + p.getName() + " !");
 					return "null";
 				}
 				break;
 			case CONFIG:
 				String notsure = config.getString(from);
-				if(notsure == null) {
-					notsure = config.getString(LanguageData.DEFAULT_LANGUAGE+"."+ofrom);
+				if (notsure == null) {
+					notsure = config.getString(LanguageData.DEFAULT_LANGUAGE + "." + ofrom);
 				} else {
 					found = true;
 				}
 				to = notsure;
 				break;
 			}
-			if(found) {
-				savedMessages.put(from, Arrays.asList(to));
-			} else {
+			if (found) {
 				to = ChatColor.translateAlternateColorCodes('&', to);
+				savedMessages.put(from, Arrays.asList(to));
 			}
 			return to;
 		}
@@ -175,46 +187,46 @@ public class LanguageAPI {
 	@SuppressWarnings("unchecked")
 	public List<String> translateArrays(final Player p, final String ofrom) {
 		final String lang = languageData.getLang(p);
-		final String from = lang+"."+ofrom;
-		if(savedMessages.containsKey(from))
+		final String from = lang + "." + ofrom;
+		if (savedMessages.containsKey(from))
 			return savedMessages.get(from);
 		else {
 			List<String> to = null;
 			boolean found = false;
-			switch(type) {
+			switch (type) {
 			case CLASS:
 				try {
 					Field field = clazz.getClass().getDeclaredField(from.replace(".", "_"));
 					Object object = field.get(clazz);
-					if(object == null) {
-						field = clazz.getClass().getDeclaredField((LanguageData.DEFAULT_LANGUAGE+"_"+ofrom).replace(".", "_"));
+					if (object == null) {
+						field = clazz.getClass().getDeclaredField((LanguageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
 						field.setAccessible(true);
 						object = field.get(clazz);
 					} else {
 						found = true;
 					}
-					to = (List<String>)object;
+					to = (List<String>) object;
 				} catch (final Exception e) {
-					Bukkit.getConsoleSender().sendMessage("§cCant get string field "+from.replace(".", "_")+" from "+clazz.getClass().getName()+" from player "+p.getName()+" !");
+					Bukkit.getConsoleSender().sendMessage("§cCant get string field " + from.replace(".", "_") + " from " + clazz.getClass().getName()
+							+ " from player " + p.getName() + " !");
 					return Arrays.asList("null");
 				}
 				break;
 			case CONFIG:
 				List<String> notsure = config.getStringList(from);
-				if(notsure == null) {
-					notsure = config.getStringList(LanguageData.DEFAULT_LANGUAGE+"."+ofrom);
+				if (notsure == null) {
+					notsure = config.getStringList(LanguageData.DEFAULT_LANGUAGE + "." + ofrom);
 				} else {
 					found = true;
 				}
 				to = notsure;
 				break;
 			}
-			if(found) {
-				savedMessages.put(from, to);
-			} else {
-				for(int i = 0; i < to.size() ; i++) {
+			if (found) {
+				for (int i = 0; i < to.size(); i++) {
 					to.set(i, ChatColor.translateAlternateColorCodes('&', to.get(i)));
 				}
+				savedMessages.put(from, to);
 			}
 			return to;
 		}

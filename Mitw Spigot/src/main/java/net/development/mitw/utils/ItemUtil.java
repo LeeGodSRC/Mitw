@@ -26,18 +26,16 @@ public class ItemUtil {
 		return item;
 	}
 
-	public static ItemStack createSkull(String owner, String name, String... loreOptions) {
-		final ItemStack item = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+	public static ItemStack createSkull(String owner, String name, Integer amount, List<String> loreOptions) {
+		final ItemStack item = new ItemStack(Material.SKULL_ITEM, amount, (byte) 3);
 		final SkullMeta meta = (SkullMeta) item.getItemMeta();
 		meta.setOwner(owner);
 		meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
 		final ArrayList<String> color = new ArrayList<>();
-		final String[] arrstring = loreOptions;
-		final int n = arrstring.length;
+		final int n = loreOptions.size();
 		int n2 = 0;
 		while (n2 < n) {
-			final String b = arrstring[n2];
-			color.add(ChatColor.translateAlternateColorCodes('&', b));
+			color.add(ChatColor.translateAlternateColorCodes('&', loreOptions.get(n2)));
 			meta.setLore(color);
 			++n2;
 		}
