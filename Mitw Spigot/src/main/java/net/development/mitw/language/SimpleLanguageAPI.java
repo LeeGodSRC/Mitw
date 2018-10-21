@@ -35,7 +35,11 @@ public abstract class SimpleLanguageAPI {
 
 	public SimpleLanguageAPI(final Plugin plugin) {
 		this.plugin = plugin;
+		savedMessages = getMessages();
+		savedMessages.entrySet().forEach(entry -> savedMessages.put(entry.getKey(), entry.getValue().stream().map(s -> StringUtil.cc(s)).collect(Collectors.toList())));
 	}
+
+	public abstract Map<String, List<String>> getMessages();
 
 	public void send(final Player p, final String translateMessage) {
 		p.sendMessage(translate(p, translateMessage));
