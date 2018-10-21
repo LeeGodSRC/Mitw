@@ -97,7 +97,7 @@ public abstract class SimpleLanguageAPI {
 
 	public String translate(final Player p, final String ofrom) {
 		final String lang = data.getLang(p);
-		final String from = lang + "." + ofrom;
+		final String from = lang + "_" + ofrom;
 		if (savedMessages.containsKey(from))
 			return savedMessages.get(from).get(0);
 		else {
@@ -113,7 +113,7 @@ public abstract class SimpleLanguageAPI {
 
 	public List<String> translateArrays(final Player p, final String ofrom) {
 		final String lang = data.getLang(p);
-		final String from = lang + "." + ofrom;
+		final String from = lang + "_" + ofrom;
 		if (savedMessages.containsKey(from))
 			return savedMessages.get(from);
 		else {
