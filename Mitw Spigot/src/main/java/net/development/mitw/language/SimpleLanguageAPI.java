@@ -174,4 +174,13 @@ public abstract class SimpleLanguageAPI {
 		}
 	}
 
+	public static class SimpleHashMap extends HashMap<String, List<String>> {
+		private static final long serialVersionUID = 1L;
+
+		public SimpleHashMap p(final String from, final String... to) {
+			super.put(from, Arrays.asList(to));
+			return this;
+		}
+	}
+
 }
