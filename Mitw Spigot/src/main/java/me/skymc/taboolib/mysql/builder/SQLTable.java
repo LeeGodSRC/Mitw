@@ -7,10 +7,7 @@ import me.skymc.taboolib.string.ArrayUtils;
 
 import java.util.Arrays;
 
-/**
- * @Author sky
- * @Since 2018-05-14 19:07
- */
+
 public class SQLTable {
 
     private String tableName;

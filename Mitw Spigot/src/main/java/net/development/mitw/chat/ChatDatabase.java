@@ -46,8 +46,9 @@ public class ChatDatabase {
 	}
 
 	public boolean putWords(final String word, final CheckType type) {
-		if (containsWord(word))
+		if (containsWord(word)) {
 			return false;
+		}
 		try {
 			table.executeInsert("?, ?")
 			.dataSource(database.getDataSource())
@@ -79,7 +80,7 @@ public class ChatDatabase {
 	}
 
 	private boolean containsWord(final String word) {
-		return table.executeSelect("WHERE 'words' = ?").dataSource(database.getDataSource()).statement(s -> {
+		return table.executeSelect("words = ?").dataSource(database.getDataSource()).statement(s -> {
 			s.setString(1, word);
 		}).resultNext(r -> true).run(false, false);
 	}

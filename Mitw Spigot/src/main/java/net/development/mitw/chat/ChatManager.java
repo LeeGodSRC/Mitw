@@ -17,6 +17,7 @@ import com.google.common.cache.CacheBuilder;
 import de.domedd.betternick.api.BetterNickAPI;
 import lombok.Getter;
 import net.development.mitw.Mitw;
+import net.development.mitw.chat.check.CheckType;
 import net.development.mitw.chat.check.HighCheck;
 import net.development.mitw.chat.check.LowCheck;
 import net.development.mitw.chat.check.SingleCheck;
@@ -33,21 +34,22 @@ public class ChatManager implements Listener {
 	@Getter
 	private final Set<UUID> playerMuted = new HashSet<>();
 	private final Mitw plugin;
-
+	@Getter
+	private final ChatDatabase chatDB;
 	private final List<String> TOXIC_REPLACEMENT = new ArrayList<>();
 
 	public ChatManager(Mitw plugin) {
 		this.plugin = plugin;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
-
+		chatDB = new ChatDatabase(plugin);
 		load();
 	}
 
 	public void load() {
 		Settings.init();
-		new HighCheck(Settings.CHECK_HIGH);
-		new LowCheck(Settings.CHECK_LOW);
-		new SingleCheck(Settings.CHECK_SINGLE);
+		new HighCheck(getChatDB().getAllWordsByType(CheckType.HIGH));
+		new LowCheck(getChatDB().getAllWordsByType(CheckType.LOW));
+		new SingleCheck(getChatDB().getAllWordsByType(CheckType.SINGLE));
 	}
 
 	public String getChatPrefix(Player player) {

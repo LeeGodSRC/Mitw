@@ -16,10 +16,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import me.skymc.taboolib.mysql.builder.SQLHost;
 import net.development.mitw.Mitw;
 
-/**
- * @Author sky
- * @Since 2018-08-28 14:46
- */
+
 public class HikariHandler {
 
     private static ConcurrentHashMap<SQLHost, MapDataSource> dataSource = new ConcurrentHashMap<>();

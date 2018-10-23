@@ -4,10 +4,7 @@ import com.ilummc.tlib.util.Strings;
 
 import java.util.Objects;
 
-/**
- * @Author sky
- * @Since 2018-05-14 19:01
- */
+
 public class SQLHost {
 
     private String host;
