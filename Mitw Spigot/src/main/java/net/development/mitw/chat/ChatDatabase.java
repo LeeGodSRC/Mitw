@@ -46,8 +46,20 @@ public class ChatDatabase {
 	}
 
 	public boolean putWords(final String word, final CheckType type) {
-		if (containsWord(word))
+		if (containsWord(word)) {
+			try {
+				table.executeUpdate("UPDATE chat SET 'level' = ? WHERE 'words' = ?;")
+				.dataSource(database.getDataSource())
+				.statement(s -> {
+					s.setString(1, type.name().toLowerCase());
+					s.setString(2, word);
+				}).run();
+				return true;
+			} catch (final Exception e) {
+				e.printStackTrace();
+			}
 			return false;
+		}
 		try {
 			table.executeInsert("?, ?")
 			.dataSource(database.getDataSource())
