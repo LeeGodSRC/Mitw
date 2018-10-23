@@ -34,6 +34,10 @@ public class ToxicCommand extends Command {
 	public boolean execute(CommandSender sender, String label, String[] args) {
 		if(!sender.hasPermission("mitw.chat.admin"))
 			return false;
+		if(args.length < 1) {
+			help(sender);
+			return false;
+		}
 		final String arg = args[0].toLowerCase();
 		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
 		switch (args[0].toLowerCase()) {
@@ -68,7 +72,7 @@ public class ToxicCommand extends Command {
 		return false;
 	}
 
-	public void help(Player p) {
+	public void help(CommandSender p) {
 		Common.tell(p,
 				"/toxic add <word> <high/low/single>",
 				"/toxic remove <word>",
