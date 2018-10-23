@@ -14,6 +14,7 @@ import mitw.commands.Reply;
 import mitw.commands.Report;
 import mitw.commands.Server;
 import mitw.managers.BungeeListener;
+import mitw.managers.CommandManager;
 import mitw.managers.YamlManagers;
 import mitw.modules.MotdDisplay;
 import net.md_5.bungee.api.ProxyServer;
@@ -51,6 +52,7 @@ public class Bungee extends Plugin {
 		registerListener(
 				new MotdDisplay(this),
 				new BungeeListener());
+		new CommandManager(this);
 		final YamlManagers YamlManagers = new YamlManagers(this);
 		YamlManagers.SetUp();
 	}
@@ -71,14 +73,14 @@ public class Bungee extends Plugin {
 		servers.add("ffa");
 	}
 
-	private void registerCommand(Command... cmds) {
+	public void registerCommand(final Command... cmds) {
 		final PluginManager pm = ProxyServer.getInstance().getPluginManager();
 		for (final Command cmd : cmds) {
 			pm.registerCommand(this, cmd);
 		}
 	}
 
-	private void registerListener(Listener... listeners) {
+	private void registerListener(final Listener... listeners) {
 		final PluginManager pm = ProxyServer.getInstance().getPluginManager();
 		for (final Listener l : listeners) {
 			pm.registerListener(this, l);

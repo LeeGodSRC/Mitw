@@ -5,3 +5,4 @@ database:
   password: password
   database: mitw
   languagedatabase: lang
+  chatdatabase: chat

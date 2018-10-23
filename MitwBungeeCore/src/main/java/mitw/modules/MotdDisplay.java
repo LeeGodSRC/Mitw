@@ -16,13 +16,13 @@ public class MotdDisplay implements Listener {
 
 	Bungee main;
 
-	public MotdDisplay(Bungee main) {
+	public MotdDisplay(final Bungee main) {
 		this.main = main;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
 	@EventHandler
-	public void onPing(ProxyPingEvent e) {
+	public void onPing(final ProxyPingEvent e) {
 		final ServerPing serverPing = e.getResponse();
 
 		final StringBuilder str = new StringBuilder();

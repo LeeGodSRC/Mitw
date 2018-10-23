@@ -27,10 +27,9 @@ public class Broadcast extends Command {
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
-		if (args.length == 0) {
+	public void execute(final CommandSender sender, final String[] args) {
+		if (args.length == 0)
 			return;
-		}
 		final String serverName = args[0].toLowerCase();
 		if (serverName.equals("uhc")) {
 			UHCAlert();
@@ -43,16 +42,18 @@ public class Broadcast extends Command {
 		if (!broadcasts.containsKey(serverName))
 			return;
 		final BaseComponent[] text = new ComponentBuilder(Common.colored("&7-> " + broadcasts.get(serverName) + " &f即將開始! &8- "))
-				.append(genJSONMsg("/server " + serverName)).create();
-		for (final String s : Bungee.servers)
-			for (final ProxiedPlayer pl : ProxyServer.getInstance().getServerInfo(s).getPlayers())
+				.append(genJSONMsg("/" + serverName)).create();
+		for (final String s : Bungee.servers) {
+			for (final ProxiedPlayer pl : ProxyServer.getInstance().getServerInfo(s).getPlayers()) {
 				Common.tell(pl, text);
+			}
+		}
 		Common.tell(sender, "&a成功發送公告");
 		return;
 	}
 
 	public void UHCAlert() {
-		final TextComponent clickAble = genJSONMsg("/server uhc");
+		final TextComponent clickAble = genJSONMsg("/uhc");
 		for (final ProxiedPlayer p : BungeeCord.getInstance().getPlayers()) {
 			Common.tell(p, "&7&m------------------------------------", "&6&lMitw&f&lUHC &c&l開放加入", "&f歡迎各位帶著好朋友們一起來參與這場&ePvP盛宴",
 					"&8Are you ready....?", "");
@@ -61,7 +62,7 @@ public class Broadcast extends Command {
 		}
 	}
 
-	public void sgAlert(CommandSender sender, String server) {
+	public void sgAlert(final CommandSender sender, String server) {
 		if (sender instanceof ProxiedPlayer) {
 			final ProxiedPlayer p = (ProxiedPlayer) sender;
 			if (!p.getServer().getInfo().getName().toLowerCase().contains("sg")) {
@@ -72,13 +73,15 @@ public class Broadcast extends Command {
 			Common.tell(sender, "&a成功發送公告");
 		}
 		final BaseComponent[] text = new ComponentBuilder(Common.colored("&7-> " + "&a飢餓遊戲&7(MCSG)" + " &f即將開始! &8- "))
-				.append(genJSONMsg("/server " + server)).create();
-		for (final String s : Bungee.servers)
-			for (final ProxiedPlayer pl : ProxyServer.getInstance().getServerInfo(s).getPlayers())
+				.append(genJSONMsg("/sg " + server)).create();
+		for (final String s : Bungee.servers) {
+			for (final ProxiedPlayer pl : ProxyServer.getInstance().getServerInfo(s).getPlayers()) {
 				Common.tell(pl, text);
+			}
+		}
 	}
 
-	public TextComponent genJSONMsg(String cmd) {
+	public TextComponent genJSONMsg(final String cmd) {
 		final TextComponent msg = new TextComponent("§e§l[點我加入!][Click me to join]");
 		msg.setClickEvent(new ClickEvent(Action.RUN_COMMAND, cmd));
 		return msg;

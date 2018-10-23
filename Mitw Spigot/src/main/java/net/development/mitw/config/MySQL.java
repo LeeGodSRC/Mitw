@@ -2,7 +2,7 @@ package net.development.mitw.config;
 
 public class MySQL extends SimpleConfig {
 
-	public MySQL(String fileName) {
+	public MySQL(final String fileName) {
 		super(fileName);
 	}
 
@@ -13,6 +13,7 @@ public class MySQL extends SimpleConfig {
 		PASSWORD = getString("database.password");
 		DATABASE = getString("database.database");
 		LANGUAGE_DATABASE = getString("database.languagedatabase");
+		CHAT_DATABASE = getString("database.chatdatabase");
 	}
 
 
@@ -21,6 +22,6 @@ public class MySQL extends SimpleConfig {
 		sql.loadVar();
 	}
 
-	public static String HOSTNAME, PORT, USER, PASSWORD, DATABASE, LANGUAGE_DATABASE;
+	public static String HOSTNAME, PORT, USER, PASSWORD, DATABASE, LANGUAGE_DATABASE, CHAT_DATABASE;
 
 }
