@@ -10,19 +10,10 @@ import java.nio.charset.Charset;
 
 import com.ilummc.tlib.util.IO;
 
-/**
- * @Author sky
- * @Since 2018-08-28 15:01
- */
+
 public class FileUtils {
 
-	/**
-	 * 获取插件资源文件
-	 *
-	 * @param target   类
-	 * @param filename 文件名
-	 * @return {@link InputStream}
-	 */
+	
 	@SuppressWarnings("rawtypes")
 	public static InputStream getResource(Class target, String filename) {
 		try {
@@ -39,12 +30,7 @@ public class FileUtils {
 		}
 	}
 
-	/**
-	 * 写入文件
-	 *
-	 * @param inputStream 输入流
-	 * @param file        文件
-	 */
+	
 	public static void inputStreamToFile(InputStream inputStream, File file) {
 		try {
 			final String text = new String(IO.readFully(inputStream), Charset.forName("utf-8"));
@@ -55,11 +41,7 @@ public class FileUtils {
 		}
 	}
 
-	/**
-	 * 检测文件并创建
-	 *
-	 * @param file 文件
-	 */
+	
 	public static File createNewFile(File file) {
 		if (file != null && !file.exists()) {
 			try {
@@ -70,11 +52,7 @@ public class FileUtils {
 		return file;
 	}
 
-	/**
-	 * 检测文件并创建（目录）
-	 *
-	 * @param file 文件
-	 */
+	
 	public static void createNewFileAndPath(File file) {
 		if (!file.exists()) {
 			final String filePath = file.getPath();

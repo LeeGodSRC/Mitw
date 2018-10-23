@@ -5,10 +5,7 @@ import me.skymc.taboolib.mysql.builder.SQLHost;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * @Author sky
- * @Since 2018-05-17 23:47
- */
+
 public class MapDataSource {
 
     private SQLHost sqlHost;

@@ -9,10 +9,7 @@ import javax.sql.DataSource;
 
 import me.skymc.taboolib.mysql.builder.SQLExecutor;
 
-/**
- * @Author sky
- * @Since 2018-07-03 21:29
- */
+
 public class RunnableQuery {
 
 	private DataSource dataSource;

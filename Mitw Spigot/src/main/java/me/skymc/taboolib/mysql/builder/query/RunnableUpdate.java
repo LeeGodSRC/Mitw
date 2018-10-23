@@ -6,12 +6,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-/**
- * F
- *
- * @Author sky
- * @Since 2018-07-03 21:29
- */
+
 public class RunnableUpdate {
 
     private DataSource dataSource;

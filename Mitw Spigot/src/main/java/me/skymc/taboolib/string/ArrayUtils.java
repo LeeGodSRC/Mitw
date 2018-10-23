@@ -13,10 +13,7 @@ import java.util.stream.IntStream;
 
 import com.ilummc.tlib.util.Strings;
 
-/**
- * @author Bkm016
- * @since 2018-04-16
- */
+
 public class ArrayUtils {
 
 	public static String arrayJoin(String[] args, int start) {

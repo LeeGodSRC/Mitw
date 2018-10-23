@@ -67,8 +67,7 @@ public abstract class HologramAPI {
 	}
 
 	@SuppressWarnings("unchecked")
-	public
-	static boolean spawn(@Nonnull final Hologram hologram, final Collection receivers) {
+	public static boolean spawn(@Nonnull final Hologram hologram, final Collection receivers) {
 		checkReceiverWorld(hologram, receivers);
 		if (!receivers.isEmpty()) {
 			((CraftHologram) hologram).sendSpawnPackets(receivers, true, true);
@@ -97,12 +96,9 @@ public abstract class HologramAPI {
 				assert e != null;
 				final Object connection = Reflection.getFieldWithException(e.getClass(), "playerConnection").get(e);
 				assert connection != null;
-				Objects.requireNonNull(Reflection
-						.getMethod(connection.getClass(), "sendPacket",
-								Reflection.getNMSClass("Packet")))
-				.invoke(connection, packet);
-			} catch (final Exception var4) {
-			}
+				Objects.requireNonNull(Reflection.getMethod(connection.getClass(), "sendPacket", Reflection.getNMSClass("Packet"))).invoke(connection,
+						packet);
+			} catch (final Exception var4) {}
 
 		} else
 			throw new IllegalArgumentException("player and packet cannot be null");

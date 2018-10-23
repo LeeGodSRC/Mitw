@@ -12,13 +12,7 @@ public class Strings {
         return var == null || var.length() == 0;
     }
 
-    /**
-     * 优化过的 String#replace，比默认快了大概 5 倍
-     *
-     * @param template 模板替换文件
-     * @param args     替换的参数
-     * @return 替换好的字符串
-     */
+    
     public static String replaceWithOrder(String template, Object... args) {
         if (args.length == 0 || template.length() == 0) {
             return template;

@@ -14,10 +14,13 @@ public class LanguageMessages {
 	public String en_us_muted = ChatColor.RED + "Do Not toxic, thank you";
 
 	public String zh_tw_inMute = "&c抱歉 你目前處於禁言狀態,你還需要約&f <sec> &c秒後才能說話";
-	public String en_us_inMute = "&cSorry, you are in muted, please wait &f <sec> &cbefore type anything";
+	public String en_us_inMute = "&cSorry, you have been muted, please wait &f <sec> &cbefore type anything";
 
 	public String zh_tw_cooldownChat = "&c請放慢你的說話速度,你還要&f <sec> &c秒後才能說話 ";
 	public String en_us_cooldownChat = "&cPlease slow down your chat,you have to wait&f <sec> &cbefore you type anything";
+
+	public String zh_tw_chatreport_usage = "&e使用方法: /chreport <不好聽的文字>";
+	public String en_us_chatreport_usage = "&eUsage: /chreport <toxicword>";
 
 	public List<String> zh_tw_nameMCVoteInfo = Arrays.asList(
 			"§8§m---------------------------",

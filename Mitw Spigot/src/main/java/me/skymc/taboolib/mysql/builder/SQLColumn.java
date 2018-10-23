@@ -4,10 +4,7 @@ import com.ilummc.tlib.util.Strings;
 
 import java.util.Arrays;
 
-/**
- * @Author sky
- * @Since 2018-05-14 19:09
- */
+
 public class SQLColumn {
 
     public static final SQLColumn PRIMARY_KEY_ID = new SQLColumn(SQLColumnType.INT, "id", SQLColumnOption.NOTNULL, SQLColumnOption.PRIMARY_KEY, SQLColumnOption.AUTO_INCREMENT);
@@ -21,50 +18,27 @@ public class SQLColumn {
 
     private SQLColumnOption[] columnOptions;
 
-    /**
-     * 文本 类型常用构造器
-     * new SQLColumn(SQLColumnType.TEXT, "username");
-     */
+    
     public SQLColumn(SQLColumnType columnType, String columnName) {
         this(columnType, 0, 0, columnName, null);
     }
 
-    /**
-     * CHAR 类型常用构造器
-     *
-     * @param columnType
-     * @param columnName
-     */
+    
     public SQLColumn(SQLColumnType columnType, int m, String columnName) {
         this(columnType, m, 0, columnName, null);
     }
 
-    /**
-     * 主键 类型常用构造器
-     * new SQLColumn(SQLColumnType.TEXT, "username", SQLColumnOption.PRIMARY_KEY, SQLColumnOption.AUTO_INCREMENT);
-     */
+    
     public SQLColumn(SQLColumnType columnType, String columnName, SQLColumnOption... columnOptions) {
         this(columnType, 0, 0, columnName, null, columnOptions);
     }
 
-    /**
-     * 数据 类型常用构造器
-     * new SQLColumn(SQLColumnType.TEXT, "player_group", "PLAYER");
-     */
+    
     public SQLColumn(SQLColumnType columnType, String columnName, Object defaultValue) {
         this(columnType, 0, 0, columnName, defaultValue);
     }
 
-    /**
-     * 完整构造器
-     *
-     * @param columnType    类型
-     * @param m             m值
-     * @param d             d值
-     * @param columnName    名称
-     * @param defaultValue  默认值
-     * @param columnOptions 属性值
-     */
+    
     public SQLColumn(SQLColumnType columnType, int m, int d, String columnName, Object defaultValue, SQLColumnOption... columnOptions) {
         this.columnType = columnType;
         this.m = m;

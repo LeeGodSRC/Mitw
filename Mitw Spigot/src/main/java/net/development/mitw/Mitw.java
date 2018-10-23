@@ -12,6 +12,8 @@ import lombok.Getter;
 import me.skymc.taboolib.mysql.builder.hikari.HikariHandler;
 import net.development.mitw.chat.ChatHandler;
 import net.development.mitw.chat.ChatManager;
+import net.development.mitw.command.ChatReportCommand;
+import net.development.mitw.command.ToxicCommand;
 import net.development.mitw.config.AntiCrash;
 import net.development.mitw.config.EzProtector;
 import net.development.mitw.config.MySQL;
@@ -71,11 +73,10 @@ public class Mitw extends JavaPlugin {
 		Security.init();
 
 		new BlockCrashHandler();
-		chatManager = new ChatManager(this);
 		nameMC = new NameMC(this);
 		chatHandlers = new HashSet<>();
 		helpHandlers = new HashSet<>();
-		/** 基礎 Help 訊息 **/
+
 		helpHandlers.add(() -> Arrays.asList("Help1", "Help2"));
 
 		HikariHandler.init();
@@ -84,6 +85,7 @@ public class Mitw extends JavaPlugin {
 		final LanguageSQLConnection languageSQLConnection = new LanguageSQLConnection(MySQL.LANGUAGE_DATABASE);
 		languageData = new LanguageData(this, languageSQLConnection);
 		coreLanguage = new LanguageAPI(LangType.CLASS, this, languageData, new LanguageMessages());
+		chatManager = new ChatManager(this);
 
 		registerListeners();
 		registerCommands();
@@ -101,7 +103,9 @@ public class Mitw extends JavaPlugin {
 	public void registerCommands() {
 		Arrays.asList(
 				new HelpCommand(),
-				new NameMCVoteCommand()
+				new NameMCVoteCommand(),
+				new ToxicCommand(),
+				new ChatReportCommand()
 				).forEach(command -> registerCommand(command, getName()));
 	}
 
