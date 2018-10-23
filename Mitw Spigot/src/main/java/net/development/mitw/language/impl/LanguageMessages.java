@@ -22,6 +22,9 @@ public class LanguageMessages {
 	public String zh_tw_chatreport_usage = "&e使用方法: /chreport <不好聽的文字>";
 	public String en_us_chatreport_usage = "&eUsage: /chreport <toxicword>";
 
+	public String zh_tw_chatreport_incooldown = "&c抱歉,您還需要等待 &f<sec>&c 秒後才能再檢舉一次";
+	public String en_us_chatreport_incooldown = "&cSorry, but you have to wait &f<sec>&c to report again";
+
 	public List<String> zh_tw_nameMCVoteInfo = Arrays.asList(
 			"§8§m---------------------------",
 			"§e為Mitw投一票!",

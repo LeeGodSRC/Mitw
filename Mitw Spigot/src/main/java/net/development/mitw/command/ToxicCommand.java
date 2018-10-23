@@ -17,9 +17,9 @@ import org.bukkit.inventory.ItemStack;
 
 import net.development.mitw.Mitw;
 import net.development.mitw.chat.ChatDatabase;
-import net.development.mitw.chat.ChatManager;
 import net.development.mitw.chat.check.Check;
 import net.development.mitw.chat.check.CheckType;
+import net.development.mitw.config.Settings;
 import net.development.mitw.utils.Common;
 import net.development.mitw.utils.ItemUtil;
 
@@ -40,15 +40,15 @@ public class ToxicCommand extends Command {
 		}
 		final String arg = args[0].toLowerCase();
 		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
-		switch (args[0].toLowerCase()) {
+		switch (arg) {
 		case "add":
 			if(args.length < 3) {
 				Common.tell(sender, "&7Usage: /toxic add <word> <high/low/single>");
 				return false;
 			}
-			final CheckType type = CheckType.valueOf(args[2]);
-			db.putWords(arg, type);
-			Common.tell(sender, "&a成功新增單字&f " + arg + " &a進入辭典,等級為: &e" + type.toString());
+			final CheckType type = CheckType.valueOf(args[2].toUpperCase());
+			db.putWords(args[1], type);
+			Common.tell(sender, "&a成功新增單字&f " + args[1] + " &a進入辭典,等級為: &e" + type.toString());
 			break;
 		case "remove":
 			if(args.length < 2) {
@@ -56,16 +56,23 @@ public class ToxicCommand extends Command {
 				return false;
 			}
 			if(db.removeWords(args[1].toLowerCase()))
-				Common.tell(sender, "&a成功從辭典移除單字&f " + arg);
+				Common.tell(sender, "&a成功從辭典移除單字&f " + args[1]);
 			else
-				Common.tell(sender, "&c無法找到單字&f " + arg);
+				Common.tell(sender, "&c無法找到單字&f " + args[1]);
 			break;
 		case "list":
 			if(!(sender instanceof Player))
 				return false;
 			new MainMenu().open((Player) sender);
 			break;
-
+		case "backup":
+			for(final String str : Settings.CHECK_HIGH)
+				db.putWords(str.toLowerCase(), CheckType.HIGH);
+			for(final String str : Settings.CHECK_LOW)
+				db.putWords(str.toLowerCase(), CheckType.LOW);
+			for(final String str : Settings.CHECK_SINGLE)
+				db.putWords(str.toLowerCase(), CheckType.SINGLE);
+			Common.tell(sender, "done!");
 		default:
 			break;
 		}
@@ -121,9 +128,11 @@ class MainMenu extends Menu {
 
 	public MainMenu() {
 		super("&c&l待審核單字", 6);
-		final ChatManager chm = Mitw.getInstance().getChatManager();
-		for (int a = 0; a < 54; a++) {
-			s(a, ItemUtil.createItem1(Material.PAPER, 1, 0, "DB_STRING", "","&a左鍵來新增至辭典","&c右鍵移除此文字"));
+		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
+		int count = 0;
+		for(final String str : db.getTop54TempWords()) {
+			s(count, ItemUtil.createItem1(Material.PAPER, 1, 0, str, "", "&a左鍵來新增至辭典", "&c右鍵移除此文字"));
+			count++;
 		}
 	}
 
@@ -162,6 +171,7 @@ class TypeMenu extends Menu {
 	@Override
 	public void onClick(Player p, ItemStack i) {
 		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
+		db.removeTempWord(word);
 		if (i.equals(high)) {
 			db.putWords(word, CheckType.HIGH);
 			Check.getCheck("high").getCheckExams().add(word);
@@ -175,6 +185,8 @@ class TypeMenu extends Menu {
 			Check.getCheck("single").getCheckExams().add(word);
 			Common.tell(p, "&a成功新增單字&f " + word + " &a進入辭典,等級為: &bSINGLE");
 		}
+		p.closeInventory();
+		new MainMenu().open(p);
 	}
 
 }

@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public abstract class Check {
 	private static ArrayList<Check> checks = new ArrayList<>();
 	@Getter
-	protected final List<String> checkExams = new ArrayList<>();
+	@Setter
+	protected List<String> checkExams = new ArrayList<>();
 	protected String name;
 
 	public Check(String name, List<String> exam) {
