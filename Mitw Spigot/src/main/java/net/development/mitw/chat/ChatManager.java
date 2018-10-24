@@ -42,7 +42,6 @@ public class ChatManager implements Listener {
 		this.plugin = plugin;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 		chatDB = new ChatDatabase(plugin);
-		new CopyDatatask().runTaskTimerAsynchronously(Mitw.getInstance(), 20*60*20, 20*60*20);
 		load();
 	}
 

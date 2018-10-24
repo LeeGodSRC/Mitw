@@ -12,6 +12,7 @@ import lombok.Getter;
 import me.skymc.taboolib.mysql.builder.hikari.HikariHandler;
 import net.development.mitw.chat.ChatHandler;
 import net.development.mitw.chat.ChatManager;
+import net.development.mitw.chat.CopyDatatask;
 import net.development.mitw.command.ChatReportCommand;
 import net.development.mitw.command.ToxicCommand;
 import net.development.mitw.config.AntiCrash;
@@ -89,6 +90,9 @@ public class Mitw extends JavaPlugin {
 
 		registerListeners();
 		registerCommands();
+
+
+		new CopyDatatask().runTaskTimerAsynchronously(Mitw.getInstance(), 20*60*20, 20*60*20);
 
 		new MitwProtector().onEnable();
 	}

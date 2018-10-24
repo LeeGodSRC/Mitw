@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -32,9 +33,9 @@ public class ToxicCommand extends Command {
 
 	@Override
 	public boolean execute(CommandSender sender, String label, String[] args) {
-		if(!sender.hasPermission("mitw.chat.admin"))
+		if (!sender.hasPermission("mitw.chat.admin"))
 			return false;
-		if(args.length < 1) {
+		if (args.length < 1) {
 			help(sender);
 			return false;
 		}
@@ -42,35 +43,37 @@ public class ToxicCommand extends Command {
 		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
 		switch (arg) {
 		case "add":
-			if(args.length < 3) {
+			if (args.length < 3) {
 				Common.tell(sender, "&7Usage: /toxic add <word> <high/low/single>");
 				return false;
 			}
+			final String toAdd = args[1].toLowerCase();
 			final CheckType type = CheckType.valueOf(args[2].toUpperCase());
-			db.putWords(args[1], type);
+			db.putWords(toAdd, type);
+			Check.getCheck(type.toString()).getCheckExams().add(toAdd);
 			Common.tell(sender, "&a成功新增單字&f " + args[1] + " &a進入辭典,等級為: &e" + type.toString());
 			break;
 		case "remove":
-			if(args.length < 2) {
+			if (args.length < 2) {
 				Common.tell(sender, "&7Usage: /toxic remove <word>");
 				return false;
 			}
-			if(db.removeWords(args[1].toLowerCase()))
+			if (db.removeWords(args[1].toLowerCase()))
 				Common.tell(sender, "&a成功從辭典移除單字&f " + args[1]);
 			else
 				Common.tell(sender, "&c無法找到單字&f " + args[1]);
 			break;
 		case "list":
-			if(!(sender instanceof Player))
+			if (!(sender instanceof Player))
 				return false;
 			new MainMenu().open((Player) sender);
 			break;
 		case "backup":
-			for(final String str : Settings.CHECK_HIGH)
+			for (final String str : Settings.CHECK_HIGH)
 				db.putWords(str.toLowerCase(), CheckType.HIGH);
-			for(final String str : Settings.CHECK_LOW)
+			for (final String str : Settings.CHECK_LOW)
 				db.putWords(str.toLowerCase(), CheckType.LOW);
-			for(final String str : Settings.CHECK_SINGLE)
+			for (final String str : Settings.CHECK_SINGLE)
 				db.putWords(str.toLowerCase(), CheckType.SINGLE);
 			Common.tell(sender, "done!");
 		default:
@@ -80,10 +83,7 @@ public class ToxicCommand extends Command {
 	}
 
 	public void help(CommandSender p) {
-		Common.tell(p,
-				"/toxic add <word> <high/low/single>",
-				"/toxic remove <word>",
-				"/toxic list");
+		Common.tell(p, "/toxic add <word> <high/low/single>", "/toxic remove <word>", "/toxic list");
 	}
 
 }
@@ -109,7 +109,7 @@ abstract class Menu {
 		inv.setItem(i, item);
 	}
 
-	public abstract void onClick(Player p, ItemStack i);
+	public abstract void onClick(Player p, ItemStack i, ClickType action);
 
 	public static List<Menu> getMenuList() {
 		return menuList;
@@ -125,38 +125,37 @@ abstract class Menu {
 }
 
 class MainMenu extends Menu {
+	ChatDatabase db;
 
 	public MainMenu() {
 		super("&c&l待審核單字", 6);
-		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
+		db = Mitw.getInstance().getChatManager().getChatDB();
 		int count = 0;
-		for(final String str : db.getTop54TempWords()) {
+		for (final String str : db.getTop54TempWords()) {
 			s(count, ItemUtil.createItem1(Material.PAPER, 1, 0, str, "", "&a左鍵來新增至辭典", "&c右鍵移除此文字"));
 			count++;
 		}
 	}
 
 	@Override
-	public void onClick(Player p, ItemStack i) {
-		new TypeMenu(i.getItemMeta().getDisplayName().toLowerCase()).open(p);
+	public void onClick(Player p, ItemStack i, ClickType action) {
+		final String word = i.getItemMeta().getDisplayName().toLowerCase();
+		if (action == ClickType.RIGHT) {
+			db.removeTempWord(word);
+			getInv().remove(i);
+		}
+		else if (action == ClickType.LEFT)
+			new TypeMenu(word).open(p);
 	}
 
 }
 
 class TypeMenu extends Menu {
-	private static ItemStack high,low,single;
+	private static ItemStack high, low, single;
 	static {
-		high = ItemUtil.createItem1(Material.WOOL, 1, 14, "&f設定為: &c嚴重單字&7(High)",
-				"&7如果說了會被禁言3小時",
-				"&7打字內容包含就算");
-		low = ItemUtil.createItem1(Material.WOOL, 1, 4, "&f設定為: &e輕微單字&7(Low)",
-				"&7如果說了會被禁言1小時",
-				"&7打字內容包含就算",
-				"&7如果是指明玩家,且該玩名子包含這個單字",
-				"&7將不會被禁言");
-		single = ItemUtil.createItem1(Material.WOOL, 1, 3, "&f設定為: &c文字單字&7(Single)",
-				"&7如果說了會被禁言3小時",
-				"&7打字內容要跟單字'一摸一樣'");
+		high = ItemUtil.createItem1(Material.WOOL, 1, 14, "&f設定為: &c嚴重單字&7(High)", "&7如果說了會被禁言3小時", "&7打字內容包含就算");
+		low = ItemUtil.createItem1(Material.WOOL, 1, 4, "&f設定為: &e輕微單字&7(Low)", "&7如果說了會被禁言1小時", "&7打字內容包含就算", "&7如果是指明玩家,且該玩名子包含這個單字", "&7將不會被禁言");
+		single = ItemUtil.createItem1(Material.WOOL, 1, 3, "&f設定為: &c文字單字&7(Single)", "&7如果說了會被禁言3小時", "&7打字內容要跟單字'一摸一樣'");
 	}
 	private final String word;
 
@@ -169,7 +168,7 @@ class TypeMenu extends Menu {
 	}
 
 	@Override
-	public void onClick(Player p, ItemStack i) {
+	public void onClick(Player p, ItemStack i, ClickType action) {
 		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
 		db.removeTempWord(word);
 		if (i.equals(high)) {
@@ -200,7 +199,7 @@ class MenuListener implements Listener {
 		e.setCancelled(true);
 		final ItemStack i = e.getCurrentItem();
 		if (i != null && i.getType() != Material.AIR && m.getInv().contains(i)) {
-			m.onClick((Player) e.getWhoClicked(), e.getCurrentItem());
+			m.onClick((Player) e.getWhoClicked(), e.getCurrentItem(), e.getClick());
 		}
 	}
 
