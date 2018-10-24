@@ -41,27 +41,35 @@ public class ToxicCommand extends Command {
 		}
 		final String arg = args[0].toLowerCase();
 		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
+		final StringBuilder builder = new StringBuilder();
 		switch (arg) {
 		case "add":
 			if (args.length < 3) {
-				Common.tell(sender, "&7Usage: /toxic add <word> <high/low/single>");
+				Common.tell(sender, "&7Usage: /toxic add <high/low/single> <word>");
 				return false;
 			}
-			final String toAdd = args[1].toLowerCase();
-			final CheckType type = CheckType.valueOf(args[2].toUpperCase());
+			final CheckType type = CheckType.valueOf(args[1].toUpperCase());
+			builder.append(args[2]);
+			for (int a = 3; a < args.length; a++)
+				builder.append(" " + args[a]);
+			final String toAdd = builder.toString().toLowerCase();
 			db.putWords(toAdd, type);
 			Check.getCheck(type.toString()).getCheckExams().add(toAdd);
-			Common.tell(sender, "&a成功新增單字&f " + args[1] + " &a進入辭典,等級為: &e" + type.toString());
+			Common.tell(sender, "&a成功新增單字&f " + toAdd + " &a進入辭典,等級為: &e" + type.toString());
 			break;
 		case "remove":
 			if (args.length < 2) {
 				Common.tell(sender, "&7Usage: /toxic remove <word>");
 				return false;
 			}
-			if (db.removeWords(args[1].toLowerCase()))
-				Common.tell(sender, "&a成功從辭典移除單字&f " + args[1]);
+			builder.append(args[1]);
+			for (int a = 2; a < args.length; a++)
+				builder.append(" " + args[a]);
+			final String toRemove = builder.toString().toLowerCase();
+			if (db.removeWords(toRemove))
+				Common.tell(sender, "&a成功從辭典移除單字&f " + toRemove);
 			else
-				Common.tell(sender, "&c無法找到單字&f " + args[1]);
+				Common.tell(sender, "&c無法找到單字&f " + toRemove);
 			break;
 		case "list":
 			if (!(sender instanceof Player))
@@ -83,7 +91,7 @@ public class ToxicCommand extends Command {
 	}
 
 	public void help(CommandSender p) {
-		Common.tell(p, "/toxic add <word> <high/low/single>", "/toxic remove <word>", "/toxic list");
+		Common.tell(p, "/toxic add <high/low/single> <word>", "/toxic remove <word>", "/toxic list");
 	}
 
 }

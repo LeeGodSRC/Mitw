@@ -39,7 +39,10 @@ public class ChatReportCommand extends Command {
 			api.send(p, "chatreport_incooldown", RV.o("<sec>", ((COOLDOWN_SEC - (systemTime - longTime.getIfPresent(p.getUniqueId())) / 1000)) + ""));
 			return false;
 		}
-		final String toReport = args[0].toLowerCase();
+		final StringBuilder builder = new StringBuilder(args[0]);
+		for (int a = 1; a < args.length; a++)
+			builder.append(" " + args[a]);
+		final String toReport = builder.toString().toLowerCase();
 		Mitw.getInstance().getChatManager().getChatDB().putTempWord(toReport);
 		longTime.put(p.getUniqueId(), systemTime);
 		api.send(p, "chatreport_success", RV.o("<word>", toReport));

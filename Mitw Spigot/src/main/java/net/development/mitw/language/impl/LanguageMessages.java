@@ -26,7 +26,7 @@ public class LanguageMessages {
 	public String en_us_chatreport_incooldown = "&cSorry, but you have to wait &f<sec>&c to report again";
 
 	public String zh_tw_chatreport_success = "&a成功檢舉單字: &f<word>";
-	public String en_us_chatreport_success = "&aSuccessful report the word: &fword";
+	public String en_us_chatreport_success = "&aSuccessful report the word: &f<word>";
 
 	public List<String> zh_tw_nameMCVoteInfo = Arrays.asList(
 			"§8§m---------------------------",
