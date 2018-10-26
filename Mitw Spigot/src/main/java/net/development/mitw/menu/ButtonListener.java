@@ -22,7 +22,7 @@ public class ButtonListener implements Listener {
 	public void onButtonPress(final InventoryClickEvent event) {
 		final Player player = (Player) event.getWhoClicked();
 
-		final Menu openMenu = Menu.currentlyOpenedMenus.get(player.getName());
+		final Menu openMenu = Menu.currentlyOpenedMenus.get(player.getUniqueId());
 
 		if (openMenu != null) {
 			if (event.getSlot() != event.getRawSlot()) {
@@ -50,8 +50,8 @@ public class ButtonListener implements Listener {
 
 				button.clicked(player, event.getSlot(), event.getClick(), event.getHotbarButton());
 
-				if (Menu.currentlyOpenedMenus.containsKey(player.getName())) {
-					final Menu newMenu = Menu.currentlyOpenedMenus.get(player.getName());
+				if (Menu.currentlyOpenedMenus.containsKey(player.getUniqueId())) {
+					final Menu newMenu = Menu.currentlyOpenedMenus.get(player.getUniqueId());
 
 					if (newMenu == openMenu) {
 						final boolean buttonUpdate = button.shouldUpdate(player, event.getSlot(), event.getClick());
@@ -80,12 +80,12 @@ public class ButtonListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onInventoryClose(final InventoryCloseEvent event) {
 		final Player player = (Player) event.getPlayer();
-		final Menu openMenu = Menu.currentlyOpenedMenus.get(player.getName());
+		final Menu openMenu = Menu.currentlyOpenedMenus.get(player.getUniqueId());
 
 		if (openMenu != null) {
 			openMenu.onClose(player);
 
-			Menu.currentlyOpenedMenus.remove(player.getName());
+			Menu.currentlyOpenedMenus.remove(player.getUniqueId());
 
 			if (openMenu instanceof PaginatedMenu)
 				return;

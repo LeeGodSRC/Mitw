@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,11 +30,13 @@ import net.development.mitw.language.LanguageSQLConnection;
 import net.development.mitw.language.impl.LanguageMessages;
 import net.development.mitw.listener.ChatListener;
 import net.development.mitw.listener.PlayerLoginListener;
+import net.development.mitw.menu.ButtonListener;
 import net.development.mitw.namemc.NameMC;
 import net.development.mitw.namemc.NameMCVoteCommand;
 import net.development.mitw.packetlistener.PacketHandler;
 import net.development.mitw.security.anticrash.BlockCrashHandler;
 import net.development.mitw.security.protector.MitwProtector;
+import net.development.mitw.task.MenuUpdateTask;
 import net.development.mitw.utils.holograms.Hologram;
 import net.development.mitw.utils.holograms.HologramAPI;
 import net.development.mitw.utils.holograms.HologramListeners;
@@ -88,11 +91,13 @@ public class Mitw extends JavaPlugin {
 		coreLanguage = new LanguageAPI(LangType.CLASS, this, languageData, new LanguageMessages());
 		chatManager = new ChatManager(this);
 
+		Bukkit.getScheduler().runTaskTimerAsynchronously(this, new MenuUpdateTask(), 20L, 20 * 30L);
+
 		registerListeners();
 		registerCommands();
 
 
-		new CopyDatatask().runTaskTimerAsynchronously(Mitw.getInstance(), 20*60*20, 20*60*20);
+		new CopyDatatask().runTaskTimerAsynchronously(Mitw.getInstance(), 20 * 60 * 20L, 20 * 60 * 20L);
 
 		new MitwProtector().onEnable();
 	}
@@ -117,7 +122,8 @@ public class Mitw extends JavaPlugin {
 		Arrays.asList(
 				new ChatListener(this),
 				new PlayerLoginListener(),
-				new HologramListeners())
+				new HologramListeners(),
+				new ButtonListener())
 		.forEach(listener -> getServer().getPluginManager().registerEvents(listener, instance));
 	}
 

@@ -2,8 +2,8 @@ package net.development.mitw.menu;
 
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -11,11 +11,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Getter
 @Setter
 public abstract class Menu {
 
-	public static Map<String, Menu> currentlyOpenedMenus = new HashMap<>();
+	public static Map<UUID, Menu> currentlyOpenedMenus = new HashMap<>();
 	@Getter
 	private Map<Integer, Button> buttons = new HashMap<>();
 	private boolean autoUpdate = false;
@@ -24,11 +27,11 @@ public abstract class Menu {
 	private boolean placeholder = false;
 	private Button placeholderButton = Button.placeholder(Material.STAINED_GLASS_PANE, (byte) 15, " ");
 
-	private ItemStack createItemStack(Player player, Button button) {
-		ItemStack item = button.getButtonItem(player);
+	private ItemStack createItemStack(final Player player, final Button button) {
+		final ItemStack item = button.getButtonItem(player);
 
 		if (item.getType() != Material.SKULL_ITEM) {
-			ItemMeta meta = item.getItemMeta();
+			final ItemMeta meta = item.getItemMeta();
 
 			if (meta != null && meta.hasDisplayName()) {
 				meta.setDisplayName(meta.getDisplayName() + "§b§c§d§e");
@@ -41,12 +44,15 @@ public abstract class Menu {
 	}
 
 	public void openMenu(final Player player) {
+		this.openMenu(player, false);
+	}
+
+	public void openMenu(final Player player, boolean update) {
 		this.buttons = this.getButtons(player);
 
-		Menu previousMenu = Menu.currentlyOpenedMenus.get(player.getName());
+		final Menu previousMenu = Menu.currentlyOpenedMenus.get(player.getUniqueId());
 		Inventory inventory = null;
-		int size = this.getSize() == -1 ? this.size(this.buttons) : this.getSize();
-		boolean update = false;
+		final int size = this.getSize() == -1 ? this.size(this.buttons) : this.getSize();
 		String title = this.getTitle(player);
 
 		if (title.length() > 32) {
@@ -57,7 +63,7 @@ public abstract class Menu {
 			if (previousMenu == null) {
 				player.closeInventory();
 			} else {
-				int previousSize = player.getOpenInventory().getTopInventory().getSize();
+				final int previousSize = player.getOpenInventory().getTopInventory().getSize();
 
 				if (previousSize == size && player.getOpenInventory().getTopInventory().getTitle().equals(title)) {
 					inventory = player.getOpenInventory().getTopInventory();
@@ -75,9 +81,9 @@ public abstract class Menu {
 
 		inventory.setContents(new ItemStack[inventory.getSize()]);
 
-		currentlyOpenedMenus.put(player.getName(), this);
+		currentlyOpenedMenus.put(player.getUniqueId(), this);
 
-		for (Map.Entry<Integer, Button> buttonEntry : this.buttons.entrySet()) {
+		for (final Map.Entry<Integer, Button> buttonEntry : this.buttons.entrySet()) {
 			inventory.setItem(buttonEntry.getKey(), createItemStack(player, buttonEntry.getValue()));
 		}
 
@@ -100,10 +106,10 @@ public abstract class Menu {
 		this.setClosedByMenu(false);
 	}
 
-	public int size(Map<Integer, Button> buttons) {
+	public int size(final Map<Integer, Button> buttons) {
 		int highest = 0;
 
-		for (int buttonValue : buttons.keySet()) {
+		for (final int buttonValue : buttons.keySet()) {
 			if (buttonValue > highest) {
 				highest = buttonValue;
 			}
@@ -112,7 +118,7 @@ public abstract class Menu {
 		return (int) (Math.ceil((highest + 1) / 9D) * 9D);
 	}
 
-	public int getSlot(int x, int y) {
+	public int getSlot(final int x, final int y) {
 		return ((9 * y) + x);
 	}
 
@@ -124,10 +130,10 @@ public abstract class Menu {
 
 	public abstract Map<Integer, Button> getButtons(Player player);
 
-	public void onOpen(Player player) {
+	public void onOpen(final Player player) {
 	}
 
-	public void onClose(Player player) {
+	public void onClose(final Player player) {
 	}
 
 }
