@@ -15,15 +15,13 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class Server extends Command {
 
-	public Server(Bungee main) {
+	public Server(final Bungee main) {
 		super("server");
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(final CommandSender sender, final String[] args) {
 		final ProxiedPlayer player = (ProxiedPlayer) sender;
-		if(!player.hasPermission("mitw.admin"))
-			return;
 		if (args.length == 0) {
 			player.sendMessage(
 					Bungee.Prefix + ChatColor.GRAY + "你現在正處於 " + ChatColor.GOLD + player.getServer().getInfo().getName() + ChatColor.GRAY + " 伺服器");

@@ -2,7 +2,6 @@ package net.development.mitw;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
@@ -14,13 +13,11 @@ import me.skymc.taboolib.mysql.builder.hikari.HikariHandler;
 import net.development.mitw.chat.ChatHandler;
 import net.development.mitw.chat.ChatManager;
 import net.development.mitw.chat.CopyDatatask;
-import net.development.mitw.command.ChatReportCommand;
-import net.development.mitw.command.ToxicCommand;
+import net.development.mitw.commands.CommandHandler;
 import net.development.mitw.config.AntiCrash;
 import net.development.mitw.config.EzProtector;
 import net.development.mitw.config.MySQL;
 import net.development.mitw.config.Security;
-import net.development.mitw.helpmessage.HelpCommand;
 import net.development.mitw.helpmessage.HelpHandler;
 import net.development.mitw.hooks.LuckPerms;
 import net.development.mitw.language.LanguageAPI;
@@ -29,40 +26,33 @@ import net.development.mitw.language.LanguageData;
 import net.development.mitw.language.LanguageSQLConnection;
 import net.development.mitw.language.impl.LanguageMessages;
 import net.development.mitw.listener.ChatListener;
-import net.development.mitw.listener.PlayerLoginListener;
+import net.development.mitw.listener.JoinAndQuitListener;
 import net.development.mitw.menu.ButtonListener;
 import net.development.mitw.namemc.NameMC;
-import net.development.mitw.namemc.NameMCVoteCommand;
 import net.development.mitw.packetlistener.PacketHandler;
 import net.development.mitw.security.anticrash.BlockCrashHandler;
 import net.development.mitw.security.protector.MitwProtector;
 import net.development.mitw.task.MenuUpdateTask;
+import net.development.mitw.utils.FastRandom;
 import net.development.mitw.utils.holograms.Hologram;
 import net.development.mitw.utils.holograms.HologramAPI;
 import net.development.mitw.utils.holograms.HologramListeners;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 
+@Getter
 public class Mitw extends JavaPlugin {
 
 	@Getter
 	private static Mitw instance;
 
 	@Getter
-	private static final Random random = new Random();
+	private static final FastRandom random = new FastRandom();
 
-	@Getter
 	private ChatManager chatManager;
-	@Getter
 	private LanguageData languageData;
-	@Getter
 	private NameMC nameMC;
-
-	@Getter
 	private LanguageAPI coreLanguage;
-
-	@Getter
 	private Set<ChatHandler> chatHandlers;
-	@Getter
 	private Set<HelpHandler> helpHandlers;
 
 	@Override
@@ -110,18 +100,16 @@ public class Mitw extends JavaPlugin {
 	}
 
 	public void registerCommands() {
-		Arrays.asList(
-				new HelpCommand(),
-				new NameMCVoteCommand(),
-				new ToxicCommand(),
-				new ChatReportCommand()
-				).forEach(command -> registerCommand(command, getName()));
+
+		CommandHandler.init();
+		CommandHandler.loadCommandsFromPackage(this, "net.development.mitw.commands.cmd");
+
 	}
 
 	public void registerListeners() {
 		Arrays.asList(
 				new ChatListener(this),
-				new PlayerLoginListener(),
+				new JoinAndQuitListener(),
 				new HologramListeners(),
 				new ButtonListener())
 		.forEach(listener -> getServer().getPluginManager().registerEvents(listener, instance));

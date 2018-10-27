@@ -18,22 +18,24 @@ import net.development.mitw.menu.pagination.PaginatedMenu;
 
 public class ButtonListener implements Listener {
 
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onButtonPress(final InventoryClickEvent event) {
+
 		final Player player = (Player) event.getWhoClicked();
 
 		final Menu openMenu = Menu.currentlyOpenedMenus.get(player.getUniqueId());
 
 		if (openMenu != null) {
+
 			if (event.getSlot() != event.getRawSlot()) {
 				if ((event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT)) {
 					event.setCancelled(true);
 				}
-
 				return;
 			}
 
 			if (openMenu.getButtons().containsKey(event.getSlot())) {
+
 				final Button button = openMenu.getButtons().get(event.getSlot());
 				final boolean cancel = button.shouldCancel(player, event.getSlot(), event.getClick());
 

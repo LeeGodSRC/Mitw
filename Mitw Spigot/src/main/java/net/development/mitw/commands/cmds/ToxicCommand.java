@@ -1,12 +1,10 @@
-package net.development.mitw.command;
+package net.development.mitw.commands.cmds;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,78 +18,61 @@ import net.development.mitw.Mitw;
 import net.development.mitw.chat.ChatDatabase;
 import net.development.mitw.chat.check.Check;
 import net.development.mitw.chat.check.CheckType;
+import net.development.mitw.commands.Command;
+import net.development.mitw.commands.param.Parameter;
 import net.development.mitw.config.Settings;
 import net.development.mitw.utils.Common;
 import net.development.mitw.utils.ItemUtil;
 
-public class ToxicCommand extends Command {
+public class ToxicCommand {
 
 	public ToxicCommand() {
-		super("toxic");
 		Bukkit.getPluginManager().registerEvents(new MenuListener(), Mitw.getInstance());
 	}
 
-	@Override
-	public boolean execute(CommandSender sender, String label, String[] args) {
-		if (!sender.hasPermission("mitw.chat.admin"))
-			return false;
-		if (args.length < 1) {
-			help(sender);
-			return false;
-		}
-		final String arg = args[0].toLowerCase();
-		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
-		final StringBuilder builder = new StringBuilder();
-		switch (arg) {
-		case "add":
-			if (args.length < 3) {
-				Common.tell(sender, "&7Usage: /toxic add <high/low/single> <word>");
-				return false;
-			}
-			final CheckType type = CheckType.valueOf(args[1].toUpperCase());
-			builder.append(args[2]);
-			for (int a = 3; a < args.length; a++)
-				builder.append(" " + args[a]);
-			final String toAdd = builder.toString().toLowerCase();
-			db.putWords(toAdd, type);
-			Check.getCheck(type.toString()).getCheckExams().add(toAdd);
-			Common.tell(sender, "&a成功新增單字&f " + toAdd + " &a進入辭典,等級為: &e" + type.toString());
-			break;
-		case "remove":
-			if (args.length < 2) {
-				Common.tell(sender, "&7Usage: /toxic remove <word>");
-				return false;
-			}
-			builder.append(args[1]);
-			for (int a = 2; a < args.length; a++)
-				builder.append(" " + args[a]);
-			final String toRemove = builder.toString().toLowerCase();
-			if (db.removeWords(toRemove))
-				Common.tell(sender, "&a成功從辭典移除單字&f " + toRemove);
-			else
-				Common.tell(sender, "&c無法找到單字&f " + toRemove);
-			break;
-		case "list":
-			if (!(sender instanceof Player))
-				return false;
-			new MainMenu().open((Player) sender);
-			break;
-		case "backup":
-			for (final String str : Settings.CHECK_HIGH)
-				db.putWords(str.toLowerCase(), CheckType.HIGH);
-			for (final String str : Settings.CHECK_LOW)
-				db.putWords(str.toLowerCase(), CheckType.LOW);
-			for (final String str : Settings.CHECK_SINGLE)
-				db.putWords(str.toLowerCase(), CheckType.SINGLE);
-			Common.tell(sender, "done!");
-		default:
-			break;
-		}
-		return false;
+	@Command(names = {"toxic", "toxic help"}, permissionNode = "mitw.chat.admin")
+	public static void help(final Player player) {
+		Common.tell(player, "/toxic add <high/low/single> <word>", "/toxic remove <word>", "/toxic list");
 	}
 
-	public void help(CommandSender p) {
-		Common.tell(p, "/toxic add <high/low/single> <word>", "/toxic remove <word>", "/toxic list");
+	@Command(names = {"toxic add"}, permissionNode = "mitw.chat.admin")
+	public static void toxicAdd(final Player player, @Parameter(name = "high/low/single") final CheckType type, @Parameter(name = "word", wildcard = true) final String word) {
+		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
+		final String toAdd = word.toLowerCase();
+		db.putWords(toAdd, type);
+		Check.getCheck(type.toString()).getCheckExams().add(toAdd);
+		Common.tell(player, "&a成功新增單字&f " + toAdd + " &a進入辭典,等級為: &e" + type.toString());
+	}
+
+	@Command(names = {"toxic remove"}, permissionNode = "mitw.chat.admin")
+	public static void toxicRemove(final Player player, @Parameter(name = "word", wildcard = true) final String word) {
+		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
+		final String toRemove = word.toLowerCase();
+		if (db.removeWords(toRemove)) {
+			Common.tell(player, "&a成功從辭典移除單字&f " + toRemove);
+		} else {
+			Common.tell(player, "&c無法找到單字&f " + toRemove);
+		}
+	}
+
+	@Command(names = {"toxic list"}, permissionNode = "mitw.chat.admin")
+	public static void toxicList(final Player player) {
+		new MainMenu().open(player);
+	}
+
+	@Command(names = {"toxic backup"}, permissionNode = "mitw.chat.admin")
+	public static void toxicBackup(final Player player) {
+		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
+		for (final String str : Settings.CHECK_HIGH) {
+			db.putWords(str.toLowerCase(), CheckType.HIGH);
+		}
+		for (final String str : Settings.CHECK_LOW) {
+			db.putWords(str.toLowerCase(), CheckType.LOW);
+		}
+		for (final String str : Settings.CHECK_SINGLE) {
+			db.putWords(str.toLowerCase(), CheckType.SINGLE);
+		}
+		Common.tell(player, "done!");
 	}
 
 }
@@ -100,7 +81,7 @@ abstract class Menu {
 	private static List<Menu> menuList = new ArrayList<>();
 	private final Inventory inv;
 
-	public Menu(String title, int raws) {
+	public Menu(final String title, final int raws) {
 		inv = Bukkit.createInventory(null, raws * 9, Common.colored(title));
 		menuList.add(this);
 	}
@@ -109,11 +90,11 @@ abstract class Menu {
 		return inv;
 	}
 
-	public void open(Player p) {
+	public void open(final Player p) {
 		p.openInventory(inv);
 	}
 
-	public void s(int i, ItemStack item) {
+	public void s(final int i, final ItemStack item) {
 		inv.setItem(i, item);
 	}
 
@@ -123,7 +104,7 @@ abstract class Menu {
 		return menuList;
 	}
 
-	public static Menu getMenu(Inventory i) {
+	public static Menu getMenu(final Inventory i) {
 		for (final Menu m : menuList)
 			if (m.getInv().equals(i))
 				return m;
@@ -146,14 +127,15 @@ class MainMenu extends Menu {
 	}
 
 	@Override
-	public void onClick(Player p, ItemStack i, ClickType action) {
+	public void onClick(final Player p, final ItemStack i, final ClickType action) {
 		final String word = i.getItemMeta().getDisplayName().toLowerCase();
 		if (action == ClickType.RIGHT) {
 			db.removeTempWord(word);
 			getInv().remove(i);
 		}
-		else if (action == ClickType.LEFT)
+		else if (action == ClickType.LEFT) {
 			new TypeMenu(word).open(p);
+		}
 	}
 
 }
@@ -167,7 +149,7 @@ class TypeMenu extends Menu {
 	}
 	private final String word;
 
-	public TypeMenu(String word) {
+	public TypeMenu(final String word) {
 		super("&e&l處理動作為?", 3);
 		s(11, high);
 		s(13, low);
@@ -176,7 +158,7 @@ class TypeMenu extends Menu {
 	}
 
 	@Override
-	public void onClick(Player p, ItemStack i, ClickType action) {
+	public void onClick(final Player p, final ItemStack i, final ClickType action) {
 		final ChatDatabase db = Mitw.getInstance().getChatManager().getChatDB();
 		db.removeTempWord(word);
 		if (i.equals(high)) {
@@ -200,7 +182,7 @@ class TypeMenu extends Menu {
 
 class MenuListener implements Listener {
 	@EventHandler
-	public void onInventoryClick(InventoryClickEvent e) {
+	public void onInventoryClick(final InventoryClickEvent e) {
 		final Menu m = Menu.getMenu(e.getInventory());
 		if (m == null)
 			return;
@@ -212,7 +194,7 @@ class MenuListener implements Listener {
 	}
 
 	@EventHandler
-	public void onInventoryClose(InventoryCloseEvent e) {
+	public void onInventoryClose(final InventoryCloseEvent e) {
 		final Menu m = Menu.getMenu(e.getInventory());
 		if (m == null)
 			return;
