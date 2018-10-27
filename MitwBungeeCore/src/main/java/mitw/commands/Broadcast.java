@@ -62,16 +62,7 @@ public class Broadcast extends Command {
 		}
 	}
 
-	public void sgAlert(final CommandSender sender, String server) {
-		if (sender instanceof ProxiedPlayer) {
-			final ProxiedPlayer p = (ProxiedPlayer) sender;
-			if (!p.getServer().getInfo().getName().toLowerCase().contains("sg")) {
-				Common.tell(p, Bungee.Prefix + " &cSG公告只限定在你存在sg分流中才能使用!");
-				return;
-			}
-			server = p.getServer().getInfo().getName();
-			Common.tell(sender, "&a成功發送公告");
-		}
+	public void sgAlert(final CommandSender sender, final String server) {
 		final BaseComponent[] text = new ComponentBuilder(Common.colored("&7-> " + "&a飢餓遊戲&7(MCSG)" + " &f即將開始! &8- "))
 				.append(genJSONMsg("/sg " + server)).create();
 		for (final String s : Bungee.servers) {

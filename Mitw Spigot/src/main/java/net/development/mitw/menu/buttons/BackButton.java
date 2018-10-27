@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import lombok.AllArgsConstructor;
+import net.development.mitw.Mitw;
 import net.development.mitw.menu.Button;
 import net.development.mitw.menu.Menu;
 
@@ -21,7 +22,7 @@ public class BackButton extends Button {
 		final ItemStack itemStack = new ItemStack(Material.BED);
 		final ItemMeta itemMeta = itemStack.getItemMeta();
 
-		itemMeta.setDisplayName(ChatColor.RED + "Go back");
+		itemMeta.setDisplayName(ChatColor.RED + Mitw.getInstance().getCoreLanguage().translate(player, "goBack"));
 		itemStack.setItemMeta(itemMeta);
 
 		return itemStack;

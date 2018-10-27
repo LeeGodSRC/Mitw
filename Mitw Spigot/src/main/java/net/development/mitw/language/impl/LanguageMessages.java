@@ -51,4 +51,34 @@ public class LanguageMessages {
 			"  §7- §e/vote ok",
 			"§7- after that you will get the gifts!",
 			"§8§m---------------------------§f");
+
+	public String zh_tw_previousPage = "上一頁";
+	public String en_us_previousPage = "Previous page";
+
+	public String zh_tw_nextPage = "下一頁";
+	public String en_us_nextPage = "Next page";
+
+	public String zh_tw_lastPage = "最後一頁";
+	public String en_us_lastPage = "Last page";
+
+	public String zh_tw_firstPage = "第一頁";
+	public String en_us_firstPage = "First page";
+
+	public String zh_tw_jumpPage = "選擇頁面";
+	public String en_us_jumpPage = "Jump to page";
+
+	public String zh_tw_goBack = "返回";
+	public String en_us_goBack = "Go back";
+
+	public String zh_tw_page = "第{0}頁";
+	public String en_us_page = "Page {0}";
+
+	public String zh_tw_currentPage = "目前所在的頁面";
+	public String en_us_currentPage = "Current page";
+
+	public List<String> zh_tw_jumpToPage_lore = Arrays.asList("", "§e右鍵點擊", "§e跳到該頁面", "");
+	public List<String> en_us_jumpToPage_lore = Arrays.asList("", "§eRight click to", "§ejump to a page", "");
+
+	public List<String> zh_tw_chosePage_lore = Arrays.asList("", "§e右鍵點擊", "§e選擇你想要的頁面", "");
+	public List<String> en_us_chosePage_lore = Arrays.asList("", "§eRight click to", "§echose the page you want", "");
 }

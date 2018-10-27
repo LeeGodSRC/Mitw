@@ -1,7 +1,5 @@
 package net.development.mitw.menu.pagination;
 
-import java.util.Arrays;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import lombok.AllArgsConstructor;
+import net.development.mitw.Mitw;
 import net.development.mitw.menu.Button;
 
 @AllArgsConstructor
@@ -24,16 +23,21 @@ public class PageButton extends Button {
 		final ItemMeta itemMeta = itemStack.getItemMeta();
 
 		if (this.hasNext(player)) {
-			itemMeta.setDisplayName(this.mod > 0 ? ChatColor.GREEN + "Next page" : ChatColor.RED + "Previous page");
-		} else {
-			itemMeta.setDisplayName(ChatColor.GRAY + (this.mod > 0 ? "Last page" : "First page"));
-		}
+			itemMeta.setDisplayName(this.mod > 0 ? ChatColor.GREEN +
+					Mitw.getInstance().getCoreLanguage().translate(player, "nextPage")
+					: ChatColor.RED + Mitw.getInstance().getCoreLanguage().translate(player, "previousPage"));
 
-		itemMeta.setLore(Arrays.asList(
-				"",
-				ChatColor.YELLOW + "Right click to",
-				ChatColor.YELLOW + "jump to a page"
-				));
+			itemMeta.setLore(Mitw.getInstance().getCoreLanguage().translateArrays(player, "jumpToPage_lore"));
+
+		} else {
+
+			itemMeta.setDisplayName(ChatColor.GRAY + (this.mod > 0 ?
+					Mitw.getInstance().getCoreLanguage().translate(player, "lastPage") :
+						Mitw.getInstance().getCoreLanguage().translate(player, "firstPage")));
+
+			itemMeta.setLore(Mitw.getInstance().getCoreLanguage().translateArrays(player, "chosePage_lore"));
+
+		}
 
 		itemStack.setItemMeta(itemMeta);
 

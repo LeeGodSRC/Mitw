@@ -8,10 +8,10 @@ import net.development.mitw.commands.Command;
 public class NameMCVoteCommand {
 
 	@Command(names = "votes")
-	public boolean execute(final Player player) {
+	public static void execute(final Player player) {
 		Mitw.getInstance().getCoreLanguage().translateArrays(player, "nameMCVoteInfo")
 		.forEach(player::sendMessage);
-		return false;
+		return;
 	}
 
 }

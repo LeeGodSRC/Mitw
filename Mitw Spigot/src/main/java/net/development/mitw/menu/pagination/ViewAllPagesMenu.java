@@ -2,14 +2,16 @@ package net.development.mitw.menu.pagination;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.bukkit.entity.Player;
+
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import net.development.mitw.Mitw;
 import net.development.mitw.menu.Button;
 import net.development.mitw.menu.Menu;
 import net.development.mitw.menu.buttons.BackButton;
-
-import org.bukkit.entity.Player;
 
 @RequiredArgsConstructor
 public class ViewAllPagesMenu extends Menu {
@@ -19,13 +21,13 @@ public class ViewAllPagesMenu extends Menu {
 	PaginatedMenu menu;
 
 	@Override
-	public String getTitle(Player player) {
-		return "Jump to page";
+	public String getTitle(final Player player) {
+		return Mitw.getInstance().getCoreLanguage().translate(player, "jumpPage");
 	}
 
 	@Override
-	public Map<Integer, Button> getButtons(Player player) {
-		HashMap<Integer, Button> buttons = new HashMap<>();
+	public Map<Integer, Button> getButtons(final Player player) {
+		final HashMap<Integer, Button> buttons = new HashMap<>();
 
 		buttons.put(0, new BackButton(menu));
 
