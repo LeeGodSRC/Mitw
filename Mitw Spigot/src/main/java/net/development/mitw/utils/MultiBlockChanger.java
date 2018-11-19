@@ -39,11 +39,11 @@ public class MultiBlockChanger {
 
 	private final Queue<BlockChange> blockChanges = new ArrayDeque<>();
 
-	public MultiBlockChanger(World world) {
+	public MultiBlockChanger(final World world) {
 		this.worldName = world.getName();
 	}
 
-	public MultiBlockChanger(String worldName) {
+	public MultiBlockChanger(final String worldName) {
 		this.worldName = worldName;
 	}
 
@@ -75,12 +75,12 @@ public class MultiBlockChanger {
 		return blockChanges;
 	}
 
-	public MultiBlockChanger setWorldName(String worldName) {
+	public MultiBlockChanger setWorldName(final String worldName) {
 		this.worldName = worldName;
 		return this;
 	}
 
-	public MultiBlockChanger setMaxChanges(int maxChanges) {
+	public MultiBlockChanger setMaxChanges(final int maxChanges) {
 		this.maxChanges = maxChanges;
 		return this;
 	}
@@ -95,44 +95,44 @@ public class MultiBlockChanger {
 		return this;
 	}
 
-	public MultiBlockChanger tick(long tick) {
+	public MultiBlockChanger tick(final long tick) {
 		this.tick = tick;
 		return this;
 	}
 
-	public MultiBlockChanger callback(Runnable callback) {
+	public MultiBlockChanger callback(final Runnable callback) {
 		this.callback = callback;
 		return this;
 	}
 
-	public MultiBlockChanger addBlockChanges(Block block, MaterialData materialData) {
+	public MultiBlockChanger addBlockChanges(final Block block, final MaterialData materialData) {
 		this.blockChanges.add(new BlockChange(BlockVector.toBlockVector(block), materialData));
 		return this;
 	}
 
-	public MultiBlockChanger addBlockChanges(Location location, MaterialData materialData) {
+	public MultiBlockChanger addBlockChanges(final Location location, final MaterialData materialData) {
 		this.blockChanges.add(new BlockChange(BlockVector.toBlockVector(location), materialData));
 		return this;
 	}
 
-	public MultiBlockChanger addBlockChanges(Block block, Material material, byte data) {
+	public MultiBlockChanger addBlockChanges(final Block block, final Material material, final byte data) {
 		this.blockChanges.add(new BlockChange(BlockVector.toBlockVector(block), material, data));
 		return this;
 	}
 
-	public MultiBlockChanger addBlockChanges(Location location, Material material, byte data) {
+	public MultiBlockChanger addBlockChanges(final Location location, final Material material, final byte data) {
 		this.blockChanges.add(new BlockChange(BlockVector.toBlockVector(location), material, data));
 		return this;
 	}
 
-	public MultiBlockChanger addBlockChanges(Material material, byte data, Location... locations) {
+	public MultiBlockChanger addBlockChanges(final Material material, final byte data, final Location... locations) {
 		for (final Location location : locations) {
 			this.blockChanges.add(new BlockChange(BlockVector.toBlockVector(location), material, data));
 		}
 		return this;
 	}
 
-	public MultiBlockChanger addBlockChanges(Material material, byte data, Block... blocks) {
+	public MultiBlockChanger addBlockChanges(final Material material, final byte data, final Block... blocks) {
 		for (final Block block : blocks) {
 			this.blockChanges.add(new BlockChange(BlockVector.toBlockVector(block), material, data));
 		}
@@ -141,7 +141,7 @@ public class MultiBlockChanger {
 
 	private BukkitTask bukkitTask = null;
 
-	public void start(JavaPlugin plugin) {
+	public void start(final JavaPlugin plugin) {
 
 		final World world = Bukkit.getWorld(worldName);
 
@@ -150,10 +150,9 @@ public class MultiBlockChanger {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public boolean add(SimpleChunk simpleChunk) {
-					if (this.contains(simpleChunk)) {
+				public boolean add(final SimpleChunk simpleChunk) {
+					if (this.contains(simpleChunk))
 						return false;
-					}
 					return super.add(simpleChunk);
 				}
 
@@ -180,21 +179,20 @@ public class MultiBlockChanger {
 						/*
 							i make the block set to nms because its pertty great for performance
 							you can change it to bukkit api if you want
-						*/
+						 */
 						final net.minecraft.server.v1_8_R3.World w = ((CraftWorld) world).getHandle();
-				        final net.minecraft.server.v1_8_R3.Chunk chunk = w.getChunkAt(blockVector.getX() >> 4, blockVector.getZ() >> 4);
-				        final BlockPosition bp = new BlockPosition(blockVector.getX(), blockVector.getY(), blockVector.getZ());
-				        final int combined = blockChange.getMaterialData().getItemTypeId() + (blockChange.getMaterialData().getData() << 12);
-				        final IBlockData ibd = net.minecraft.server.v1_8_R3.Block.getByCombinedId(combined);
-				        w.setTypeAndData(bp, ibd, 2);
-				        chunk.a(bp, ibd);
+						final net.minecraft.server.v1_8_R3.Chunk chunk = w.getChunkAt(blockVector.getX() >> 4, blockVector.getZ() >> 4);
+						final BlockPosition bp = new BlockPosition(blockVector.getX(), blockVector.getY(), blockVector.getZ());
+						final int combined = blockChange.getMaterialData().getItemTypeId() + (blockChange.getMaterialData().getData() << 12);
+						final IBlockData ibd = net.minecraft.server.v1_8_R3.Block.getByCombinedId(combined);
+						w.setTypeAndData(bp, ibd, 2);
+						chunk.a(bp, ibd);
 
 					}
 				}
 
-				if (!blockSetDone) {
+				if (!blockSetDone)
 					return;
-				}
 
 				while (!chunksToRefresh.isEmpty()) {
 					final SimpleChunk simpleChunk = chunksToRefresh.poll();
@@ -221,9 +219,7 @@ public class MultiBlockChanger {
 
 		int x = 0, y = 0, z = 0;
 
-		private BlockVector() {}
-
-		public BlockVector(int x, int y, int z) {
+		public BlockVector(final int x, final int y, final int z) {
 			this.x = x;
 			this.y = y;
 			this.z = z;
@@ -241,11 +237,11 @@ public class MultiBlockChanger {
 			return z;
 		}
 
-		private static BlockVector toBlockVector(Block block) {
+		private static BlockVector toBlockVector(final Block block) {
 			return new BlockVector(block.getX(), block.getY(), block.getZ());
 		}
 
-		private static BlockVector toBlockVector(Location location) {
+		private static BlockVector toBlockVector(final Location location) {
 			return new BlockVector(location.getBlockX(), location.getBlockY(), location.getBlockZ());
 		}
 
@@ -253,17 +249,15 @@ public class MultiBlockChanger {
 
 	private static class BlockChange {
 
-		private BlockVector blockVector;
-		private MaterialData materialData;
+		private final BlockVector blockVector;
+		private final MaterialData materialData;
 
-		private BlockChange() {}
-
-		public BlockChange(BlockVector blockVector, MaterialData materialData) {
+		public BlockChange(final BlockVector blockVector, final MaterialData materialData) {
 			this.blockVector = blockVector;
 			this.materialData = materialData;
 		}
 
-		public BlockChange(BlockVector blockVector, Material material, byte data) {
+		public BlockChange(final BlockVector blockVector, final Material material, final byte data) {
 			this.blockVector = blockVector;
 			this.materialData = new MaterialData(material, data);
 		}
@@ -282,9 +276,7 @@ public class MultiBlockChanger {
 
 		private int x = 0, z = 0;
 
-		private SimpleChunk() {}
-
-		public SimpleChunk(int x, int z) {
+		public SimpleChunk(final int x, final int z) {
 			this.x = x;
 			this.z = z;
 		}
@@ -298,10 +290,9 @@ public class MultiBlockChanger {
 		}
 
 		@Override
-		public boolean equals(Object object) {
-			if (!(object instanceof SimpleChunk)) {
+		public boolean equals(final Object object) {
+			if (!(object instanceof SimpleChunk))
 				return false;
-			}
 			return ((SimpleChunk) object).getX() == this.x && ((SimpleChunk) object).getZ() == this.z;
 		}
 	}
