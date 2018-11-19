@@ -62,7 +62,7 @@
       <artifactId>nspigot</artifactId>
       <version>1.8.8-R0.1-SNAPSHOT</version>
       <scope>system</scope>
-      <systemPath>${project.basedir}/libs/ySpigot2.jar</systemPath>
+      <systemPath>${project.basedir}/libs/nspigot-2.0E.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>

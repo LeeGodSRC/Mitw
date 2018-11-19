@@ -37,6 +37,7 @@ import net.development.mitw.utils.FastRandom;
 import net.development.mitw.utils.holograms.Hologram;
 import net.development.mitw.utils.holograms.HologramAPI;
 import net.development.mitw.utils.holograms.HologramListeners;
+import net.development.mitw.utils.timer.TimerManager;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 
 @Getter
@@ -50,6 +51,7 @@ public class Mitw extends JavaPlugin {
 
 	private ChatManager chatManager;
 	private LanguageData languageData;
+	private TimerManager timerManager;
 	private NameMC nameMC;
 	private LanguageAPI coreLanguage;
 	private Set<ChatHandler> chatHandlers;
@@ -68,6 +70,7 @@ public class Mitw extends JavaPlugin {
 
 		new BlockCrashHandler();
 		nameMC = new NameMC(this);
+		timerManager = new TimerManager(this);
 		chatHandlers = new HashSet<>();
 		helpHandlers = new HashSet<>();
 
