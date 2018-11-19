@@ -35,19 +35,29 @@ public class PacketEventListener {
 
 		PacketHandler.getInstance().register(new PacketListener() {
 			@Override
-			public void out(PacketEvent arg0) {}
+			public void out(final PacketEvent arg0) {}
 
 			@Override
-			public void in(PacketEvent packetEvent) {
+			public void in(final PacketEvent packetEvent) {
 				if (packetEvent.getPacket() instanceof PacketPlayInTabComplete) {
 
-					if (!packetEvent.hasPlayer()) {
+					if (!packetEvent.hasPlayer())
 						return;
-					}
 
 					final Player player = packetEvent.getPlayer();
 					MitwProtector.player = player.getName();
-					final String message = ((String) packetEvent.getPacketValue("a")).split(" ")[0].toLowerCase();
+
+					final String packetValue = (String) packetEvent.getPacketValue("a");
+
+					if (packetValue == null)
+						return;
+
+					final String[] messages = packetValue.split(" ");
+
+					if (messages.length == 0)
+						return;
+
+					final String message = messages[0].toLowerCase();
 
 					for (final String command : blocked) {
 						if (!player.hasPermission("mitw.admin")
