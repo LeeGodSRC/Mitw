@@ -9,7 +9,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,19 +27,7 @@ public abstract class Menu {
 	private Button placeholderButton = Button.placeholder(Material.STAINED_GLASS_PANE, (byte) 15, " ");
 
 	private ItemStack createItemStack(final Player player, final Button button) {
-		final ItemStack item = button.getButtonItem(player);
-
-		if (item.getType() != Material.SKULL_ITEM) {
-			final ItemMeta meta = item.getItemMeta();
-
-			if (meta != null && meta.hasDisplayName()) {
-				meta.setDisplayName(meta.getDisplayName() + "§b§c§d§e");
-			}
-
-			item.setItemMeta(meta);
-		}
-
-		return item;
+		return button.getButtonItem(player);
 	}
 
 	public void openMenu(final Player player) {
