@@ -21,7 +21,11 @@ public class CommandManager {
 			public void execute(final CommandSender sender, final String[] args) {
 				if (!(sender instanceof ProxiedPlayer))
 					return;
-				((ProxiedPlayer) sender).connect(ProxyServer.getInstance().getServerInfo("meetup"));
+				if (args.length != 1)
+					return;
+				if (!args[0].contains("meetup-"))
+					return;
+				((ProxiedPlayer) sender).connect(ProxyServer.getInstance().getServerInfo(args[0]));
 			}
 		}, new Command("sg") {
 			@Override

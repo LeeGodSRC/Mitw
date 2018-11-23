@@ -39,6 +39,9 @@ public class Broadcast extends Command {
 			sgAlert(sender, serverName);
 			return;
 		}
+		if (serverName.contains("meetup") && isBoolean(args[1])) {
+			meetupAlert(sender, serverName, Boolean.parseBoolean(args[1]));
+		}
 		if (!broadcasts.containsKey(serverName))
 			return;
 		final BaseComponent[] text = new ComponentBuilder(Common.colored("&7-> " + broadcasts.get(serverName) + " &f即將開始! &8- "))
@@ -50,6 +53,16 @@ public class Broadcast extends Command {
 		}
 		Common.tell(sender, "&a成功發送公告");
 		return;
+	}
+
+	private void meetupAlert(final CommandSender sender, final String serverName, final boolean team) {
+		final BaseComponent[] text = new ComponentBuilder(Common.colored("&7-> " + "&e模擬UHC&7(Meetup)" + " &f即將開始! &7(" + (team ? "&bTeam" : "&eSolo") + "&7) &8- "))
+				.append(genJSONMsg("/meetup " + serverName)).create();
+		for (final String s : Bungee.servers) {
+			for (final ProxiedPlayer pl : ProxyServer.getInstance().getServerInfo(s).getPlayers()) {
+				Common.tell(pl, text);
+			}
+		}
 	}
 
 	public void UHCAlert() {
@@ -76,6 +89,11 @@ public class Broadcast extends Command {
 		final TextComponent msg = new TextComponent("§e§l[點我加入!][Click me to join]");
 		msg.setClickEvent(new ClickEvent(Action.RUN_COMMAND, cmd));
 		return msg;
+	}
+
+	public boolean isBoolean(final String string) {
+		try { Boolean.parseBoolean(string); } catch (final Exception e) { return false; }
+		return true;
 	}
 
 }
