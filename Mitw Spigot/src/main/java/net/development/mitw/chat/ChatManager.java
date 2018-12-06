@@ -21,6 +21,7 @@ import net.development.mitw.chat.check.CheckType;
 import net.development.mitw.chat.check.HighCheck;
 import net.development.mitw.chat.check.LowCheck;
 import net.development.mitw.chat.check.SingleCheck;
+import net.development.mitw.chat.slowchat.ChatSlowerAI;
 import net.development.mitw.config.Settings;
 import net.development.mitw.events.ConfigurationReloadEvent;
 import net.development.mitw.hooks.LuckPerms;
@@ -37,11 +38,14 @@ public class ChatManager implements Listener {
 	@Getter
 	private final ChatDatabase chatDB;
 	private final List<String> TOXIC_REPLACEMENT = new ArrayList<>();
+	@Getter
+	private final ChatSlowerAI chatSlowerAI;
 
-	public ChatManager(Mitw plugin) {
+	public ChatManager(final Mitw plugin) {
 		this.plugin = plugin;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 		chatDB = new ChatDatabase(plugin);
+		chatSlowerAI = new ChatSlowerAI(plugin);
 		load();
 	}
 
@@ -52,7 +56,7 @@ public class ChatManager implements Listener {
 		new SingleCheck(getChatDB().getAllWordsByType(CheckType.SINGLE));
 	}
 
-	public String getChatPrefix(Player player) {
+	public String getChatPrefix(final Player player) {
 		final String luckpermsPrefix;
 		if (Settings.IS_BETTER_NICK && BetterNickAPI.getApi().isNicked(player)) {
 			luckpermsPrefix = "&7";
@@ -64,17 +68,19 @@ public class ChatManager implements Listener {
 
 		for (final ChatHandler chatHandler : plugin.getChatHandlers()) {
 			final String prefix = chatHandler.getPrefix(player);
-			if (prefix == null || prefix.isEmpty())
+			if (prefix == null || prefix.isEmpty()) {
 				continue;
+			}
 			builder.append(chatHandler.getPrefix(player));
 		}
-		if (luckpermsPrefix != null)
+		if (luckpermsPrefix != null) {
 			builder.append(luckpermsPrefix);
+		}
 
 		return Common.colored(builder.toString());
 	}
 
-	public String getSuffixPrefix(Player player) {
+	public String getSuffixPrefix(final Player player) {
 		final String luckpermsPrefix;
 		if (Settings.IS_BETTER_NICK && BetterNickAPI.getApi().isNicked(player)) {
 			luckpermsPrefix = "&7";
@@ -85,8 +91,9 @@ public class ChatManager implements Listener {
 
 		for (final ChatHandler chatHandler : plugin.getChatHandlers()) {
 			final String suffix = chatHandler.getSuffix(player);
-			if (suffix == null || suffix.isEmpty())
+			if (suffix == null || suffix.isEmpty()) {
 				continue;
+			}
 			builder.append(chatHandler.getSuffix(player));
 		}
 		builder.append(luckpermsPrefix);
@@ -97,7 +104,7 @@ public class ChatManager implements Listener {
 		return TOXIC_REPLACEMENT.get(Mitw.getRandom().nextInt(TOXIC_REPLACEMENT.size()));
 	}
 
-	public static PlayerCache getPlayerCaches(UUID id) {
+	public static PlayerCache getPlayerCaches(final UUID id) {
 		PlayerCache cache = playerCaches.getIfPresent(id);
 		if (cache == null) {
 			cache = new PlayerCache(id);
@@ -107,7 +114,7 @@ public class ChatManager implements Listener {
 	}
 
 	@EventHandler
-	public void onConfigurationReload(ConfigurationReloadEvent e) {
+	public void onConfigurationReload(final ConfigurationReloadEvent e) {
 		load();
 	}
 

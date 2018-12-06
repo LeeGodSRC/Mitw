@@ -24,30 +24,26 @@ public class ChatListener implements org.bukkit.event.Listener {
 
 	private final Mitw plugin;
 
-	public ChatListener(Mitw plugin) {
+	public ChatListener(final Mitw plugin) {
 		this.plugin = plugin;
 	}
 
 	@EventHandler
-	public void onChat(AsyncPlayerChatEvent e) {
+	public void onChat(final AsyncPlayerChatEvent e) {
 		final Player p = e.getPlayer();
 		final UUID u = p.getUniqueId();
 		final PlayerCache cache = ChatManager.getPlayerCaches(u);
 		String message = e.getMessage();
 		final int cooldownTime = (int) ((System.currentTimeMillis() - cache.getLastTalkTime()) / 1000);
-		/*if (cache.isMute()) {
-			if (cooldownTime < Settings.MUTE_TIME) {
-				e.setCancelled(true);
-				Common.tell(p,
-						Mitw.getInstance().getCoreLanguage().translate(p, "inMute").replaceAll("<sec>", Settings.MUTE_TIME - cooldownTime + ""));
-				return;
-			}
-			cache.setMute(false);
-		}*/
-		if (cooldownTime < Settings.CHAT_COOLDOWN) { // 還沒冷卻結束
+		if (!plugin.getChatManager().getChatSlowerAI().isChatEnabled()) {
+			e.setCancelled(true);
+			p.sendMessage("§cChat is disband by §eMitwAI");
+		}
+		final int cooldown = plugin.getChatManager().getChatSlowerAI().getChatCooldown();
+		if (cooldownTime < cooldown) { // 還沒冷卻結束
 			e.setCancelled(true);
 			Common.tell(p, Mitw.getInstance().getCoreLanguage().translate(p, "cooldownChat").replaceAll("<sec>",
-					Settings.CHAT_COOLDOWN - cooldownTime + ""));
+					cooldown - cooldownTime + ""));
 			return;
 		}
 		if (Settings.IS_NO_SAME_MESSAGE && message.equalsIgnoreCase(cache.getLastMessage())) {
@@ -55,8 +51,9 @@ public class ChatListener implements org.bukkit.event.Listener {
 			Common.tell(p, Mitw.getInstance().getCoreLanguage().translate(p, "noSpam"));
 			return;
 		}
-		if (!(message.toLowerCase().equals("gg") || message.toLowerCase().equals("gf")))
+		if (!(message.toLowerCase().equals("gg") || message.toLowerCase().equals("gf"))) {
 			cache.setLastMessage(message);
+		}
 
 		cache.setLastTalkTime(System.currentTimeMillis());
 
@@ -91,17 +88,20 @@ public class ChatListener implements org.bukkit.event.Listener {
 			e.setFormat(prefix + e.getPlayer().getName() + suffix + "§f: " + ChatColor.GOLD + message);
 			return;
 		}
-		if (e.getPlayer().hasPermission("mChat.color"))
+		if (e.getPlayer().hasPermission("mChat.color")) {
 			e.setFormat(ChatColor.translateAlternateColorCodes('&', prefix + e.getPlayer().getName() + suffix + "&f: " + message));
-		else
+		} else {
 			e.setFormat(prefix + e.getPlayer().getName() + suffix + "§f: " + message);
+		}
+
+		plugin.getChatManager().getChatSlowerAI().detectChatSpammer(p, message);
 
 	}
 
 	ExecutorService executor = Executors.newSingleThreadExecutor();
 
 	@EventHandler
-	public void onQuit(PlayerQuitEvent e) {
+	public void onQuit(final PlayerQuitEvent e) {
 		executor.execute(() -> ChatManager.getPlayerCaches(e.getPlayer().getUniqueId()).save());
 	}
 

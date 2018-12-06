@@ -360,7 +360,7 @@ public abstract class Protocol_Newer extends IProtocol {
 			}
 
 			return interceptor;
-		} catch (final IllegalArgumentException e) {
+		} catch (final Exception e) {
 			// Try again
 			return (PacketInterceptor) channel.pipeline().get(handlerName);
 		}

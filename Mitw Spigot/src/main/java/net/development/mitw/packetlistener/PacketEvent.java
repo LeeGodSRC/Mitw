@@ -22,7 +22,7 @@ public class PacketEvent {
 	protected FieldResolver fieldResolver;
 
 	@SuppressWarnings("rawtypes")
-	public PacketEvent(Object owner, Object packet) {
+	public PacketEvent(final Object owner, final Object packet) {
 		if (owner instanceof Player) {
 			this.player = (Player) owner;
 			this.channelWrapper = null;
@@ -36,16 +36,20 @@ public class PacketEvent {
 		fieldResolver = new FieldResolver(packet.getClass());
 	}
 
-	public void setPacketValue(String field, Object value) {
+	public void setPacketValue(final String field, final Object value) {
 		ReflectionUtils.setField(packet, field, value);
 	}
 
-	public Object getPacketValue(String field) {
+	public Object getPacketValue(final String field) {
 		try {
 			return fieldResolver.resolve(field).get(packet);
 		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public <T> T getPacketValue(final String field, final Class<T> cast) {
+		return (T) getPacketValue(field);
 	}
 
 	public String getPacketName() {

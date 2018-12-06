@@ -1,6 +1,7 @@
 package net.development.mitw.packetlistener;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.bukkit.entity.Player;
@@ -27,7 +28,7 @@ public class PacketHandler {
 		try {
 			packetListenerInit = new Protocol_Newer(Mitw.getInstance()) {
 				@Override
-				public Object onPacketInAsync(Player sender, ChannelWrapper channel, Object packet) {
+				public Object onPacketInAsync(final Player sender, final ChannelWrapper channel, final Object packet) {
 
 					Object owner = null;
 
@@ -42,11 +43,31 @@ public class PacketHandler {
 						packetListener.in(packetEvent);
 					}
 
-					if (packetEvent.isCancelled()) {
+					if (packetEvent.isCancelled())
 						return null;
-					}
 
 					return super.onPacketInAsync(sender, channel, packet);
+				}
+				@Override
+				public Object onPacketOutAsync(final Player receiver, final ChannelWrapper channelWrapper, final Object packet) {
+
+					Object owner = null;
+
+					if (receiver != null) {
+						owner = receiver;
+					} else {
+						owner = channelWrapper;
+					}
+
+					final PacketEvent packetEvent = new PacketEvent(owner, packet);
+					for (final PacketListener packetListener : packetListeners) {
+						packetListener.out(packetEvent);
+					}
+
+					if (packetEvent.isCancelled())
+						return null;
+
+					return super.onPacketOutAsync(receiver, channelWrapper, packet);
 				}
 			};
 		} catch (final Exception e) {
@@ -54,16 +75,22 @@ public class PacketHandler {
 		}
 	}
 
-	public boolean register(PacketListener packetListener) {
-		if(packetListeners.contains(packetListener)) {
+	public boolean register(final PacketListener packetListener) {
+		if(packetListeners.contains(packetListener))
 			return false;
-		}
 		packetListeners.add(packetListener);
 		return true;
 	}
 
-	public boolean unregister(PacketListener packetListener) {
-		return packetListeners.remove(packetListener);
+	public boolean unregister(final Class<?> clazz) {
+		final Iterator<PacketListener> listenerIterator = packetListeners.iterator();
+		while (listenerIterator.hasNext()) {
+			if (listenerIterator.next().getClass().equals(clazz)) {
+				listenerIterator.remove();
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

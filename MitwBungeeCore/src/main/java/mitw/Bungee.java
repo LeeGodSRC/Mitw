@@ -17,6 +17,9 @@ import mitw.managers.BungeeListener;
 import mitw.managers.CommandManager;
 import mitw.managers.YamlManagers;
 import mitw.modules.MotdDisplay;
+import mitw.util.Lang;
+import mitw.util.MitwLanguage;
+import mitw.util.MitwLanguage.SQLConnection;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Listener;
@@ -28,6 +31,7 @@ public class Bungee extends Plugin {
 	public static HashMap<UUID, UUID> replys = new HashMap<>();
 	public static String Prefix;
 	public static String CPrefix;
+	public static MitwLanguage language;
 	public static ArrayList<String> servers = new ArrayList<>();
 
 	static {
@@ -39,6 +43,11 @@ public class Bungee extends Plugin {
 	public void onEnable() {
 		ins = this;
 		registerSgAlertServer();
+
+		final SQLConnection conn = new SQLConnection("127.0.0.1", 3306, "root", "mitwsdriverpass", "language");
+		conn.connect();
+		language = new MitwLanguage(conn, new Lang());
+
 		registerCommand(
 				new Lobby(this),
 				new Server(this),
@@ -51,10 +60,12 @@ public class Bungee extends Plugin {
 				new Reload(this));
 		registerListener(
 				new MotdDisplay(this),
-				new BungeeListener());
+				new BungeeListener(),
+				language);
 		new CommandManager(this);
 		final YamlManagers YamlManagers = new YamlManagers(this);
 		YamlManagers.SetUp();
+
 	}
 
 	@Override
