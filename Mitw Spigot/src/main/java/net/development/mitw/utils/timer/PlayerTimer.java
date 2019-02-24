@@ -136,11 +136,15 @@ public abstract class PlayerTimer extends Timer {
 			return flag;
 		} else {
 			Bukkit.getPluginManager().callEvent(new TimerStartEvent(player, playerUUID, this, duration));
-			runnable = new TimerCooldown(this, playerUUID, duration);
+			runnable = create(playerUUID, duration);
 		}
 
 		this.cooldowns.put(playerUUID, runnable);
 		return true;
+	}
+
+	public TimerCooldown create(final UUID uuid, final long duration) {
+		return new TimerCooldown(this, uuid, duration);
 	}
 
 	@Override

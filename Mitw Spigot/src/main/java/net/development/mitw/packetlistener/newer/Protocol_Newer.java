@@ -15,7 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -34,6 +34,8 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.ChannelPromise;
 import net.development.mitw.packetlistener.IProtocol;
 import net.development.mitw.packetlistener.Reflection;
+import net.development.mitw.packetlistener.Reflection.FieldAccessor;
+import net.development.mitw.packetlistener.Reflection.MethodInvoker;
 import net.development.mitw.packetlistener.channel.ChannelWrapper;
 
 /**
@@ -44,8 +46,24 @@ import net.development.mitw.packetlistener.channel.ChannelWrapper;
  * @author Kristian
  */
 public abstract class Protocol_Newer extends IProtocol {
-
 	private static final AtomicInteger ID = new AtomicInteger(0);
+
+	// Used in order to lookup a channel
+	private static final MethodInvoker getPlayerHandle = Reflection.getMethod("{obc}.entity.CraftPlayer", "getHandle");
+	private static final FieldAccessor<Object> getConnection = Reflection.getField("{nms}.EntityPlayer", "playerConnection", Object.class);
+	private static final FieldAccessor<Object> getManager = Reflection.getField("{nms}.PlayerConnection", "networkManager", Object.class);
+	private static final FieldAccessor<Channel> getChannel = Reflection.getField("{nms}.NetworkManager", Channel.class, 0);
+
+	// Looking up ServerConnection
+	private static final Class<Object> minecraftServerClass = Reflection.getUntypedClass("{nms}.MinecraftServer");
+	private static final Class<Object> serverConnectionClass = Reflection.getUntypedClass("{nms}.ServerConnection");
+	private static final FieldAccessor<Object> getMinecraftServer = Reflection.getField("{obc}.CraftServer", minecraftServerClass, 0);
+	private static final FieldAccessor<Object> getServerConnection = Reflection.getField(minecraftServerClass, serverConnectionClass, 0);
+	private static final MethodInvoker getNetworkMarkers = Reflection.getTypedMethod(serverConnectionClass, null, List.class, serverConnectionClass);
+
+	// Packets we have to intercept
+	private static final Class<?> PACKET_LOGIN_IN_START = Reflection.getMinecraftClass("PacketLoginInStart");
+	private static final FieldAccessor<GameProfile> getGameProfile = Reflection.getField(PACKET_LOGIN_IN_START, GameProfile.class, 0);
 
 	// Speedup channel lookup
 	private final Map<String, Channel> channelLookup = new MapMaker().weakValues().makeMap();
@@ -155,7 +173,7 @@ public abstract class Protocol_Newer extends IProtocol {
 		listener = new Listener() {
 
 			@EventHandler(priority = EventPriority.LOWEST)
-			public final void onPlayerJoin(final PlayerJoinEvent e) {
+			public final void onPlayerLogin(final PlayerLoginEvent e) {
 				if (closed)
 					return;
 
@@ -243,7 +261,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @return The packet to send instead, or NULL to cancel the transmission.
 	 */
 	@Override
-	public Object onPacketOutAsync(final Player receiver, final ChannelWrapper channelWrapper, final Object packet) {
+	public Object onPacketOutAsync(final Player receiver, final ChannelWrapper channel, final Object packet) {
 		return packet;
 	}
 
@@ -258,7 +276,7 @@ public abstract class Protocol_Newer extends IProtocol {
 	 * @return The packet to recieve instead, or NULL to cancel.
 	 */
 	@Override
-	public Object onPacketInAsync(final Player sender, final ChannelWrapper channelWrapper, final Object packet) {
+	public Object onPacketInAsync(final Player sender, final ChannelWrapper channel, final Object packet) {
 		return packet;
 	}
 
@@ -360,7 +378,7 @@ public abstract class Protocol_Newer extends IProtocol {
 			}
 
 			return interceptor;
-		} catch (final Exception e) {
+		} catch (final IllegalArgumentException e) {
 			// Try again
 			return (PacketInterceptor) channel.pipeline().get(handlerName);
 		}
@@ -466,7 +484,7 @@ public abstract class Protocol_Newer extends IProtocol {
 			handleLoginStart(channel, msg);
 
 			try {
-				msg = onPacketInAsync(player, new INCChannelWrapper(ctx.channel()), msg);
+				msg = onPacketInAsync(player, new INCChannelWrapper(channel), msg);
 			} catch (final Exception e) {
 				plugin.getLogger().log(Level.SEVERE, "Error in onPacketInAsync().", e);
 			}
@@ -497,9 +515,9 @@ public abstract class Protocol_Newer extends IProtocol {
 		}
 	}
 
-	class INCChannelWrapper extends ChannelWrapper<io.netty.channel.Channel> implements IChannelWrapper {
+	class INCChannelWrapper extends ChannelWrapper<Channel> implements IChannelWrapper {
 
-		public INCChannelWrapper(final io.netty.channel.Channel channel) {
+		public INCChannelWrapper(final Channel channel) {
 			super(channel);
 		}
 

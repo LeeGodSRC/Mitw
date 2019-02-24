@@ -63,7 +63,7 @@
 			<groupId>de.demomedd.betternick</groupId>
 			<artifactId>BetterNick</artifactId>
 			<version>1.0.0</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -77,6 +77,13 @@
 			<version>1.8.8-R0.1-SNAPSHOT</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/libs/nspigot-2.0E.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>mitw.spigot</groupId>
+			<artifactId>MitwSpigot</artifactId>
+			<version>1.7.10-R0.1-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/Paper1.7Forked.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>me.lucko.luckperms</groupId>

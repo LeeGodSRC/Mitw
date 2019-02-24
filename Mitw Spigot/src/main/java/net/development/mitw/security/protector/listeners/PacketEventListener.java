@@ -24,7 +24,6 @@ import net.development.mitw.packetlistener.PacketHandler;
 import net.development.mitw.packetlistener.PacketListener;
 import net.development.mitw.security.protector.MitwProtector;
 import net.development.mitw.security.protector.utils.ExecutionUtil;
-import net.minecraft.server.v1_8_R3.PacketPlayInTabComplete;
 
 public class PacketEventListener {
 
@@ -39,7 +38,7 @@ public class PacketEventListener {
 
 			@Override
 			public void in(final PacketEvent packetEvent) {
-				if (packetEvent.getPacket() instanceof PacketPlayInTabComplete) {
+				if (packetEvent.getPacketName().equals("PacketPlayInTabComplate")) {
 
 					if (!packetEvent.hasPlayer())
 						return;

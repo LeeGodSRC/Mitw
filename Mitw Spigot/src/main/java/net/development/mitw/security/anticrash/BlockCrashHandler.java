@@ -10,25 +10,22 @@ import net.development.mitw.packetlistener.PacketEvent;
 import net.development.mitw.packetlistener.PacketHandler;
 import net.development.mitw.packetlistener.PacketListener;
 import net.development.mitw.security.NBTType;
-import net.minecraft.server.v1_8_R3.ItemStack;
-import net.minecraft.server.v1_8_R3.NBTTagList;
-import net.minecraft.server.v1_8_R3.PacketPlayInBlockPlace;
 
 public class BlockCrashHandler {
 
 	public BlockCrashHandler() {
 		PacketHandler.getInstance().register(new PacketListener() {
 			@Override
-			public void out(PacketEvent packetEvent) {
+			public void out(final PacketEvent packetEvent) {
 			}
 
 			@Override
-			public void in(PacketEvent packetEvent) {
-				if (packetEvent.getPacket() instanceof PacketPlayInBlockPlace) {
+			public void in(final PacketEvent packetEvent) {
+				if (packetEvent.getPacket() instanceof net.minecraft.server.v1_8_R3.PacketPlayInBlockPlace) {
 					final Player player = packetEvent.getPlayer();
-					final ItemStack book = (ItemStack) packetEvent.getPacketValue("d");
+					final net.minecraft.server.v1_8_R3.ItemStack book = (net.minecraft.server.v1_8_R3.ItemStack) packetEvent.getPacketValue("d");
 					if (book != null && book.hasTag() && book.getTag().hasKey("pages")) {
-						final NBTTagList pages = book.getTag().getList("pages", NBTType.String.getType());
+						final net.minecraft.server.v1_8_R3.NBTTagList pages = book.getTag().getList("pages", NBTType.String.getType());
 						if (pages.size() > 50) {
 							packetEvent.setCancelled(true);
 							handleInvalidPacket(player);
@@ -50,7 +47,7 @@ public class BlockCrashHandler {
 		});
 	}
 
-	public void handleInvalidPacket(Player player) {
+	public void handleInvalidPacket(final Player player) {
 		new Runnable() {
 			@Override
 			public void run() {

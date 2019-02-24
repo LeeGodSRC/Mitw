@@ -266,7 +266,7 @@ public class MitwLanguage implements Listener{
 				connection = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + port + "/" + database, this.name,
 						this.password);
 
-				ProxyServer.getInstance().getConsole().sendMessage("��aMitw Language API SQL Connectted");
+				ProxyServer.getInstance().getConsole().sendMessage("§aMitw Language API SQL Connectted");
 				createTable();
 				return true;
 			} catch (final Exception e) {

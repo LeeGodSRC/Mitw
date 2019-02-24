@@ -1,6 +1,9 @@
 package net.development.mitw.utils.timer;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.bukkit.event.Listener;
@@ -11,16 +14,18 @@ import lombok.Getter;
 import net.development.mitw.config.Configuration;
 
 @Data
-public class TimerManager implements Listener {
+public class TimerManager implements Listener, Runnable {
 
 	@Getter
 	private final Set<Timer> timers = new LinkedHashSet<>();
+	private final List<TimerCooldown> timerCooldowns = new ArrayList<>();
 
 	private Configuration configuration;
 	private final JavaPlugin plugin;
 
 	public TimerManager(final JavaPlugin plugin) {
 		this.plugin = plugin;
+		plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, this, 4L, 4L);
 	}
 
 	public void registerTimer(final Timer timer) {
@@ -55,6 +60,18 @@ public class TimerManager implements Listener {
 		configuration = new Configuration("timers");
 		for (final Timer timer : timers) {
 			timer.load(configuration);
+		}
+	}
+
+	@Override
+	public void run() {
+		final long now = System.currentTimeMillis();
+		final Iterator<TimerCooldown> iterator = timerCooldowns.iterator();
+		while (iterator.hasNext()) {
+			final TimerCooldown timer = iterator.next();
+			if (timer.check(now)) {
+				iterator.remove();
+			}
 		}
 	}
 }

@@ -6,11 +6,11 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.development.mitw.Mitw;
+import net.development.mitw.utils.BukkitUtil;
 import net.development.mitw.utils.reflection.NMSClass;
 import net.development.mitw.utils.reflection.Reflection;
 import net.development.mitw.utils.reflection.minecraft.DataWatcher;
@@ -290,7 +290,7 @@ public abstract class CraftHologram implements Hologram {
 
 			for (final Player p : receivers) {
 
-				if (((CraftPlayer) p).getHandle().playerConnection.networkManager.getProtocolVersion().getProtocol() > 5) {
+				if (BukkitUtil.getVersion(p) > 5) {
 
 					HologramAPI.sendPacket(p, this.spawnPacketHorse_1_8);
 
@@ -347,7 +347,7 @@ public abstract class CraftHologram implements Hologram {
 
 			if (holo) {
 
-				if (((CraftPlayer) p).getHandle().playerConnection.networkManager.getProtocolVersion().getProtocol() > 5) {
+				if (BukkitUtil.getVersion(p) > 5) {
 
 					HologramAPI.sendPacket(p, this.teleportPacketHorse_1_8);
 
@@ -379,11 +379,11 @@ public abstract class CraftHologram implements Hologram {
 
 			try {
 
-				final int id = ((CraftPlayer) p).getHandle().playerConnection.networkManager.getProtocolVersion().getProtocol() > 5
+				final int id = BukkitUtil.getVersion(p) > 5
 						? this.hologramIDs[2]
 								: this.hologramIDs[1];
 
-						final Object dataWatcher = ((CraftPlayer) p).getHandle().playerConnection.networkManager.getProtocolVersion().getProtocol() > 5
+						final Object dataWatcher = BukkitUtil.getVersion(p) > 5
 								? this.dataWatcherHorse_1_8
 										: this.dataWatcherHorse_1_7;
 
@@ -391,7 +391,7 @@ public abstract class CraftHologram implements Hologram {
 
 						HologramAPI.sendPacket(p, packet);
 
-						if ((((CraftPlayer) p).getHandle().playerConnection.networkManager.getProtocolVersion().getProtocol() <= 5)
+						if ((BukkitUtil.getVersion(p) <= 5)
 								&& (this.hologramIDs.length > 1)) {
 
 							HologramAPI.sendPacket(p,

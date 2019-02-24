@@ -27,7 +27,6 @@ import net.development.mitw.security.protector.listeners.CommandEventListener;
 import net.development.mitw.security.protector.listeners.PacketEventListener;
 import net.development.mitw.security.protector.listeners.PacketMessageListener;
 import net.development.mitw.security.protector.listeners.PlayerJoinListener;
-import net.minecraft.server.v1_8_R3.MinecraftServer;
 
 public class MitwProtector {
 
@@ -66,7 +65,7 @@ public class MitwProtector {
 	 *            The string that should be filtered.
 	 * @return The new string with replaced placeholders.
 	 */
-	public static String placeholders(String args) {
+	public static String placeholders(final String args) {
 		return StringEscapeUtils.unescapeJava(args.replace("%prefix%", color(prefix)).replace("%player%", player)
 				.replace("%errormessage%", errorMessage).replace("%command%", "/" + playerCommand));
 	}
@@ -93,7 +92,8 @@ public class MitwProtector {
 		server.getMessenger().registerOutgoingPluginChannel(plugin, MCBRAND);
 		server.getMessenger().registerOutgoingPluginChannel(plugin, SCHEMATICA);
 
-		MinecraftServer.getServer().server.getCommandMap().register("protector", "mitw", new EZPCommand());
+		Mitw.getInstance().registerCommand(new EZPCommand(), "mitw");
+
 
 		server.getPluginManager().registerEvents(new CommandEventListener(), plugin);
 		server.getPluginManager().registerEvents(new PlayerJoinListener(), plugin);

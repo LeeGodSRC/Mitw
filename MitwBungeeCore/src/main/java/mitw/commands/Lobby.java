@@ -8,12 +8,12 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class Lobby extends Command {
 
-	public Lobby(Bungee main) {
+	public Lobby(final Bungee main) {
 		super("lobby", null, "hub");
 	}
 
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(final CommandSender sender, final String[] args) {
 
 		final ProxiedPlayer player = (ProxiedPlayer) sender;
 		final String serverName = player.getServer().getInfo().getName();

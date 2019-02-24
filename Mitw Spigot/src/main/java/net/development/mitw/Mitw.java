@@ -1,11 +1,13 @@
 package net.development.mitw;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -33,6 +35,7 @@ import net.development.mitw.listener.JoinAndQuitListener;
 import net.development.mitw.menu.ButtonListener;
 import net.development.mitw.namemc.NameMC;
 import net.development.mitw.packetlistener.PacketHandler;
+import net.development.mitw.packetlistener.Reflection;
 import net.development.mitw.security.anticrash.BlockCrashHandler;
 import net.development.mitw.security.protector.MitwProtector;
 import net.development.mitw.task.MenuUpdateTask;
@@ -41,7 +44,6 @@ import net.development.mitw.utils.holograms.Hologram;
 import net.development.mitw.utils.holograms.HologramAPI;
 import net.development.mitw.utils.holograms.HologramListeners;
 import net.development.mitw.utils.timer.TimerManager;
-import net.minecraft.server.v1_8_R3.MinecraftServer;
 
 @Getter
 public class Mitw extends JavaPlugin {
@@ -71,7 +73,9 @@ public class Mitw extends JavaPlugin {
 		EzProtector.init();
 		Security.init();
 
-		new BlockCrashHandler();
+		if (!Reflection.VERSION.contains("7")) {
+			new BlockCrashHandler();
+		}
 		nameMC = new NameMC(this);
 		timerManager = new TimerManager(this);
 		timerManager.loadTimerData();
@@ -94,7 +98,7 @@ public class Mitw extends JavaPlugin {
 		registerCommands();
 
 
-		new CopyDatatask().runTaskTimerAsynchronously(Mitw.getInstance(), 20 * 60 * 20L, 20 * 60 * 20L);
+		new CopyDatatask().runTaskTimerAsynchronously(this, 20 * 60 * 20L, 20 * 60 * 20L);
 
 		new MitwProtector().onEnable();
 	}
@@ -141,7 +145,16 @@ public class Mitw extends JavaPlugin {
 	}
 
 	public void registerCommand(final Command cmd, final String fallbackPrefix) {
-		MinecraftServer.getServer().server.getCommandMap().register(cmd.getName(), fallbackPrefix, cmd);
+		try {
+			final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+			bukkitCommandMap.setAccessible(true);
+			final CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+			commandMap.register(fallbackPrefix, cmd);
+		} catch (final NoSuchFieldException e) {
+			e.printStackTrace();
+		} catch (final IllegalAccessException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void broadcastMessage(final String message) {

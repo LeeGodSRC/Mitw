@@ -20,11 +20,11 @@ public class Message extends Command implements TabExecutor {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void execute(CommandSender sender, String[] args) {
+	public void execute(final CommandSender sender, final String[] args) {
 		if (args.length >= 2) {
 			if (sender instanceof ProxiedPlayer) {
-				ProxiedPlayer p = (ProxiedPlayer) sender;
-				ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
+				final ProxiedPlayer p = (ProxiedPlayer) sender;
+				final ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
 				if (target == null) {
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&6&l私訊系統&7]&c 指定玩家並不存在!"));
 					return;
@@ -36,11 +36,11 @@ public class Message extends Command implements TabExecutor {
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c" + target.getName() + "目前不接受任何人的訊息"));
 					return;
 				}
-				StringBuilder sb = new StringBuilder("");
+				final StringBuilder sb = new StringBuilder("");
 				for (int i = 1; i < args.length; i++) {
 					sb.append(args[i]).append(" ");
 				}
-				String msg = sb.toString();
+				final String msg = sb.toString();
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&',
 						"&8(&7私訊給&e " + target.getName() + "&7: &f" + msg + " &7)"));
 				target.sendMessage(ChatColor.translateAlternateColorCodes('&',
@@ -55,10 +55,10 @@ public class Message extends Command implements TabExecutor {
 	}
 
 	@Override
-	public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
-		Set<String> matches = new HashSet<>();
+	public Iterable<String> onTabComplete(final CommandSender sender, final String[] args) {
+		final Set<String> matches = new HashSet<>();
 		if (args.length == 1) {
-			for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
+			for (final ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
 				if (p.getName().toUpperCase().startsWith(args[0].toUpperCase())) {
 					matches.add(p.getName());
 				}

@@ -76,7 +76,7 @@ public final class Reflection {
 	// Deduce the net.minecraft.server.v* package
 	private static String OBC_PREFIX = Bukkit.getServer().getClass().getPackage().getName();
 	private static String NMS_PREFIX = OBC_PREFIX.replace("org.bukkit.craftbukkit", "net.minecraft.server");
-	private static String VERSION = OBC_PREFIX.replace("org.bukkit.craftbukkit", "").replace(".", "");
+	public static String VERSION = OBC_PREFIX.replace("org.bukkit.craftbukkit", "").replace(".", "");
 
 	// Variable replacement
 	private static Pattern MATCH_VARIABLE = Pattern.compile("\\{([^\\}]+)\\}");
@@ -93,7 +93,7 @@ public final class Reflection {
 	 * @param fieldType - a compatible field type.
 	 * @return The field accessor.
 	 */
-	public static <T> FieldAccessor<T> getField(Class<?> target, String name, Class<T> fieldType) {
+	public static <T> FieldAccessor<T> getField(final Class<?> target, final String name, final Class<T> fieldType) {
 		return getField(target, name, fieldType, 0);
 	}
 
@@ -105,7 +105,7 @@ public final class Reflection {
 	 * @param fieldType - a compatible field type.
 	 * @return The field accessor.
 	 */
-	public static <T> FieldAccessor<T> getField(String className, String name, Class<T> fieldType) {
+	public static <T> FieldAccessor<T> getField(final String className, final String name, final Class<T> fieldType) {
 		return getField(getClass(className), name, fieldType, 0);
 	}
 
@@ -117,7 +117,7 @@ public final class Reflection {
 	 * @param index - the number of compatible fields to skip.
 	 * @return The field accessor.
 	 */
-	public static <T> FieldAccessor<T> getField(Class<?> target, Class<T> fieldType, int index) {
+	public static <T> FieldAccessor<T> getField(final Class<?> target, final Class<T> fieldType, final int index) {
 		return getField(target, null, fieldType, index);
 	}
 
@@ -129,12 +129,12 @@ public final class Reflection {
 	 * @param index - the number of compatible fields to skip.
 	 * @return The field accessor.
 	 */
-	public static <T> FieldAccessor<T> getField(String className, Class<T> fieldType, int index) {
+	public static <T> FieldAccessor<T> getField(final String className, final Class<T> fieldType, final int index) {
 		return getField(getClass(className), fieldType, index);
 	}
 
 	// Common method
-	private static <T> FieldAccessor<T> getField(Class<?> target, String name, Class<T> fieldType, int index) {
+	private static <T> FieldAccessor<T> getField(final Class<?> target, final String name, final Class<T> fieldType, int index) {
 		for (final Field field : target.getDeclaredFields()) {
 			if ((name == null || field.getName().equals(name)) && fieldType.isAssignableFrom(field.getType()) && index-- <= 0) {
 				field.setAccessible(true);
@@ -144,7 +144,7 @@ public final class Reflection {
 
 					@Override
 					@SuppressWarnings("unchecked")
-					public T get(Object target) {
+					public T get(final Object target) {
 						try {
 							return (T) field.get(target);
 						} catch (final IllegalAccessException e) {
@@ -153,7 +153,7 @@ public final class Reflection {
 					}
 
 					@Override
-					public void set(Object target, Object value) {
+					public void set(final Object target, final Object value) {
 						try {
 							field.set(target, value);
 						} catch (final IllegalAccessException e) {
@@ -162,7 +162,7 @@ public final class Reflection {
 					}
 
 					@Override
-					public boolean hasField(Object target) {
+					public boolean hasField(final Object target) {
 						// target instanceof DeclaringClass
 						return field.getDeclaringClass().isAssignableFrom(target.getClass());
 					}
@@ -186,7 +186,7 @@ public final class Reflection {
 	 * @return An object that invokes this specific method.
 	 * @throws IllegalStateException If we cannot find this method.
 	 */
-	public static MethodInvoker getMethod(String className, String methodName, Class<?>... params) {
+	public static MethodInvoker getMethod(final String className, final String methodName, final Class<?>... params) {
 		return getTypedMethod(getClass(className), methodName, null, params);
 	}
 
@@ -199,7 +199,7 @@ public final class Reflection {
 	 * @return An object that invokes this specific method.
 	 * @throws IllegalStateException If we cannot find this method.
 	 */
-	public static MethodInvoker getMethod(Class<?> clazz, String methodName, Class<?>... params) {
+	public static MethodInvoker getMethod(final Class<?> clazz, final String methodName, final Class<?>... params) {
 		return getTypedMethod(clazz, methodName, null, params);
 	}
 
@@ -213,7 +213,7 @@ public final class Reflection {
 	 * @return An object that invokes this specific method.
 	 * @throws IllegalStateException If we cannot find this method.
 	 */
-	public static MethodInvoker getTypedMethod(Class<?> clazz, String methodName, Class<?> returnType, Class<?>... params) {
+	public static MethodInvoker getTypedMethod(final Class<?> clazz, final String methodName, final Class<?> returnType, final Class<?>... params) {
 		for (final Method method : clazz.getDeclaredMethods()) {
 			if ((methodName == null || method.getName().equals(methodName))
 					&& (returnType == null || method.getReturnType().equals(returnType))
@@ -245,7 +245,7 @@ public final class Reflection {
 	 * @return An object that invokes this constructor.
 	 * @throws IllegalStateException If we cannot find this method.
 	 */
-	public static ConstructorInvoker getConstructor(String className, Class<?>... params) {
+	public static ConstructorInvoker getConstructor(final String className, final Class<?>... params) {
 		return getConstructor(getClass(className), params);
 	}
 
@@ -257,7 +257,7 @@ public final class Reflection {
 	 * @return An object that invokes this constructor.
 	 * @throws IllegalStateException If we cannot find this method.
 	 */
-	public static ConstructorInvoker getConstructor(Class<?> clazz, Class<?>... params) {
+	public static ConstructorInvoker getConstructor(final Class<?> clazz, final Class<?>... params) {
 		for (final Constructor<?> constructor : clazz.getDeclaredConstructors()) {
 			if (Arrays.equals(constructor.getParameterTypes(), params)) {
 				constructor.setAccessible(true);
@@ -285,7 +285,7 @@ public final class Reflection {
 	 * @param lookupName - the class name with variables.
 	 * @return The class.
 	 */
-	public static Class<Object> getUntypedClass(String lookupName) {
+	public static Class<Object> getUntypedClass(final String lookupName) {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		final
 		Class<Object> clazz = (Class) getClass(lookupName);
@@ -320,7 +320,7 @@ public final class Reflection {
 	 * @return The looked up class.
 	 * @throws IllegalArgumentException If a variable or class could not be found.
 	 */
-	public static Class<?> getClass(String lookupName) {
+	public static Class<?> getClass(final String lookupName) {
 		return getCanonicalClass(expandVariables(lookupName));
 	}
 
@@ -330,7 +330,7 @@ public final class Reflection {
 	 * @param name - the name of the class, excluding the package.
 	 * @throws IllegalArgumentException If the class doesn't exist.
 	 */
-	public static Class<?> getMinecraftClass(String name) {
+	public static Class<?> getMinecraftClass(final String name) {
 		return getCanonicalClass(NMS_PREFIX + "." + name);
 	}
 
@@ -340,7 +340,7 @@ public final class Reflection {
 	 * @param name - the name of the class, excluding the package.
 	 * @throws IllegalArgumentException If the class doesn't exist.
 	 */
-	public static Class<?> getCraftBukkitClass(String name) {
+	public static Class<?> getCraftBukkitClass(final String name) {
 		return getCanonicalClass(OBC_PREFIX + "." + name);
 	}
 
@@ -350,7 +350,7 @@ public final class Reflection {
 	 * @param canonicalName - the canonical name.
 	 * @return The class.
 	 */
-	private static Class<?> getCanonicalClass(String canonicalName) {
+	private static Class<?> getCanonicalClass(final String canonicalName) {
 		try {
 			return Class.forName(canonicalName);
 		} catch (final ClassNotFoundException e) {
@@ -364,7 +364,7 @@ public final class Reflection {
 	 * @param name - the full name of the class.
 	 * @return The expanded string.
 	 */
-	private static String expandVariables(String name) {
+	private static String expandVariables(final String name) {
 		final StringBuffer output = new StringBuffer();
 		final Matcher matcher = MATCH_VARIABLE.matcher(name);
 
@@ -373,22 +373,24 @@ public final class Reflection {
 			String replacement = "";
 
 			// Expand all detected variables
-			if ("nms".equalsIgnoreCase(variable))
+			if ("nms".equalsIgnoreCase(variable)) {
 				replacement = NMS_PREFIX;
-			else if ("obc".equalsIgnoreCase(variable))
+			} else if ("obc".equalsIgnoreCase(variable)) {
 				replacement = OBC_PREFIX;
-			else if ("version".equalsIgnoreCase(variable))
+			} else if ("version".equalsIgnoreCase(variable)) {
 				replacement = VERSION;
-			else
+			} else
 				throw new IllegalArgumentException("Unknown variable: " + variable);
 
 			// Assume the expanded variables are all packages, and append a dot
-			if (replacement.length() > 0 && matcher.end() < name.length() && name.charAt(matcher.end()) != '.')
+			if (replacement.length() > 0 && matcher.end() < name.length() && name.charAt(matcher.end()) != '.') {
 				replacement += ".";
+			}
 			matcher.appendReplacement(output, Matcher.quoteReplacement(replacement));
 		}
 
 		matcher.appendTail(output);
 		return output.toString();
 	}
+
 }

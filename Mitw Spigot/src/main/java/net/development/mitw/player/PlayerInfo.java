@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.development.mitw.utils.reflection.BukkitReflection;
 
 @Getter
 public class PlayerInfo {
@@ -34,7 +35,7 @@ public class PlayerInfo {
 		if (bukkitPlayer == null)
 			return -1;
 		else
-			return bukkitPlayer.spigot().getPing();
+			return BukkitReflection.getPing(bukkitPlayer);
 	}
 
 }

@@ -5,14 +5,14 @@ import java.util.UUID;
 import net.development.mitw.config.SimpleConfig;
 
 public class PlayerCache {
-	private static SimpleConfig cfg = new SimpleConfig("cache.dat", false);;
+	private static SimpleConfig cfg = new SimpleConfig("cache.dat", false);
 	private String lastMessage = "";
 	private long lastTalkTime = 0;
 	/*private boolean isMute = false;*/
 	private String suffix = "";
 	private final String path;
 
-	public PlayerCache(UUID u) {
+	public PlayerCache(final UUID u) {
 		path = u.toString();
 		onLoad();
 	}
@@ -35,7 +35,7 @@ public class PlayerCache {
 		return lastTalkTime;
 	}
 
-	public void setLastTalkTime(long lastTalkTime) {
+	public void setLastTalkTime(final long lastTalkTime) {
 		this.lastTalkTime = lastTalkTime;
 	}
 
@@ -43,7 +43,7 @@ public class PlayerCache {
 		return lastMessage;
 	}
 
-	public void setLastMessage(String lastMessage) {
+	public void setLastMessage(final String lastMessage) {
 		this.lastMessage = lastMessage;
 	}
 
@@ -59,7 +59,7 @@ public class PlayerCache {
 		return suffix;
 	}
 
-	public void setSuffix(String suffix) {
+	public void setSuffix(final String suffix) {
 		this.suffix = suffix;
 	}
 
