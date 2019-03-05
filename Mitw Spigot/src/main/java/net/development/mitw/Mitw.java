@@ -8,10 +8,7 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import com.google.common.collect.ImmutableList;
 
 import lombok.Getter;
 import me.skymc.taboolib.mysql.builder.hikari.HikariHandler;
@@ -155,34 +152,6 @@ public class Mitw extends JavaPlugin {
 		} catch (final IllegalAccessException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static void broadcastMessage(final String message) {
-
-		final ImmutableList<Player> players = ImmutableList.copyOf(Mitw.instance.getServer().getOnlinePlayers());
-		final int size = players.size();
-		final int diff = (int) Math.ceil(players.size() / 20D);
-
-		for (int i = 0, j = 0; i < size; i += diff) {
-
-			if (i >= size)
-				return;
-
-			// Some shit for the task
-			final int start = i;
-			final int end = i + diff;
-			Bukkit.getServer().getScheduler().runTaskLater(Mitw.instance, () -> {
-				for (int i1 = start; i1 < end; ++i1) {
-					// Overshot
-					if (i1 >= players.size())
-						return;
-
-					players.get(i1).sendMessage(message);
-				}
-			}, ++j);
-
-		}
-
 	}
 
 }

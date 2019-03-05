@@ -1,8 +1,6 @@
 package net.development.mitw.chat;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -37,7 +35,6 @@ public class ChatManager implements Listener {
 	private final Mitw plugin;
 	@Getter
 	private final ChatDatabase chatDB;
-	private final List<String> TOXIC_REPLACEMENT = new ArrayList<>();
 	@Getter
 	private final ChatSlowerAI chatSlowerAI;
 
@@ -101,7 +98,7 @@ public class ChatManager implements Listener {
 	}
 
 	public String getRandomMessages() {
-		return TOXIC_REPLACEMENT.get(Mitw.getRandom().nextInt(TOXIC_REPLACEMENT.size()));
+		return Settings.REPLACE_LIST.get(Mitw.getRandom().nextInt(Settings.REPLACE_LIST.size()));
 	}
 
 	public static PlayerCache getPlayerCaches(final UUID id) {

@@ -2,11 +2,13 @@ package net.development.mitw.config;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
+
 public class Settings extends SimpleConfig{
 
 	private static SimpleConfig config;
 
-	private Settings(String fileName) {
+	private Settings(final String fileName) {
 		super(fileName);
 		config = this;
 	}
@@ -15,7 +17,7 @@ public class Settings extends SimpleConfig{
 		IS_REPLACE_MODE = getBoolean("Replacemode.Enable");
 		IS_NO_SAME_MESSAGE = getBoolean("AntiSpam.NoSameMessage");
 
-		IS_BETTER_NICK = getBoolean("Hooks.Better-Nick");
+		IS_BETTER_NICK = Bukkit.getPluginManager().getPlugin("BetterNick") != null;
 
 		CHAT_COOLDOWN = getInt("AntiSpam.Cooldown");
 		MUTE_TIME = getInt("MuteTime");
