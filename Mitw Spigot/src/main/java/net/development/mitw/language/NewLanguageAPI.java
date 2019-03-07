@@ -2,6 +2,7 @@ package net.development.mitw.language;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.development.mitw.utils.ClassUtil;
 import net.development.mitw.utils.RV;
 import net.development.mitw.utils.StringUtil;
 import net.md_5.bungee.api.ChatColor;
@@ -35,12 +36,12 @@ public class NewLanguageAPI {
 
         try {
 
-            InputStream folder = plugin.getResource("languages");
-            InputStreamReader reader = new InputStreamReader(folder);
-            BufferedReader bf = new BufferedReader(reader);
+            String[] list = ClassUtil.getResourceListing(plugin.getClass(), "languages/");
 
             String next;
-            while ((next = bf.readLine()) != null) {
+            for (int i = 0; i < list.length; i++) {
+                next = list[i];
+                plugin.getServer().getConsoleSender().sendMessage(next);
                 if (!next.endsWith(".lang")) {
                     continue;
                 }
@@ -121,6 +122,7 @@ public class NewLanguageAPI {
             String to = config.getString(from);
             boolean found = false;
             if (to == null) {
+                Bukkit.getConsoleSender().sendMessage("cannot find " + from + " in config " + lang);
                 return "null";
             } else {
                 to = ChatColor.translateAlternateColorCodes('&', to);
