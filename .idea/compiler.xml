@@ -10,5 +10,10 @@
         <module name="MitwBungeeCore" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="maven-archiver" target="1.5" />
+      <module name="Mitw (1)" target="1.8" />
+      <module name="MitwBungeeCore (1)" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
