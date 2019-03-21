@@ -134,6 +134,7 @@ class MainMenu extends Menu {
 			getInv().remove(i);
 		}
 		else if (action == ClickType.LEFT) {
+			p.closeInventory();
 			new TypeMenu(word).open(p);
 		}
 	}
