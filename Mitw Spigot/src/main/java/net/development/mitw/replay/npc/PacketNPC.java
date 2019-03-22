@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class PacketNPC implements INPC {
+public class PacketNPC /*implements INPC*/ {
 
     private int id;
     private String name;
@@ -26,7 +26,6 @@ public class PacketNPC implements INPC {
         this.spawnPacket = new PacketPlayOutNamedEntitySpawn();
     }
 
-    @Override
     public void spawn(Location location, Player... players) {
         this.watcher = players;
         this.location = location;
