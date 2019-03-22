@@ -13,6 +13,9 @@ public class LanguageMessages {
     public String zh_tw_targetNULL = ChatColor.RED + "目標沒有上線或是不存在!";
     public String en_us_targetNULL = ChatColor.RED + "Target is not online or not exists!";
 
+    public String zh_tw_unfreezed = ChatColor.GREEN + "你被解除凍結了 抱歉造成您的困擾 也感謝你的配合!";
+    public String en_us_unfreezed = ChatColor.GREEN + "You have been unfreezed, We're sorry for the inconvenience, and thanks for your cooperation!";
+
     public List<String> zh_tw_freezed = Arrays.asList("&7&m--------------------------"
             , "&e&l 警告! 你被凍結了! 請按照管理員的指令行動!"
             , "&f凍結者: &6%0"

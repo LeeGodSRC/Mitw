@@ -4,3 +4,5 @@ version: ${project.version}
 author: LeeGod
 description: Mitw的核心插件 , 其中包括了 聊天室管理, ... , 和各種所有分流都會用到的Utils
 load: startup
+depend: [Protocollib]
+softdepend: [eFlame]

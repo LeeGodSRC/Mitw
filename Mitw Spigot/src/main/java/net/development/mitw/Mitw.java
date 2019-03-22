@@ -35,7 +35,7 @@ import net.development.mitw.packetlistener.PacketHandler;
 import net.development.mitw.packetlistener.Reflection;
 import net.development.mitw.security.anticrash.BlockCrashHandler;
 import net.development.mitw.security.protector.MitwProtector;
-import net.development.mitw.task.MenuUpdateTask;
+import net.development.mitw.menu.task.MenuUpdateTask;
 import net.development.mitw.utils.FastRandom;
 import net.development.mitw.utils.holograms.Hologram;
 import net.development.mitw.utils.holograms.HologramAPI;

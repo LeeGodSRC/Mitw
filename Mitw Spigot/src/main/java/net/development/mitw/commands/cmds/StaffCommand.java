@@ -6,6 +6,7 @@ import me.efla.connection.Communication;
 import net.development.mitw.Mitw;
 import net.development.mitw.commands.Command;
 import net.development.mitw.commands.param.Parameter;
+import net.development.mitw.hooks.eFlameHook;
 import net.development.mitw.utils.PlayerUtil;
 import net.development.mitw.utils.StringUtil;
 import org.bukkit.entity.Player;
@@ -24,13 +25,12 @@ public class StaffCommand {
         if (target.hasMetadata(FREEZE_TAG)) {
             target.removeMetadata(FREEZE_TAG, Mitw.getInstance());
             PlayerUtil.allowMovement(target);
-            if (Main.lista.contains(target.getName())) {
-                Communication.removePlayer(target.getName());
-            }
+            target.sendMessage(Mitw.getInstance().getCoreLanguage().translate(player, "unfreezed"));
+            eFlameHook.uncheckPlayer(target);
         } else {
             PlayerUtil.denyMovement(target);
             target.setMetadata(FREEZE_TAG, new FixedMetadataValue(Mitw.getInstance(), player.getName()));
-            API.sendCheckRequest(player, true);
+            eFlameHook.checkPlayer(target);
             for (String message : Mitw.getInstance().getCoreLanguage().translateArrays(target, "freezed")) {
                 target.sendMessage(StringUtil.replace(message, "%0", player.getName()));
             }

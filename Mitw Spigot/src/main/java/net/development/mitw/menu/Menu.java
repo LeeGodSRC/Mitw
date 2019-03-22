@@ -20,7 +20,7 @@ public abstract class Menu {
 	public static Map<UUID, Menu> currentlyOpenedMenus = new HashMap<>();
 	@Getter
 	private Map<Integer, Button> buttons = new HashMap<>();
-	private boolean autoUpdate = false;
+	private boolean autoUpdate = true;
 	private boolean updateAfterClick = true;
 	private boolean closedByMenu = false;
 	private boolean placeholder = false;
