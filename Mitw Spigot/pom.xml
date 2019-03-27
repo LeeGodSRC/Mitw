@@ -37,6 +37,14 @@
 						</goals>
 						<configuration>
 							<minimizeJar>true</minimizeJar>
+							<relocations>
+								<relocation>
+									<pattern>redis.clients.jedis</pattern>
+									<shadedPattern>net.development.mitw.shaded.redis.clients.jedis</shadedPattern>
+									<pattern>org.apache.commons</pattern>
+									<shadedPattern>net.development.mitw.shaded.org.apache.commons</shadedPattern>
+								</relocation>
+							</relocations>
 						</configuration>
 					</execution>
 				</executions>
@@ -71,11 +79,23 @@
 			<version>3.1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>top.potl.spigot</groupId>
+			<groupId>top.potl</groupId>
 			<artifactId>nspigot</artifactId>
-			<version>1.8.8-R0.1-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/nspigot-2.0E.jar</systemPath>
+			<version>2.0E</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.8.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>2.6.1</version>
 		</dependency>
 		<dependency>
 			<groupId>mitw.spigot</groupId>

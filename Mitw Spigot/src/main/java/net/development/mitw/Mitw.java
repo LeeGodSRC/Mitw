@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.development.mitw.config.*;
+import net.development.mitw.jedis.JedisSettings;
+import net.development.mitw.jedis.MitwJedis;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -14,12 +17,8 @@ import lombok.Getter;
 import me.skymc.taboolib.mysql.builder.hikari.HikariHandler;
 import net.development.mitw.chat.ChatHandler;
 import net.development.mitw.chat.ChatManager;
-import net.development.mitw.chat.CopyDatatask;
+import net.development.mitw.chat.UpdateDataTask;
 import net.development.mitw.commands.CommandHandler;
-import net.development.mitw.config.AntiCrash;
-import net.development.mitw.config.EzProtector;
-import net.development.mitw.config.MySQL;
-import net.development.mitw.config.Security;
 import net.development.mitw.helpmessage.HelpHandler;
 import net.development.mitw.hooks.LuckPerms;
 import net.development.mitw.language.LanguageAPI;
@@ -56,6 +55,7 @@ public class Mitw extends JavaPlugin {
 	private TimerManager timerManager;
 	private NameMC nameMC;
 	private LanguageAPI coreLanguage;
+	private MitwJedis mitwJedis;
 	private Set<ChatHandler> chatHandlers;
 	private Set<HelpHandler> helpHandlers;
 
@@ -95,7 +95,9 @@ public class Mitw extends JavaPlugin {
 		registerCommands();
 
 
-		new CopyDatatask().runTaskTimerAsynchronously(this, 20 * 60 * 20L, 20 * 60 * 20L);
+		new UpdateDataTask().runTaskTimerAsynchronously(this, 20 * 60 * 20L, 20 * 60 * 20L);
+
+		this.mitwJedis = new MitwJedis(new JedisSettings(Settings.JEDIS_ADDRESS, Settings.JEDIS_PORT, Settings.JEDIS_PASSWORD));
 
 		new MitwProtector().onEnable();
 	}

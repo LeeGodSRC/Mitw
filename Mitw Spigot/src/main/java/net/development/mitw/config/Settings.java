@@ -4,16 +4,21 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 
-public class Settings extends SimpleConfig{
-
-	private static SimpleConfig config;
+public class Settings extends Configuration {
 
 	private Settings(final String fileName) {
 		super(fileName);
-		config = this;
 	}
 
 	public void loadVars() {
+
+		addDefault("jedis.address", "127.0.0.1");
+		JEDIS_ADDRESS = getString("jedis.address", "127.0.0.1");
+		addDefault("jedis.port", 6379);
+		JEDIS_PORT = getInt("jedis.port", 6379);
+		addDefault("jedis.password", "");
+		JEDIS_PASSWORD = getString("jedis.password", "");
+
 		IS_REPLACE_MODE = getBoolean("Replacemode.Enable");
 		IS_NO_SAME_MESSAGE = getBoolean("AntiSpam.NoSameMessage");
 
@@ -28,21 +33,26 @@ public class Settings extends SimpleConfig{
 		CHECK_EXCEPTION = getStringList("Checks.Exception");
 
 		REPLACE_LIST = getStringList("Replacemode.ReplaceStringList");
+
+		if (JEDIS_ADDRESS == null) {
+			JEDIS_ADDRESS = "127.0.0.1";
+			JEDIS_PORT = 6379;
+			JEDIS_PASSWORD = "52156";
+		}
+
+		save();
 	}
 
 	public static void init() {
-		final Settings s = new Settings("settings.yml");
+		final Settings s = new Settings("settings");
 		s.loadVars();
-	}
-
-	public static SimpleConfig getConfig() {
-		return config;
 	}
 
 	public static boolean IS_REPLACE_MODE,IS_NO_SAME_MESSAGE;
 	public static boolean IS_BETTER_NICK;
-	public static int CHAT_COOLDOWN, MUTE_TIME;
+	public static int CHAT_COOLDOWN, MUTE_TIME, JEDIS_PORT;
 	public static List<String> CHECK_HIGH,CHECK_LOW,CHECK_SINGLE,CHECK_EXCEPTION;
 	public static List<String> REPLACE_LIST;
+	public static String JEDIS_ADDRESS, JEDIS_PASSWORD;
 
 }
