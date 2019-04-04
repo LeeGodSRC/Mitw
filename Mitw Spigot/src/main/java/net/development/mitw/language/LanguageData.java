@@ -6,6 +6,8 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import net.development.mitw.Mitw;
+import net.development.mitw.json.JsonChain;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -21,157 +23,170 @@ import lombok.Getter;
 import lombok.Setter;
 import net.development.mitw.utils.FastUUID;
 
-public class LanguageData implements Listener{
+public class LanguageData implements Listener {
 
-	static final String DEFAULT_LANGUAGE = "zh_tw";
+    static final String DEFAULT_LANGUAGE = "zh_tw";
 
-	private static Map<UUID, String> playerLangs = new HashMap<>();
+    private static Map<UUID, String> playerLangs = new HashMap<>();
 
-	@Getter @Setter private Plugin plugin;
-	@Getter @Setter private LanguageSQLConnection conn;
+    @Getter
+    @Setter
+    private Plugin plugin;
+    @Getter
+    @Setter
+    private LanguageSQLConnection conn;
 
-	private final ExecutorService langExecutor = Executors.newSingleThreadExecutor();
+    private final ExecutorService langExecutor = Executors.newSingleThreadExecutor();
 
-	public LanguageData(final Plugin plugin, final LanguageSQLConnection conn) {
-		this.plugin = plugin;
-		this.conn = conn;
-		Bukkit.getPluginManager().registerEvents(this, plugin);
-		conn.connect();
-	}
+    public LanguageData(final Plugin plugin, final LanguageSQLConnection conn) {
+        this.plugin = plugin;
+        this.conn = conn;
+        Bukkit.getPluginManager().registerEvents(this, plugin);
+        conn.connect();
+    }
 
-	public String getLang(final Player p) {
-		return getLang(p.getUniqueId());
-	}
+    public String getLang(final Player p) {
+        return getLang(p.getUniqueId());
+    }
 
-	public String getLang(final UUID uuid) {
-		if (playerLangs.containsKey(uuid))
-			return playerLangs.get(uuid);
-		return conn.getSqlTable().executeSelect("uuid = ?")
-				.dataSource(conn.getDatabase().getDataSource())
-				.statement(s -> s.setString(1, FastUUID.toString(uuid)))
-				.resultNext(r -> {
-					return r.getString("lang");
-				}).run("", "");
-	}
+    public String getLang(final UUID uuid) {
+        if (playerLangs.containsKey(uuid))
+            return playerLangs.get(uuid);
+        return conn.getSqlTable().executeSelect("uuid = ?")
+                .dataSource(conn.getDatabase().getDataSource())
+                .statement(s -> s.setString(1, FastUUID.toString(uuid)))
+                .resultNext(r -> {
+                    return r.getString("lang");
+                }).run("", "");
+    }
 
-	public boolean hasLang(final Player p) {
-		if (playerLangs.containsKey(p.getUniqueId()))
-			return true;
-		return hasLangSQL(p);
-	}
+    public boolean hasLang(final Player p) {
+        if (playerLangs.containsKey(p.getUniqueId()))
+            return true;
+        return hasLangSQL(p);
+    }
 
-	public boolean hasLangSQL(final Player p) {
-		return conn.getSqlTable().executeSelect("uuid = ?")
-				.dataSource(conn.getDatabase().getDataSource())
-				.statement(s -> s.setString(1, p.getUniqueId().toString()))
-				.resultNext(r -> true)
-				.run(false, false);
-	}
+    public boolean hasLangSQL(final Player p) {
+        return conn.getSqlTable().executeSelect("uuid = ?")
+                .dataSource(conn.getDatabase().getDataSource())
+                .statement(s -> s.setString(1, p.getUniqueId().toString()))
+                .resultNext(r -> true)
+                .run(false, false);
+    }
 
-	public void setLang(final Player p, final boolean sql) {
-		if(playerLangs.containsKey(p.getUniqueId())) {
-			setLang(p, playerLangs.get(p.getUniqueId()), sql, false);
-		} else {
-			setLang(p, DEFAULT_LANGUAGE, sql, false);
-		}
-	}
+    public void setLang(final Player p, final boolean sql) {
+        if (playerLangs.containsKey(p.getUniqueId())) {
+            setLang(p, playerLangs.get(p.getUniqueId()), sql, false);
+        } else {
+            setLang(p, DEFAULT_LANGUAGE, sql, false);
+        }
+    }
 
-	public void setLang(final Player p, String string, final boolean sql, final boolean first) {
-		final ChangeLanguageEvent event = new ChangeLanguageEvent(p, string, first);
-		Bukkit.getPluginManager().callEvent(event);
-		if(event.isCancelled())
-			return;
-		if(!event.getLanguage().equals(string)) {
-			string = event.getLanguage();
-		}
-		playerLangs.put(p.getUniqueId(), string);
-		if(!sql)
-			return;
-		if(hasLangSQL(p)) {
-			conn.getSqlTable().executeUpdate("UPDATE `MitwLang` SET `lang` = ? WHERE `uuid` = ?;")
-			.dataSource(conn.getDatabase().getDataSource()).statement(s -> {
-				s.setString(1, playerLangs.get(p.getUniqueId()));
-				s.setString(2, p.getUniqueId().toString());
-			}).run();
-		} else {
-			conn.getSqlTable().executeInsert("?, ?")
-			.dataSource(conn.getDatabase().getDataSource())
-			.statement(s -> {
-				s.setString(1, p.getUniqueId().toString());
-				s.setString(2, playerLangs.get(p.getUniqueId()));
-			}).run();
-		}
-		return;
-	}
+    public void setLangRedis(Player player, String language) {
+        Mitw.getInstance().getMitwJedis().write("LANGUAGE_CHANGED", new JsonChain()
+                .addProperty("uuid", FastUUID.toString(player.getUniqueId())).addProperty("language", language).get());
+        setLangSQL(player, language);
+    }
 
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onLogin(final PlayerLoginEvent e) {
-		final Player p = e.getPlayer();
-		langExecutor.execute(() -> {
-			if (hasLang(p)) {
-				playerLangs.put(p.getUniqueId(), getLang(p));
-			} else {
-				setLang(p, DEFAULT_LANGUAGE, true, true);
-			}
-		});
-	}
+    public void setLang(final Player player, String language, final boolean sql, final boolean first) {
+        final ChangeLanguageEvent event = new ChangeLanguageEvent(player, language, first);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return;
+        if (!event.getLanguage().equals(language)) {
+            language = event.getLanguage();
+        }
+        playerLangs.put(player.getUniqueId(), language);
+        if (sql) {
+            setLangSQL(player, language);
+        }
+    }
 
-	@EventHandler
-	public void onQuit(final PlayerQuitEvent e) {
-		final Player p = e.getPlayer();
-		langExecutor.execute(() -> {
-			setLang(p, true);
-			playerLangs.remove(p.getUniqueId());
-		});
-	}
+    public void setLangSQL(Player player, String language) {
+        if (hasLangSQL(player)) {
+            conn.getSqlTable().executeUpdate("UPDATE `MitwLang` SET `lang` = ? WHERE `uuid` = ?;")
+                    .dataSource(conn.getDatabase().getDataSource()).statement(s -> {
+                s.setString(1, language);
+                s.setString(2, FastUUID.toString(player.getUniqueId()));
+            }).run();
+        } else {
+            conn.getSqlTable().executeInsert("?, ?")
+                    .dataSource(conn.getDatabase().getDataSource())
+                    .statement(s -> {
+                        s.setString(1, FastUUID.toString(player.getUniqueId()));
+                        s.setString(2, language);
+                    }).run();
+        }
+    }
 
-	public static class ChangeLanguageEvent extends Event{
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onLogin(final PlayerLoginEvent e) {
+        final Player p = e.getPlayer();
+        langExecutor.execute(() -> {
+            if (hasLang(p)) {
+                playerLangs.put(p.getUniqueId(), getLang(p));
+            } else {
+                setLang(p, DEFAULT_LANGUAGE, true, true);
+            }
+        });
+    }
 
-		private static final HandlerList handlerlist = new HandlerList();
+    @EventHandler
+    public void onQuit(final PlayerQuitEvent e) {
+        final Player p = e.getPlayer();
+        langExecutor.execute(() -> {
+            setLang(p, true);
+            playerLangs.remove(p.getUniqueId());
+        });
+    }
 
-		private final Player p;
-		private String language;
-		private boolean cancelled = false;
-		private final boolean first;
+    public static class ChangeLanguageEvent extends Event {
 
-		public ChangeLanguageEvent(final Player p, final String language, final boolean first) {
-			this.p = p;
-			this.language = language;
-			this.first = first;
-		}
+        private static final HandlerList handlerlist = new HandlerList();
 
-		public Player getPlayer() {
-			return p;
-		}
+        private final Player p;
+        private String language;
+        private boolean cancelled = false;
+        private final boolean first;
 
-		public String getLanguage() {
-			return language;
-		}
+        public ChangeLanguageEvent(final Player p, final String language, final boolean first) {
+            this.p = p;
+            this.language = language;
+            this.first = first;
+        }
 
-		public void setLanguage(final String language) {
-			this.language = language;
-		}
+        public Player getPlayer() {
+            return p;
+        }
 
-		public boolean isFirstSet() {
-			return first;
-		}
+        public String getLanguage() {
+            return language;
+        }
 
-		public boolean isCancelled() {
-			return cancelled;
-		}
+        public void setLanguage(final String language) {
+            this.language = language;
+        }
 
-		public void setCancelled(final boolean cancel) {
-			cancelled = cancel;
-		}
+        public boolean isFirstSet() {
+            return first;
+        }
 
-		@Override
-		public HandlerList getHandlers() {
-			return handlerlist;
-		}
+        public boolean isCancelled() {
+            return cancelled;
+        }
 
-		public static HandlerList getHandlerList() {
-			return handlerlist;
-		}
-	}
+        public void setCancelled(final boolean cancel) {
+            cancelled = cancel;
+        }
+
+        @Override
+        public HandlerList getHandlers() {
+            return handlerlist;
+        }
+
+        public static HandlerList getHandlerList() {
+            return handlerlist;
+        }
+    }
 
 }

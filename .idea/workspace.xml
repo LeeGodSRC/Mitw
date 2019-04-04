@@ -2,26 +2,86 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17e31ef7-b841-4241-95a3-fa20c6aae986" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisPublisher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisSettings.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisSubscriber.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisSubscriptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/MitwJedis.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/RedisCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/impl/MitwSubscriptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/Mitw.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/Configuration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/ConfigurationOptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/ConfigurationSection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/ConfigurationSerializable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/ConfigurationSerialization.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/DelegateDeserialization.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/FileConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/FileConfigurationOptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/InvalidConfigurationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/MemoryConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/MemoryConfigurationOptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/MemorySection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/SerializableAs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/YamlConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/YamlConfigurationOptions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/YamlConstructor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/YamlRepresenter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/impl/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/impl/MySQL.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/database/Database.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/JedisPublisher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/JedisSettings.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/JedisSubscriber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/JedisSubscriptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/MitwJedis.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/RedisCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/impl/MitwSubscriptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/ILanguageData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/Language.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/LanguageAPI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/LanguageSQLConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/types/RedisLanguageData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/types/SQLLanguageData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/util/FastUUID.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/util/FileUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/util/RV.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/util/StringUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/SQLColumn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/SQLColumnOption.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/SQLColumnType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/SQLExecutor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/SQLHost.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/SQLTable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/hikari/HikariHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/hikari/MapDataSource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/query/RunnableQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/query/RunnableUpdate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/query/TaskResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/query/TaskStatement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/string/ArrayUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/util/FileUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/resources/HikariSettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mitw Spigot/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mitw Spigot/dependency-reduced-pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mitw Spigot/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Mitw Spigot/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/Mitw.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/Mitw.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/chat/CopyDatatask.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/chat/UpdateDataTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/config/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/config/Settings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/listener/JoinAndQuitListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/listener/JoinAndQuitListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/uuid/UUIDCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/uuid/UUIDCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/impl/MitwSubscriptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/impl/MitwSubscriptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/language/LanguageData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/language/LanguageData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/Bungee.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/commands/AC.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/AC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/commands/Broadcast.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Broadcast.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/commands/Ignore.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Ignore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/commands/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Lobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/commands/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/commands/Reload.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Reload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/commands/Reply.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Reply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/commands/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/commands/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/managers/BungeeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/listener/BungeeListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/managers/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/managers/CommandManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/managers/YamlManagers.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/managers/YamlManagers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/modules/MotdDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/modules/MotdDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/util/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/util/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/util/Lang.java" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/impl/Lang.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/util/MitwLanguage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MitwBungeeCore/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/MitwBungeeCore/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/Mitw Spigot/target/" />
     <ignored path="$PROJECT_DIR$/MitwBungeeCore/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -73,92 +133,110 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/Mitw.java">
+      <file leaf-file-name="Mitw.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/Mitw.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="81" column="64" lean-forward="true" selection-start-line="81" selection-start-column="64" selection-end-line="81" selection-end-column="64" />
+            <state relative-caret-position="95">
+              <caret line="34" column="44" lean-forward="true" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/MitwJedis.java">
+      <file leaf-file-name="ILanguageData.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/ILanguageData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="26" column="45" selection-start-line="26" selection-start-column="45" selection-end-line="26" selection-end-column="45" />
+            <state>
+              <caret column="29" lean-forward="true" selection-start-column="29" selection-end-column="29" />
+              <folding>
+                <element signature="e#227#228#0" expanded="true" />
+                <element signature="e#278#279#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/uuid/UUIDCache.java">
+      <file leaf-file-name="SQLLanguageData.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/types/SQLLanguageData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+            <state relative-caret-position="60">
+              <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/config/Settings.java">
+      <file leaf-file-name="RedisLanguageData.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/types/RedisLanguageData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-66">
-              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+            <state relative-caret-position="304">
+              <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#215#216#0" expanded="true" />
+                <element signature="e#242#243#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisSubscriber.java">
+      <file leaf-file-name="plugin.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/resources/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="55">
-              <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+            <state>
+              <caret column="10" selection-start-column="10" selection-end-column="10" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/top/potl/nspigot/2.0E/nspigot-2.0E.jar!/org/bukkit/configuration/MemorySection.class">
+      <file leaf-file-name="LanguageAPI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/LanguageAPI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="253" column="18" selection-start-line="253" selection-start-column="18" selection-end-line="253" selection-end-column="18" />
+            <state relative-caret-position="19">
+              <caret line="203" column="58" selection-start-line="203" selection-start-column="58" selection-end-line="203" selection-end-column="58" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/chat/ChatManager.java">
+      <file leaf-file-name="Language.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/Language.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="49" column="19" lean-forward="true" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
+            <state relative-caret-position="38">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/config/Configuration.java">
+      <file leaf-file-name="BungeeListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/listener/BungeeListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-313">
-              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+            <state relative-caret-position="67">
+              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisPublisher.java">
+      <file leaf-file-name="MitwSubscriptionHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/impl/MitwSubscriptionHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="-47">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Mitw Spigot/pom.xml">
+      <file leaf-file-name="Protocol_Newer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/packetlistener/newer/Protocol_Newer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="91" column="34" selection-start-line="91" selection-start-column="34" selection-end-line="91" selection-end-column="34" />
+            <state relative-caret-position="-806">
+              <caret line="47" column="22" selection-start-line="47" selection-start-column="22" selection-end-line="47" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -168,6 +246,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -191,21 +270,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/ClassUtil.java" />
-        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/language/NewLanguageAPI.java" />
-        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/PlayerUtil.java" />
-        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/commands/cmds/ToxicCommand.java" />
-        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/player/MitwPlayer.java" />
-        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/language/LanguageData.java" />
-        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/language/impl/LanguageMessages.java" />
-        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/commands/cmds/StaffCommand.java" />
-        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/replay/npc/PacketNPC.java" />
-        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/resources/plugin.yml" />
         <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/chat/PlayerCache.java" />
         <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisSubscriptionHandler.java" />
         <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/NucleusJedis.java" />
         <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisPublisher.java" />
-        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/impl/MitwSubscriptionHandler.java" />
         <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/chat/CopyDatatask.java" />
         <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/chat/UpdateDataTask.java" />
         <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/listener/JoinAndQuitListener.java" />
@@ -214,6 +282,45 @@
         <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/Mitw.java" />
         <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/config/Settings.java" />
         <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/uuid/UUIDCache.java" />
+        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/json/JsonChain.java" />
+        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/commands/cmds/GeneralCommand.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/managers/BungeeListener.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/config/Configuration.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/managers/YamlManagers.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/query/TaskResult.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/util/FileUtil.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/hikari/HikariHandler.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/hikari/MapDataSource.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/query/RunnableQuery.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/query/RunnableUpdate.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/taboolib/mysql/builder/SQLTable.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/listener/BungeeListener.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/language/Language.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/util/RV.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/language/LanguageAPI.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/util/StringUtil.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/config/impl/Config.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/config/impl/MySQL.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/database/Database.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/language/LanguageSQLConnection.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/util/FastUUID.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/language/LanguageData.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/jedis/JedisSubscriptionHandler.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/pom.xml" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/jedis/MitwJedis.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/jedis/JedisPublisher.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/commands/Broadcast.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/jedis/impl/MitwSubscriptionHandler.java" />
+        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/impl/MitwSubscriptionHandler.java" />
+        <option value="$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/language/LanguageData.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/Bungee.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/Mitw.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/Mitw.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/resources/plugin.yml" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/SQLLanguageData.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/ILanguageData.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/types/SQLLanguageData.java" />
+        <option value="$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/types/RedisLanguageData.java" />
       </list>
     </option>
   </component>
@@ -227,63 +334,75 @@
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
-      <expand>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="Mitw" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-        </path>
-      </expand>
+      <expand />
       <select />
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="387" />
-    <option name="y" value="-14" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="-10" />
+    <option name="y" value="1" />
+    <option name="width" value="1940" />
+    <option name="height" value="1059" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="MitwCore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="MitwCore" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
-              <item name="libs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MitwCore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="MitwCore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="MitwCore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="MitwCore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="taboolib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="taboolib" type="462c0819:PsiDirectoryNode" />
+              <item name="builder" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
@@ -291,7 +410,7 @@
               <item name="mitw" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="MitwCore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
@@ -300,7 +419,16 @@
               <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="MitwCore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mitw" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
@@ -309,50 +437,134 @@
               <item name="jedis" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="MitwCore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="mitw" type="462c0819:PsiDirectoryNode" />
-              <item name="listener" type="462c0819:PsiDirectoryNode" />
+              <item name="jedis" type="462c0819:PsiDirectoryNode" />
+              <item name="impl" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="MitwCore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="mitw" type="462c0819:PsiDirectoryNode" />
-              <item name="uuid" type="462c0819:PsiDirectoryNode" />
+              <item name="language" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="MitwCore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mitw" type="462c0819:PsiDirectoryNode" />
+              <item name="packetlistener" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mitw" type="462c0819:PsiDirectoryNode" />
+              <item name="packetlistener" type="462c0819:PsiDirectoryNode" />
+              <item name="newer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mitw Spigot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MitwBungeeCore" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MitwBungeeCore" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MitwBungeeCore" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MitwBungeeCore" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MitwBungeeCore" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="bungee" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MitwBungeeCore" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="bungee" type="462c0819:PsiDirectoryNode" />
+              <item name="language" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mitw" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MitwBungeeCore" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="bungee" type="462c0819:PsiDirectoryNode" />
+              <item name="language" type="462c0819:PsiDirectoryNode" />
+              <item name="types" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/GitProjects/Mitw/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisSubscriber.java" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553708584209" />
-    <property name="last_opened_file_path" value="D:/Java/Spigot/RageSpigot" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/MitwBungeeCore" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Admin\git\MitwCore\Mitw Spigot\src\main\java\net\development\mitw\jedis" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Admin\git\MitwCore\Mitw Spigot\libs" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="mitw.bungee.language" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="bungee.util" />
+      <recent name="bungee.config.impl" />
+      <recent name="bungee.database" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\GitProjects\Mitw\MitwBungeeCore\src\main\java\bungee\jedis" />
+      <recent name="D:\GitProjects\Mitw\MitwBungeeCore\src\main\java\bungee\language" />
+      <recent name="D:\GitProjects\Mitw\MitwBungeeCore\src\main\resources" />
+      <recent name="D:\GitProjects\Mitw\MitwBungeeCore\src\main\java" />
+      <recent name="D:\GitProjects\Mitw\MitwBungeeCore\src\main\java\bungee\config" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -366,6 +578,49 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <properties />
+      <listeners />
+    </configuration>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -406,40 +661,50 @@
       <option name="project" value="LOCAL" />
       <updated>1553284468406</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added stuffs">
+      <created>1553764605287</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1553764605287</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="878" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25079873" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="設計器" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="Capture Tool" order="4" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info id="Designer" order="7" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49893504" weight="0.32937366" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49840257" visible="true" weight="0.32937366" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50159746" side_tool="true" visible="true" weight="0.32937366" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49946752" weight="0.32937366" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="調色板" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="Maven Projects" order="7" visible="true" weight="0.16027689" />
       <window_info anchor="right" id="Palette" order="8" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info id="Image Layers" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5032552" side_tool="true" visible="true" weight="0.3281046" />
+      <window_info anchor="right" id="Maven Projects" order="7" visible="true" weight="0.16015625" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49946752" weight="0.32937366" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49674478" visible="true" weight="0.3281046" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="Designer" order="7" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25065103" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49804688" weight="0.3281046" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="5" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="設計器" order="2" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.16" />
+      <window_info anchor="right" id="Gradle" order="5" visible="true" weight="0.2669271" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="調色板" order="3" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Build" order="10" weight="0.32965517" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -448,344 +713,387 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="improving and new depending eFlame" />
     <MESSAGE value="updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated" />
+    <MESSAGE value="added stuffs" />
+    <option name="LAST_COMMIT_MESSAGE" value="added stuffs" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/AsyncUtils.java" />
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/timer/TimerManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1065">
-          <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/timer/events/TimerExpireEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/timer/TimerCooldown.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1395">
-          <caret line="93" column="24" selection-start-line="93" selection-start-column="24" selection-end-line="93" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/BukkitUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/ClassUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
-          <caret line="85" column="46" selection-start-line="85" selection-start-column="46" selection-end-line="85" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/AtomicString.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/security/NBTType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/security/anticrash/BlockCrashHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/MathUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/ItemUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/language/NewLanguageAPI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="124" column="5" lean-forward="true" selection-start-line="124" selection-start-column="5" selection-end-line="124" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/language/SimpleLanguageAPI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-922">
-          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/commands/cmds/HelpCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/player/MitwPlayer.java" />
-    <entry file="jar://$PROJECT_DIR$/Mitw Spigot/libs/eFlame.jar!/me/efla/API/API.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/language/LanguageAPI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="85" column="16" selection-start-line="85" selection-start-column="16" selection-end-line="85" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/namemc/NameMC.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/PlayerUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/commands/cmds/ToxicCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2040">
-          <caret line="136" column="31" selection-start-line="136" selection-start-column="31" selection-end-line="136" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/resources/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/config/SimpleConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2280">
-          <caret line="152" column="16" selection-start-line="152" selection-start-column="16" selection-end-line="152" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/commands/cmds/StaffCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="23" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/player/PlayerInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="26" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/language/LanguageData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/language/impl/LanguageMessages.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="79" selection-start-line="33" selection-start-column="79" selection-end-line="33" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/chat/PlayerCache.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/replay/npc/PacketNPC.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="39" column="16" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/redis/clients/jedis/3.0.1/jedis-3.0.1.jar!/redis/clients/jedis/JedisPool.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="179" column="19" selection-start-line="179" selection-start-column="19" selection-end-line="179" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisSubscriptionHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/impl/MitwSubscriptionHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/chat/UpdateDataTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisSettings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-pool2/2.4.2/commons-pool2-2.4.2.jar!/org/apache/commons/pool2/impl/GenericObjectPool.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="341" column="24" lean-forward="true" selection-start-line="341" selection-start-column="24" selection-end-line="341" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/listener/JoinAndQuitListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="19" column="67" selection-start-line="19" selection-start-column="67" selection-end-line="19" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/RedisCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-pool2/2.4.2/commons-pool2-2.4.2.jar!/org/apache/commons/pool2/impl/DefaultEvictionPolicy.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-pool2/2.6.1/commons-pool2-2.6.1.jar!/org/apache/commons/pool2/impl/GenericObjectPool.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1123">
-          <caret line="139" column="13" selection-start-line="139" selection-start-column="13" selection-end-line="139" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/redis/clients/jedis/2.9.0/jedis-2.9.0-sources.jar!/redis/clients/util/Pool.java">
+    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/StringUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
-          <caret line="48" column="30" selection-start-line="48" selection-start-column="30" selection-end-line="48" selection-end-column="30" />
+          <caret line="108" column="35" selection-start-line="108" selection-start-column="35" selection-end-line="108" selection-end-column="35" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/redis/clients/jedis/2.9.0/jedis-2.9.0-sources.jar!/redis/clients/jedis/JedisPool.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/top/potl/nspigot/2.0E/nspigot-2.0E.jar!/org/apache/commons/lang/StringUtils.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="225" column="32" lean-forward="true" selection-start-line="225" selection-start-column="32" selection-end-line="225" selection-end-column="32" />
+        <state relative-caret-position="163">
+          <caret line="596" column="4" selection-start-line="596" selection-start-column="4" selection-end-line="604" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/util/StringUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="93" column="5" selection-start-line="93" selection-start-column="5" selection-end-line="93" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/database/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/config/EzProtector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/config/Configuration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-313">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        <state relative-caret-position="76">
+          <caret line="10" selection-start-line="10" selection-end-line="63" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/pom.xml">
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/impl/Config.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="91" column="34" selection-start-line="91" selection-start-column="34" selection-end-line="91" selection-end-column="34" />
+        <state relative-caret-position="361">
+          <caret line="33" column="13" lean-forward="true" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/database/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/util/FastUUID.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/language/NewLanguageAPI.java" />
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/LanguageSQLConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="741">
+          <caret line="41" column="56" selection-start-line="41" selection-start-column="56" selection-end-line="41" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/utils/ItemBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisPublisher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="95">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/Mitw.java">
+    <entry file="file://$PROJECT_DIR$/Mitw Spigot/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="81" column="64" lean-forward="true" selection-start-line="81" selection-start-column="64" selection-end-line="81" selection-end-column="64" />
+        <state relative-caret-position="38">
+          <caret line="95" column="49" selection-start-line="95" selection-start-column="49" selection-end-line="95" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/chat/ChatManager.java">
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="49" column="19" lean-forward="true" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
+        <state relative-caret-position="401">
+          <caret line="100" selection-start-line="100" selection-end-line="100" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/top/potl/nspigot/2.0E/nspigot-2.0E.jar!/org/bukkit/configuration/MemorySection.class">
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/JedisSubscriptionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="253" column="18" selection-start-line="253" selection-start-column="18" selection-end-line="253" selection-end-column="18" />
+        <state relative-caret-position="76">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/config/Settings.java">
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/JedisSubscriber.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-66">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        <state relative-caret-position="95">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/JedisSubscriber.java">
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/JedisSettings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+        <state relative-caret-position="95">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/RedisCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/JedisPublisher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="12" column="53" selection-start-line="12" selection-start-column="53" selection-end-line="12" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/MitwJedis.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="26" column="45" selection-start-line="26" selection-start-column="45" selection-end-line="26" selection-end-column="45" />
+        <state relative-caret-position="95">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/uuid/UUIDCache.java">
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/MitwJedis.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+        <state relative-caret-position="95">
+          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/bungee/util/MitwLanguage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="249" column="31" lean-forward="true" selection-start-line="249" selection-start-column="31" selection-end-line="249" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/config/MySQL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="24" column="67" selection-start-line="24" selection-start-column="67" selection-end-line="24" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/Mitw.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="86" column="99" lean-forward="true" selection-start-line="86" selection-start-column="99" selection-end-line="86" selection-end-column="99" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/impl/Lang.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/AC.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-209">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Broadcast.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="83" column="81" selection-start-line="83" selection-start-column="81" selection-end-line="83" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/config/impl/MySQL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Reload.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Ignore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Lobby.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Report.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="23" column="60" lean-forward="true" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/commands/Reply.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-209">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/language/LanguageData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-408">
+          <caret line="93" column="32" lean-forward="true" selection-start-line="93" selection-start-column="32" selection-end-line="93" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/jedis/impl/MitwSubscriptionHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/managers/CommandManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/managers/YamlManagers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-152">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/modules/MotdDisplay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-152">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/listener/BungeeListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="67">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/LanguageAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="203" column="58" selection-start-line="203" selection-start-column="58" selection-end-line="203" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/Language.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/jedis/impl/MitwSubscriptionHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-47">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Mitw Spigot/src/main/java/net/development/mitw/packetlistener/newer/Protocol_Newer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-806">
+          <caret line="47" column="22" selection-start-line="47" selection-start-column="22" selection-end-line="47" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/resources/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="10" selection-start-column="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/Mitw.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="34" column="44" lean-forward="true" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/ILanguageData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="29" lean-forward="true" selection-start-column="29" selection-end-column="29" />
+          <folding>
+            <element signature="e#227#228#0" expanded="true" />
+            <element signature="e#278#279#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/types/SQLLanguageData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MitwBungeeCore/src/main/java/mitw/bungee/language/types/RedisLanguageData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#215#216#0" expanded="true" />
+            <element signature="e#242#243#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -879,7 +1187,7 @@
     </states>
   </component>
   <component name="mavenExecuteGoalHistory">
-    <option value="$PROJECT_DIR$/Mitw Spigot" />
+    <option value="D:\GitProjects\Mitw\MitwBungeeCore" />
     <option value="clean install" />
   </component>
 </project>
