@@ -10,13 +10,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public abstract class Button {
 
-	public static Button placeholder(final Material material, final byte data, String... title) {
+	public static Button placeholder(final Material material, final byte data, String title) {
 		return (new Button() {
 			public ItemStack getButtonItem(Player player) {
 				ItemStack it = new ItemStack(material, 1, data);
 				ItemMeta meta = it.getItemMeta();
 
-				meta.setDisplayName(StringUtils.join(title));
+				meta.setDisplayName(title);
 				it.setItemMeta(meta);
 
 				return it;
