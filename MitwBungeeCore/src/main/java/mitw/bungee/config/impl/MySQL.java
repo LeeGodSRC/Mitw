@@ -14,11 +14,12 @@ public class MySQL extends Config {
 		DATABASE = getString("database.database");
 		LANGUAGE_DATABASE = getString("database.languagedatabase");
 		CHAT_DATABASE = getString("database.chatdatabase");
+		save();
 	}
 
 
 	public static void init() {
-		final MySQL sql = new MySQL("MySQL.yml");
+		final MySQL sql = new MySQL("MySQL");
 		sql.loadVar();
 	}
 

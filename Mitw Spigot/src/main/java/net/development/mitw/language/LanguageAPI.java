@@ -44,22 +44,22 @@ public class LanguageAPI {
 	@Setter
 	private Object clazz;
 	@Getter
-	private final LanguageData languageData;
+	private final ILanguageData languageData;
 
-	public LanguageAPI(final LangType type, final Plugin plugin, final LanguageData languageData, final YamlConfiguration config) {
+	public LanguageAPI(final LangType type, final Plugin plugin, final ILanguageData languageData, final YamlConfiguration config) {
 		this.type = type;
 		this.config = config;
 		this.plugin = plugin;
 		this.languageData = languageData;
 	}
 
-	public LanguageAPI(final LangType type, final Plugin plugin, final LanguageData languageData, final Object clazz) {
+	public LanguageAPI(final LangType type, final Plugin plugin, final ILanguageData languageData, final Object clazz) {
 		this.type = type;
 		this.clazz = clazz;
 		this.languageData = languageData;
 	}
 
-	public LanguageAPI(final LangType type, final Plugin plugin, final LanguageData languageData, final Class<?> clazz, final Class<?>... methods) {
+	public LanguageAPI(final LangType type, final Plugin plugin, final ILanguageData languageData, final Class<?> clazz, final Class<?>... methods) {
 		this.type = type;
 		this.plugin = plugin;
 		this.languageData = languageData;
@@ -70,7 +70,7 @@ public class LanguageAPI {
 		}
 	}
 
-	public LanguageAPI(final LangType type, final Plugin plugin, final LanguageData languageData, final YamlConfiguration config,
+	public LanguageAPI(final LangType type, final Plugin plugin, final ILanguageData languageData, final YamlConfiguration config,
 			final Class<?> clazz, final Class<?>... methods) {
 		this.type = type;
 		this.config = config;
@@ -149,7 +149,7 @@ public class LanguageAPI {
 					Field field = clazz.getClass().getDeclaredField(from.replace(".", "_"));
 					Object object = field.get(clazz);
 					if (object == null) {
-						field = clazz.getClass().getDeclaredField((LanguageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
+						field = clazz.getClass().getDeclaredField((languageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
 						field.setAccessible(true);
 						object = field.get(clazz);
 					} else {
@@ -165,7 +165,7 @@ public class LanguageAPI {
 			case CONFIG:
 				String notsure = config.getString(from);
 				if (notsure == null) {
-					notsure = config.getString(LanguageData.DEFAULT_LANGUAGE + "." + ofrom);
+					notsure = config.getString(languageData.DEFAULT_LANGUAGE + "." + ofrom);
 				} else {
 					found = true;
 				}
@@ -199,7 +199,7 @@ public class LanguageAPI {
 					Field field = clazz.getClass().getDeclaredField(from.replace(".", "_"));
 					Object object = field.get(clazz);
 					if (object == null) {
-						field = clazz.getClass().getDeclaredField((LanguageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
+						field = clazz.getClass().getDeclaredField((languageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
 						field.setAccessible(true);
 						object = field.get(clazz);
 					} else {
@@ -215,7 +215,7 @@ public class LanguageAPI {
 			case CONFIG:
 				List<String> notsure = config.getStringList(from);
 				if (notsure == null) {
-					notsure = config.getStringList(LanguageData.DEFAULT_LANGUAGE + "." + ofrom);
+					notsure = config.getStringList(languageData.DEFAULT_LANGUAGE + "." + ofrom);
 				} else {
 					found = true;
 				}

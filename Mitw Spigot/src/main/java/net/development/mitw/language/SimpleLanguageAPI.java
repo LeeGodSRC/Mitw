@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import net.development.mitw.language.types.SQLLanguageData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -21,7 +22,7 @@ import net.development.mitw.utils.StringUtil;
 
 public abstract class SimpleLanguageAPI {
 
-	private static LanguageData data = Mitw.getInstance().getLanguageData();
+	private static SQLLanguageData data = Mitw.getInstance().getLanguageData();
 
 	@Getter
 	@Setter

@@ -32,11 +32,11 @@ public class NewLanguageAPI {
 	@Setter
 	private Plugin plugin;
 	@Getter
-	private final LanguageData languageData;
+	private final ILanguageData languageData;
 	@Getter
 	private final Map<String, FileConfiguration> languageFileMap = new HashMap<>();
 
-	public NewLanguageAPI(final Plugin plugin, final LanguageData languageData) {
+	public NewLanguageAPI(final Plugin plugin, final ILanguageData languageData) {
 		this.plugin = plugin;
 		this.languageData = languageData;
 
@@ -60,7 +60,7 @@ public class NewLanguageAPI {
 		}
 	}
 
-	public NewLanguageAPI(final Plugin plugin, final LanguageData languageData, final String languageFolder) {
+	public NewLanguageAPI(final Plugin plugin, final ILanguageData languageData, final String languageFolder) {
 		this.plugin = plugin;
 		this.languageData = languageData;
 

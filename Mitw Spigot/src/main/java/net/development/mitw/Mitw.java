@@ -8,6 +8,7 @@ import java.util.Set;
 import net.development.mitw.config.*;
 import net.development.mitw.jedis.JedisSettings;
 import net.development.mitw.jedis.MitwJedis;
+import net.development.mitw.language.ILanguageData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -23,7 +24,7 @@ import net.development.mitw.helpmessage.HelpHandler;
 import net.development.mitw.hooks.LuckPerms;
 import net.development.mitw.language.LanguageAPI;
 import net.development.mitw.language.LanguageAPI.LangType;
-import net.development.mitw.language.LanguageData;
+import net.development.mitw.language.types.SQLLanguageData;
 import net.development.mitw.language.LanguageSQLConnection;
 import net.development.mitw.language.impl.LanguageMessages;
 import net.development.mitw.listener.ChatListener;
@@ -51,7 +52,7 @@ public class Mitw extends JavaPlugin {
 	private static final FastRandom random = new FastRandom();
 
 	private ChatManager chatManager;
-	private LanguageData languageData;
+	private ILanguageData languageData;
 	private TimerManager timerManager;
 	private NameMC nameMC;
 	private LanguageAPI coreLanguage;
@@ -85,7 +86,7 @@ public class Mitw extends JavaPlugin {
 		LuckPerms.hook();
 
 		final LanguageSQLConnection languageSQLConnection = new LanguageSQLConnection(MySQL.LANGUAGE_DATABASE);
-		languageData = new LanguageData(this, languageSQLConnection);
+		languageData = new SQLLanguageData(this, languageSQLConnection);
 		coreLanguage = new LanguageAPI(LangType.CLASS, this, languageData, new LanguageMessages());
 		chatManager = new ChatManager(this);
 

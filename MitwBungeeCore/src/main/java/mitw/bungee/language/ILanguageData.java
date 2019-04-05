@@ -7,6 +7,8 @@ import java.util.UUID;
 
 public interface ILanguageData {
 
+    String DEFAULT_LANGUAGE = "zh_tw";
+
     public default String getLang(ProxiedPlayer p) {
         return this.getLang(p.getUniqueId());
     }
@@ -15,9 +17,9 @@ public interface ILanguageData {
 
     boolean hasLang(ProxiedPlayer p);
 
-    void setLang(ProxiedPlayer p, boolean sql);
+    void setLang(ProxiedPlayer p, String lang, boolean first);
 
-    void setLang(ProxiedPlayer p, String string, boolean sql, boolean first);
+    void setLangWithoutSave(ProxiedPlayer proxiedPlayer, String lang, boolean first);
 
     public static class ChangeLanguageEvent extends Event {
 

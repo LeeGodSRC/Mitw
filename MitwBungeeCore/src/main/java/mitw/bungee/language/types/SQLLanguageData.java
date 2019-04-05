@@ -23,8 +23,6 @@ import java.util.concurrent.Executors;
 
 public class SQLLanguageData implements Listener, ILanguageData {
 
-	static final String DEFAULT_LANGUAGE = "zh_tw";
-
 	private static Map<UUID, String> playerLangs = new HashMap<>();
 
 	@Getter @Setter private Plugin plugin;
@@ -67,16 +65,16 @@ public class SQLLanguageData implements Listener, ILanguageData {
 	}
 
 	@Override
-	public void setLang(final ProxiedPlayer p, final boolean sql) {
-		if(playerLangs.containsKey(p.getUniqueId())) {
-			setLang(p, playerLangs.get(p.getUniqueId()), sql, false);
-		} else {
-			setLang(p, DEFAULT_LANGUAGE, sql, false);
-		}
+	public void setLang(ProxiedPlayer p, String lang, boolean first) {
+		this.setLang(p, lang, true, first);
 	}
 
-	@Override
-	public void setLang(final ProxiedPlayer p, String string, final boolean sql, final boolean first) {
+    @Override
+    public void setLangWithoutSave(ProxiedPlayer proxiedPlayer, String lang, boolean first) {
+        this.setLang(proxiedPlayer, lang, false, true);
+    }
+
+    public void setLang(final ProxiedPlayer p, String string, final boolean sql, final boolean first) {
 		final ChangeLanguageEvent event = new ChangeLanguageEvent(p, string, first);
 	    ProxyServer.getInstance().getPluginManager().callEvent(event);
 		if(event.isCancelled())
@@ -119,10 +117,7 @@ public class SQLLanguageData implements Listener, ILanguageData {
 	@EventHandler
 	public void onQuit(final ServerDisconnectEvent e) {
 		final ProxiedPlayer p = e.getPlayer();
-		langExecutor.execute(() -> {
-			setLang(p, true);
-			playerLangs.remove(p.getUniqueId());
-		});
+		playerLangs.remove(p.getUniqueId());
 	}
 
 }

@@ -2,21 +2,14 @@ package mitw.bungee;
 
 import java.util.*;
 
+import mitw.bungee.commands.*;
 import mitw.bungee.config.impl.MySQL;
 import mitw.bungee.jedis.MitwJedis;
+import mitw.bungee.language.ILanguageData;
 import mitw.bungee.language.LanguageAPI;
 import mitw.bungee.language.types.SQLLanguageData;
 import mitw.bungee.language.LanguageSQLConnection;
 import mitw.bungee.modules.MotdDisplay;
-import mitw.bungee.commands.AC;
-import mitw.bungee.commands.Broadcast;
-import mitw.bungee.commands.Ignore;
-import mitw.bungee.commands.Lobby;
-import mitw.bungee.commands.Message;
-import mitw.bungee.commands.Reload;
-import mitw.bungee.commands.Reply;
-import mitw.bungee.commands.Report;
-import mitw.bungee.commands.Server;
 import mitw.bungee.listener.BungeeListener;
 import mitw.bungee.managers.CommandManager;
 import mitw.bungee.managers.YamlManagers;
@@ -24,6 +17,7 @@ import mitw.bungee.language.impl.Lang;
 import lombok.Getter;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Plugin;
+import taboolib.mysql.builder.hikari.HikariHandler;
 
 @Getter
 public class Mitw extends Plugin {
@@ -32,7 +26,7 @@ public class Mitw extends Plugin {
 	public static Map<UUID, UUID> replys = new HashMap<>();
 	public static String Prefix;
 	public static String CPrefix;
-	private SQLLanguageData SQLLanguageData;
+	private ILanguageData languageData;
 	private LanguageAPI language;
 	private MitwJedis mitwJedis;
 	public static List<String> servers = new ArrayList<>();
@@ -48,9 +42,10 @@ public class Mitw extends Plugin {
 		registerSgAlertServer();
 
 		MySQL.init();
+		HikariHandler.init();
 
-		SQLLanguageData = new SQLLanguageData(this, new LanguageSQLConnection(MySQL.LANGUAGE_DATABASE));
-		language = new LanguageAPI(LanguageAPI.LangType.CLASS, this, SQLLanguageData, new Lang());
+		languageData = new SQLLanguageData(this, new LanguageSQLConnection(MySQL.LANGUAGE_DATABASE));
+		language = new LanguageAPI(LanguageAPI.LangType.CLASS, this, languageData, new Lang());
 
 		registerCommands();
 		registerListeners();
@@ -86,6 +81,7 @@ public class Mitw extends Plugin {
 				new AC(),
 				new Ignore(),
 				new Broadcast(),
+				new Memory(),
 				new Reload(this)
 		).forEach(command -> getProxy().getPluginManager().registerCommand(this, command));
 	}

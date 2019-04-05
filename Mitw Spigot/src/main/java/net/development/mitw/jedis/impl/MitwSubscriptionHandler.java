@@ -25,7 +25,7 @@ public class MitwSubscriptionHandler implements JedisSubscriptionHandler {
 
                 Player player = Bukkit.getPlayer(uuid);
 
-                Mitw.getInstance().getLanguageData().setLang(player, language, false, true);
+                Mitw.getInstance().getLanguageData().setLangWithoutSave(player, language, true);
 
                 break;
 

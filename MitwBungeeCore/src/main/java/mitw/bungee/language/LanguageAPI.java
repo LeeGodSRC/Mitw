@@ -38,25 +38,25 @@ public class LanguageAPI {
 	@Setter
 	private Object clazz;
 	@Getter
-	private final mitw.bungee.language.types.SQLLanguageData SQLLanguageData;
+	private final ILanguageData languageData;
 
-	public LanguageAPI(final LangType type, final Plugin plugin, final SQLLanguageData SQLLanguageData, final YamlConfiguration config) {
+	public LanguageAPI(final LangType type, final Plugin plugin, final ILanguageData languageData, final YamlConfiguration config) {
 		this.type = type;
 		this.config = config;
 		this.plugin = plugin;
-		this.SQLLanguageData = SQLLanguageData;
+		this.languageData = languageData;
 	}
 
-	public LanguageAPI(final LangType type, final Plugin plugin, final SQLLanguageData SQLLanguageData, final Object clazz) {
+	public LanguageAPI(final LangType type, final Plugin plugin, final ILanguageData languageData, final Object clazz) {
 		this.type = type;
 		this.clazz = clazz;
-		this.SQLLanguageData = SQLLanguageData;
+		this.languageData = languageData;
 	}
 
-	public LanguageAPI(final LangType type, final Plugin plugin, final SQLLanguageData SQLLanguageData, final Class<?> clazz, final Class<?>... methods) {
+	public LanguageAPI(final LangType type, final Plugin plugin, final ILanguageData languageData, final Class<?> clazz, final Class<?>... methods) {
 		this.type = type;
 		this.plugin = plugin;
-		this.SQLLanguageData = SQLLanguageData;
+		this.languageData = languageData;
 		try {
 			this.clazz = clazz.getConstructor(methods).newInstance();
 		} catch (final Exception e) {
@@ -64,12 +64,12 @@ public class LanguageAPI {
 		}
 	}
 
-	public LanguageAPI(final LangType type, final Plugin plugin, final SQLLanguageData SQLLanguageData, final YamlConfiguration config,
+	public LanguageAPI(final LangType type, final Plugin plugin, final ILanguageData languageData, final YamlConfiguration config,
 					   final Class<?> clazz, final Class<?>... methods) {
 		this.type = type;
 		this.config = config;
 		this.plugin = plugin;
-		this.SQLLanguageData = SQLLanguageData;
+		this.languageData = languageData;
 		try {
 			this.clazz = clazz.getConstructor(methods).newInstance();
 		} catch (final Exception e) {
@@ -130,7 +130,7 @@ public class LanguageAPI {
 	}
 
 	public String translate(final ProxiedPlayer p, final String ofrom) {
-		final String lang = SQLLanguageData.getLang(p);
+		final String lang = languageData.getLang(p);
 		final String from = lang + "." + ofrom;
 		if (savedMessages.containsKey(from)) {
 			return savedMessages.get(from).get(0);
@@ -143,7 +143,7 @@ public class LanguageAPI {
 					Field field = clazz.getClass().getDeclaredField(from.replace(".", "_"));
 					Object object = field.get(clazz);
 					if (object == null) {
-						field = clazz.getClass().getDeclaredField((SQLLanguageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
+						field = clazz.getClass().getDeclaredField((languageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
 						field.setAccessible(true);
 						object = field.get(clazz);
 					} else {
@@ -159,7 +159,7 @@ public class LanguageAPI {
 			case CONFIG:
 				String notsure = config.getString(from);
 				if (notsure == null) {
-					notsure = config.getString(SQLLanguageData.DEFAULT_LANGUAGE + "." + ofrom);
+					notsure = config.getString(languageData.DEFAULT_LANGUAGE + "." + ofrom);
 				} else {
 					found = true;
 				}
@@ -180,7 +180,7 @@ public class LanguageAPI {
 
 	@SuppressWarnings("unchecked")
 	public List<String> translateArrays(final ProxiedPlayer p, final String ofrom) {
-		final String lang = SQLLanguageData.getLang(p);
+		final String lang = languageData.getLang(p);
 		final String from = lang + "." + ofrom;
 		if (savedMessages.containsKey(from))
 			return savedMessages.get(from);
@@ -193,7 +193,7 @@ public class LanguageAPI {
 					Field field = clazz.getClass().getDeclaredField(from.replace(".", "_"));
 					Object object = field.get(clazz);
 					if (object == null) {
-						field = clazz.getClass().getDeclaredField((SQLLanguageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
+						field = clazz.getClass().getDeclaredField((languageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
 						field.setAccessible(true);
 						object = field.get(clazz);
 					} else {
@@ -209,7 +209,7 @@ public class LanguageAPI {
 			case CONFIG:
 				List<String> notsure = config.getStringList(from);
 				if (notsure == null) {
-					notsure = config.getStringList(SQLLanguageData.DEFAULT_LANGUAGE + "." + ofrom);
+					notsure = config.getStringList(languageData.DEFAULT_LANGUAGE + "." + ofrom);
 				} else {
 					found = true;
 				}
