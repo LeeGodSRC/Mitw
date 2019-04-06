@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mitw.bungee.Mitw;
-import mitw.bungee.managers.YamlManagers;
+import mitw.bungee.config.impl.General;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.ServerPing.PlayerInfo;
@@ -26,9 +26,9 @@ public class MotdDisplay implements Listener {
 		final ServerPing serverPing = e.getResponse();
 
 		final StringBuilder str = new StringBuilder();
-		str.append(ChatColor.translateAlternateColorCodes('&', YamlManagers.motd.get(0)));
+		str.append(ChatColor.translateAlternateColorCodes('&', General.motd.get(0)));
 		str.append(ChatColor.RESET + "\n");
-		str.append(ChatColor.translateAlternateColorCodes('&', YamlManagers.motd.get(1)));
+		str.append(ChatColor.translateAlternateColorCodes('&', General.motd.get(1)));
 
 		final String response = str.toString();
 

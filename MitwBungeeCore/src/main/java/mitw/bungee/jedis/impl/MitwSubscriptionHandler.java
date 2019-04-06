@@ -25,7 +25,12 @@ public class MitwSubscriptionHandler implements JedisSubscriptionHandler {
 
                 ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);
 
+                if (player == null) {
+                    return;
+                }
+
                 Mitw.INSTANCE.getLanguageData().setLangWithoutSave(player, language, false);
+                player.sendMessage(Mitw.INSTANCE.getLanguage().translate(player, "choose"));
 
                 break;
         }

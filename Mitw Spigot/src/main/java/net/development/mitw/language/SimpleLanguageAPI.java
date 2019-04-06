@@ -22,7 +22,7 @@ import net.development.mitw.utils.StringUtil;
 
 public abstract class SimpleLanguageAPI {
 
-	private static SQLLanguageData data = Mitw.getInstance().getLanguageData();
+	private static ILanguageData data = Mitw.getInstance().getLanguageData();
 
 	@Getter
 	@Setter

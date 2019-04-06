@@ -1,7 +1,7 @@
 package mitw.bungee.commands;
 
 import mitw.bungee.Mitw;
-import mitw.bungee.managers.YamlManagers;
+import mitw.bungee.config.impl.General;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
@@ -28,7 +28,7 @@ public class Reply extends Command {
 					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&6&l私訊系統&8]&c 你並沒有可回復的對象!"));
 					return;
 				}
-				if (YamlManagers.Ignores.contains(target.getUniqueId()) && !p.hasPermission("mitw.admin")) {
+				if (General.Ignores.contains(target.getUniqueId()) && !p.hasPermission("mitw.admin")) {
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c" + target.getName() + "目前不接受任何人的訊息"));
 					return;
 				}

@@ -4,6 +4,7 @@ import java.util.*;
 
 import mitw.bungee.commands.*;
 import mitw.bungee.config.impl.MySQL;
+import mitw.bungee.jedis.JedisSettings;
 import mitw.bungee.jedis.MitwJedis;
 import mitw.bungee.language.ILanguageData;
 import mitw.bungee.language.LanguageAPI;
@@ -12,7 +13,7 @@ import mitw.bungee.language.LanguageSQLConnection;
 import mitw.bungee.modules.MotdDisplay;
 import mitw.bungee.listener.BungeeListener;
 import mitw.bungee.managers.CommandManager;
-import mitw.bungee.managers.YamlManagers;
+import mitw.bungee.config.impl.General;
 import mitw.bungee.language.impl.Lang;
 import lombok.Getter;
 import net.md_5.bungee.api.plugin.Command;
@@ -43,6 +44,10 @@ public class Mitw extends Plugin {
 
 		MySQL.init();
 		HikariHandler.init();
+		final General General = new General(this);
+		General.setup();
+
+		mitwJedis = new MitwJedis(new JedisSettings(General.JEDIS_ADDRESS, General.JEDIS_PORT, General.JEDIS_PASSWORD));
 
 		languageData = new SQLLanguageData(this, new LanguageSQLConnection(MySQL.LANGUAGE_DATABASE));
 		language = new LanguageAPI(LanguageAPI.LangType.CLASS, this, languageData, new Lang());
@@ -50,19 +55,17 @@ public class Mitw extends Plugin {
 		registerCommands();
 		registerListeners();
 		new CommandManager(this);
-		final YamlManagers YamlManagers = new YamlManagers(this);
-		YamlManagers.setup();
 
 	}
 
 	@Override
 	public void onDisable() {
 		final ArrayList<String> tempUUID = new ArrayList<>();
-		for (final UUID u : YamlManagers.Ignores) {
+		for (final UUID u : General.Ignores) {
 			tempUUID.add(u.toString());
 		}
-		YamlManagers.General.set("ignore", tempUUID);
-		YamlManagers.saveConfig();
+		General.getGeneral().set("ignore", tempUUID);
+		General.getGeneral().save();
 	}
 
 	private void registerSgAlertServer() {

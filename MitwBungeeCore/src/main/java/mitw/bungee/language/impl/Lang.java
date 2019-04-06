@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Lang {
 
+	public String zh_tw_choose = "&6&l你選擇了 &e&l中文 &6&l!";
+	public String en_us_choose = "&6&lYou choosed &e&lEnglish &6&l!";
+
 	public String zh_tw_alert = "§7-> {0} §f即將開始! {1} §7-";
 	public String en_us_alert = "§7-> {0} §fis starting! {1} §7-";
 

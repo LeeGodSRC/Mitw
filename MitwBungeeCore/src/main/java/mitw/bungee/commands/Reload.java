@@ -1,7 +1,7 @@
 package mitw.bungee.commands;
 
 import mitw.bungee.Mitw;
-import mitw.bungee.managers.YamlManagers;
+import mitw.bungee.config.impl.General;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
@@ -17,9 +17,8 @@ public class Reload extends Command {
 		if (!sender.hasPermission("mitw.admin")) {
 			return;
 		}
-		YamlManagers.motd = YamlManagers.General.getStringList("motd");
-		YamlManagers.General.set("motd", YamlManagers.motd);
-		YamlManagers.saveConfig();
+		General.motd = General.getGeneral().getStringList("motd");
+		General.getGeneral().set("motd", General.motd);
 		sender.sendMessage(ChatColor.GREEN + "成功重新載入motd");
 	}
 }

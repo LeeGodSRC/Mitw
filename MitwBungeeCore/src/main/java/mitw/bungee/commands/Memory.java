@@ -11,7 +11,13 @@ public class Memory extends Command {
 
     @Override
     public void execute(CommandSender commandSender, String[] strings) {
-        Runtime rt = Runtime.getRuntime();
-        commandSender.sendMessage("§eMemory: " + ((int) ((rt.maxMemory() - rt.totalMemory() + rt.freeMemory()) / 1048576))+ "mb/" + ((int) (rt.maxMemory() / 1048576)) + "mb §7(" + ((int)(rt.freeMemory() / 1048576)) + "mb)");
+        Runtime runtime = Runtime.getRuntime();
+        double usedMemory = runtime.totalMemory() - runtime.freeMemory();
+        double freeMemory = runtime.maxMemory() - usedMemory;
+        commandSender.sendMessage("§eMemory: " + formatMem(usedMemory) + "/" + formatMem(runtime.maxMemory()) + " §7(" + formatMem(freeMemory) + " FREE)");
+    }
+
+    private static String formatMem(double mem) {
+        return "§c" + Math.round(mem / 1024 / 1024) + "MB";
     }
 }
