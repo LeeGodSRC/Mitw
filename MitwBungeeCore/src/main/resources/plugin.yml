@@ -2,5 +2,4 @@ name: Mitw
 main: mitw.bungee.Mitw
 version: 0.0.1
 author: LeeGod
-load: startup
 description: the bungee core made only for mitw

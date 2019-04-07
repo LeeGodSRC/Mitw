@@ -1,14 +1,12 @@
 package net.development.mitw.utils.holograms;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
+import net.development.mitw.Mitw;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -17,12 +15,10 @@ import net.development.mitw.utils.reflection.minecraft.Minecraft;
 import net.development.mitw.utils.reflection.minecraft.Minecraft.Version;
 
 public abstract class HologramAPI {
+
 	protected static final List<DefaultHologram> holograms;
-	public static boolean useProtocolSupport;
 	protected static boolean is1_8;
 	protected static boolean packetsEnabled;
-	static Method ProtocolSupportAPI_getProtocolVersion;
-	static Method ProtocolVersion_getId;
 
 	static {
 		is1_8 = Minecraft.VERSION.newerThan(Version.v1_8_R1);
@@ -31,6 +27,25 @@ public abstract class HologramAPI {
 	}
 
 	public HologramAPI() {
+	}
+
+	public static void tickingRange() {
+		Bukkit.getScheduler().runTaskTimerAsynchronously(Mitw.getInstance(), () -> {
+			for (DefaultHologram hologram : holograms) {
+				if (!hologram.isSpawned()) {
+					continue;
+				}
+				for (Player player : hologram.getLocation().getWorld().getPlayers()) {
+					if (hologram.getLocation().distance(player.getLocation()) > 60 && hologram.getRendered().contains(player.getUniqueId())) {
+						despawn(hologram, Collections.singleton(player));
+						hologram.getRendered().remove(player.getUniqueId());
+					} else if (hologram.getLocation().distance(player.getLocation()) <= 60 && !hologram.getRendered().contains(player.getUniqueId())) {
+						spawn(hologram, Collections.singleton(player));
+						hologram.getRendered().add(player.getUniqueId());
+					}
+				}
+			}
+		}, 30L, 30L);
 	}
 
 	public static Hologram createHologram(final Location loc, final String text) {

@@ -11,6 +11,10 @@ public class Memory extends Command {
 
     @Override
     public void execute(CommandSender commandSender, String[] strings) {
+        if (strings.length > 0 && strings[0].equalsIgnoreCase("gc")) {
+            System.gc();
+            commandSender.sendMessage("§e§lGC Success");
+        }
         Runtime runtime = Runtime.getRuntime();
         double usedMemory = runtime.totalMemory() - runtime.freeMemory();
         double freeMemory = runtime.maxMemory() - usedMemory;

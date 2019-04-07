@@ -1,6 +1,7 @@
 package net.development.mitw.utils.holograms;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -42,6 +43,8 @@ public interface Hologram {
 	void addTouchHandler(@Nonnull TouchHandler paramTouchHandler);
 
 	void removeTouchHandler(@Nonnull TouchHandler paramTouchHandler);
+
+	Collection<UUID> getRendered();
 
 	Collection<TouchHandler> getTouchHandlers();
 

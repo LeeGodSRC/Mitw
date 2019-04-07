@@ -10,7 +10,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.world.ChunkLoadEvent;
 
 public class HologramListeners implements Listener {
 
@@ -21,9 +20,11 @@ public class HologramListeners implements Listener {
 
 		while (var3.hasNext()) {
 			final Hologram h = (Hologram) var3.next();
-			if (h.isSpawned() && h.getLocation().getWorld().getName().equals(e.getTo().getWorld().getName())) {
+			if (h.isSpawned() && h.getLocation().getWorld().getName().equals(e.getTo().getWorld().getName())
+				&& h.getLocation().distance(p.getLocation()) <= 60) {
 				try {
 					HologramAPI.spawn(h, new LinkedList<>(Collections.singletonList(p)));
+					h.getRendered().add(p.getUniqueId());
 				} catch (final Exception var6) {
 					var6.printStackTrace();
 				}
@@ -39,28 +40,13 @@ public class HologramListeners implements Listener {
 
 		while (var3.hasNext()) {
 			final Hologram h = (Hologram) var3.next();
-			if (h.isSpawned() && h.getLocation().getWorld().getName().equals(p.getWorld().getName())) {
+			if (h.isSpawned() && h.getLocation().getWorld().getName().equals(p.getWorld().getName())
+					&& h.getLocation().distance(p.getLocation()) <= 60) {
 				try {
 					HologramAPI.spawn(h, new LinkedList<>(Collections.singletonList(p)));
+					h.getRendered().add(p.getUniqueId());
 				} catch (final Exception var6) {
 					var6.printStackTrace();
-				}
-			}
-		}
-
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onChunkLoad(ChunkLoadEvent e) {
-		final Iterator var2 = HologramAPI.getHolograms().iterator();
-
-		while (var2.hasNext()) {
-			final Hologram h = (Hologram) var2.next();
-			if (h.isSpawned() && h.getLocation().getChunk().equals(e.getChunk())) {
-				try {
-					HologramAPI.spawn(h, h.getLocation().getWorld().getPlayers());
-				} catch (final Exception var5) {
-					var5.printStackTrace();
 				}
 			}
 		}

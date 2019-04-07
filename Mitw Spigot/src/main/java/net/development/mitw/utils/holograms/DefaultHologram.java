@@ -4,9 +4,11 @@ package net.development.mitw.utils.holograms;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -18,6 +20,8 @@ import net.development.mitw.utils.holograms.view.ViewHandler;
 public class DefaultHologram extends CraftHologram {
 	private final List<TouchHandler> touchHandlers = new ArrayList<>();
 	private final List<ViewHandler> viewHandlers = new ArrayList<>();
+	@Getter
+	private final List<UUID> rendered = new ArrayList<>();
 	private Location location;
 	private String text;
 	private boolean touchable;
@@ -30,9 +34,6 @@ public class DefaultHologram extends CraftHologram {
 	private BukkitRunnable updater;
 
 	protected DefaultHologram(@Nonnull final Location loc, final String text) {
-
-		if (loc == null)
-			throw new IllegalArgumentException("location cannot be null");
 
 		this.location = loc;
 

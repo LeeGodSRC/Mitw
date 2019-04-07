@@ -95,6 +95,7 @@ public class Mitw extends JavaPlugin {
 		registerListeners();
 		registerCommands();
 
+		HologramAPI.tickingRange();
 
 		new UpdateDataTask().runTaskTimerAsynchronously(this, 20 * 60 * 20L, 20 * 60 * 20L);
 
