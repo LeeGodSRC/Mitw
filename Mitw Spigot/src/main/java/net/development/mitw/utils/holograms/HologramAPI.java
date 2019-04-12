@@ -39,7 +39,7 @@ public abstract class HologramAPI {
 					if (hologram.getLocation().distance(player.getLocation()) > 60 && hologram.getRendered().contains(player.getUniqueId())) {
 						despawn(hologram, Collections.singleton(player));
 						hologram.getRendered().remove(player.getUniqueId());
-					} else if (hologram.getLocation().distance(player.getLocation()) <= 60 && !hologram.getRendered().contains(player.getUniqueId())) {
+					} else if (hologram.getLocation().distance(player.getLocation()) < 60 && !hologram.getRendered().contains(player.getUniqueId())) {
 						spawn(hologram, Collections.singleton(player));
 						hologram.getRendered().add(player.getUniqueId());
 					}

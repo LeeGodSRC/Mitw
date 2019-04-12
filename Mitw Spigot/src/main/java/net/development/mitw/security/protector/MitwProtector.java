@@ -15,7 +15,7 @@ import static net.development.mitw.security.protector.utils.MessageUtil.color;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
