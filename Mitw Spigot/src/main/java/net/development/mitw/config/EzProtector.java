@@ -2,7 +2,7 @@ package net.development.mitw.config;
 
 import lombok.Getter;
 
-public class EzProtector extends SimpleConfig {
+public class EzProtector extends Configuration {
 
 	@Getter
 	public static EzProtector instance;
@@ -13,7 +13,7 @@ public class EzProtector extends SimpleConfig {
 	}
 
 	public static void init() {
-		new EzProtector("protector.yml");
+		new EzProtector("protector");
 	}
 
 }

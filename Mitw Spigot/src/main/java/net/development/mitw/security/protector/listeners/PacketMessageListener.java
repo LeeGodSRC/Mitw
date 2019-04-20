@@ -12,6 +12,7 @@ package net.development.mitw.security.protector.listeners;
 
 import java.io.UnsupportedEncodingException;
 
+import net.development.mitw.config.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,7 +24,6 @@ import com.google.common.io.ByteStreams;
 
 import net.development.mitw.Mitw;
 import net.development.mitw.config.EzProtector;
-import net.development.mitw.config.SimpleConfig;
 import net.development.mitw.security.protector.MitwProtector;
 import net.development.mitw.security.protector.mods.Schematica;
 import net.development.mitw.security.protector.utils.ExecutionUtil;
@@ -45,7 +45,7 @@ public class PacketMessageListener implements PluginMessageListener {
     @Override
 	public void onPluginMessageReceived(String channel, Player player, byte[] value) {
         MitwProtector.player = player.getName();
-        final SimpleConfig config = EzProtector.getInstance();
+        final Configuration config = EzProtector.getInstance();
         final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
         if (config.getBoolean("mods.5zig.block")) block5Zig(player, channel);

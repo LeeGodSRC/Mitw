@@ -12,13 +12,13 @@ package net.development.mitw.security.protector.utils;
 
 import static net.development.mitw.security.protector.utils.MessageUtil.color;
 
+import net.development.mitw.config.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import net.development.mitw.config.EzProtector;
-import net.development.mitw.config.SimpleConfig;
 import net.development.mitw.security.protector.MitwProtector;
 
 public class CustomCommands {
@@ -32,7 +32,7 @@ public class CustomCommands {
         final Player player = event.getPlayer();
         MitwProtector.player = player.getName();
         final String command = event.getMessage();
-        final SimpleConfig config = EzProtector.getInstance();
+        final Configuration config = EzProtector.getInstance();
         final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
         for (int i = 0; i < config.getList("custom-commands.commands").size(); i++) {

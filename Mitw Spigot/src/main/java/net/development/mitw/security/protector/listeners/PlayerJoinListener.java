@@ -10,13 +10,13 @@
 
 package net.development.mitw.security.protector.listeners;
 
+import net.development.mitw.config.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.development.mitw.config.EzProtector;
-import net.development.mitw.config.SimpleConfig;
 import net.development.mitw.security.protector.mods.DamageIndicators;
 import net.development.mitw.security.protector.mods.ReiMinimap;
 import net.development.mitw.security.protector.mods.Schematica;
@@ -32,7 +32,7 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player p = event.getPlayer();
-        final SimpleConfig config = EzProtector.getInstance();
+        final Configuration config = EzProtector.getInstance();
 
         if (config.getBoolean("mods.betterpvp.block") && !p.hasPermission("ezprotector.bypass.mod.betterpvp")) p.sendMessage(" §c §r§5 §r§1 §r§f §r§0 ");
         if (config.getBoolean("mods.damageindicators.block")) DamageIndicators.set(p);

@@ -3,15 +3,10 @@ package mitw.bungee.commands;
 import com.google.common.collect.ImmutableList;
 import mitw.bungee.Mitw;
 import mitw.bungee.util.Common;
-import com.ilummc.tlib.util.Strings;
 
-import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
@@ -20,8 +15,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class Broadcast extends Command {
@@ -47,13 +40,13 @@ public class Broadcast extends Command {
             meetupAlert(sender, serverName, Boolean.parseBoolean(args[1]));
             return;
         }
-        Mitw.INSTANCE.broadcastOnlySpecificServers("alert", "/" + serverName, serverName.toLowerCase(), "");
+        Mitw.INSTANCE.alertOnlySpecificServers("/" + serverName, serverName.toLowerCase(), "");
         Common.tell(sender, "§a成功發送公告");
         return;
     }
 
     private void meetupAlert(final CommandSender sender, final String serverName, final boolean team) {
-        Mitw.INSTANCE.broadcastOnlySpecificServers("alert", "/meetup" + serverName, "meetup", "§7(" + (team ? "§bTeam" : "§eSolo") + "§7)");
+        Mitw.INSTANCE.alertOnlySpecificServers("/meetup" + serverName, "meetup", "§7(" + (team ? "§bTeam" : "§eSolo") + "§7)");
     }
 
     public void UHCAlert() {
@@ -104,7 +97,7 @@ public class Broadcast extends Command {
     }
 
     public void sgAlert(final CommandSender sender, final String server) {
-        Mitw.INSTANCE.broadcastOnlySpecificServers("alert", "/sg " + server, "sg", "");
+        Mitw.INSTANCE.alertOnlySpecificServers("/sg " + server, "sg", "");
     }
 
     public static TextComponent genJSONMsg(final String cmd, final ProxiedPlayer player) {

@@ -1,11 +1,11 @@
 package net.development.mitw.chat;
 
+import net.development.mitw.config.Configuration;
+
 import java.util.UUID;
 
-import net.development.mitw.config.SimpleConfig;
-
 public class PlayerCache {
-	private static SimpleConfig cfg = new SimpleConfig("cache.dat", false);
+	private static Configuration cfg = new Configuration("cache.dat", false);
 	private String lastMessage = "";
 	private long lastTalkTime = 0;
 	/*private boolean isMute = false;*/
@@ -28,7 +28,7 @@ public class PlayerCache {
 		/*cfg.set(path + ".is-mute", isMute);*/
 		cfg.set(path + ".last-chat-msg", lastMessage);
 		cfg.set(path + ".last-talk-time", lastTalkTime);
-		cfg.saveConfig();
+		cfg.save();
 	}
 
 	public long getLastTalkTime() {

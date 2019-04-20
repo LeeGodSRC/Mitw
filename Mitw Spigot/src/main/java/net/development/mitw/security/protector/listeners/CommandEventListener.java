@@ -10,12 +10,12 @@
 
 package net.development.mitw.security.protector.listeners;
 
+import net.development.mitw.config.Configuration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import net.development.mitw.config.EzProtector;
-import net.development.mitw.config.SimpleConfig;
 import net.development.mitw.security.protector.utils.CustomCommands;
 import net.development.mitw.security.protector.utils.CustomPlugins;
 import net.development.mitw.security.protector.utils.CustomVersion;
@@ -32,7 +32,7 @@ public class CommandEventListener implements Listener {
      */
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
-    	final SimpleConfig config = EzProtector.getInstance();
+    	final Configuration config = EzProtector.getInstance();
 
         if (config.getBoolean("custom-commands.blocked")) CustomCommands.execute(event);
         if (config.getBoolean("hidden-syntaxes.blocked")) HiddenSyntaxes.execute(event);

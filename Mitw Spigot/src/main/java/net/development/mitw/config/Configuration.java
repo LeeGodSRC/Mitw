@@ -17,25 +17,29 @@ public class Configuration extends YamlConfiguration {
 	private final File file;
 
 	public Configuration(final String name) {
-		this.fileName = name;
+		this(name, true);
+	}
+
+	public Configuration(final String name, boolean autoYML) {
+		this.fileName = name + (!autoYML ? "" : ".yml");
 
 		final Mitw plugin = Mitw.getInstance();
 
-		file = new File(plugin.getDataFolder(), name + ".yml");
+		file = new File(plugin.getDataFolder(), fileName);
 
 		if (!plugin.getDataFolder().exists()) {
 			plugin.getDataFolder().mkdirs();
 		}
 
 		if (!file.exists()) {
-			plugin.saveResource(fileName + ".yml", false);
+			plugin.saveResource(fileName, false);
 		}
 
 		try {
 			super.load(file);
-			System.out.println("file " + fileName + ".yml has been created.");
+			System.out.println("file " + fileName + " has been created.");
 		} catch (final Exception e) {
-			System.out.println("an error happend on creating file " + fileName + ".yml");
+			System.out.println("an error happend on creating file " + fileName);
 			e.printStackTrace();
 		}
 
@@ -45,7 +49,7 @@ public class Configuration extends YamlConfiguration {
 		try {
 			super.save(file);
 		} catch (final IOException e) {
-			System.out.println("an error happend on saving file " + fileName + ".yml");
+			System.out.println("an error happend on saving file " + fileName);
 			e.printStackTrace();
 		}
 	}
@@ -55,7 +59,7 @@ public class Configuration extends YamlConfiguration {
 			super.load(file);
 			System.out.println("file " + fileName + ".yml has been reloaded.");
 		} catch (final Exception e) {
-			System.out.println("an error happend on reloading file " + fileName + ".yml");
+			System.out.println("an error happend on reloading file " + fileName);
 			e.printStackTrace();
 		}
 	}

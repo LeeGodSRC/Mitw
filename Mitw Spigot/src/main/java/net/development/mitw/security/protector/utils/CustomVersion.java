@@ -12,13 +12,13 @@ package net.development.mitw.security.protector.utils;
 
 import static net.development.mitw.security.protector.utils.MessageUtil.color;
 
+import net.development.mitw.config.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import net.development.mitw.config.EzProtector;
-import net.development.mitw.config.SimpleConfig;
 import net.development.mitw.security.protector.MitwProtector;
 
 public class CustomVersion {
@@ -54,7 +54,7 @@ public class CustomVersion {
     public static void executeBlock(PlayerCommandPreprocessEvent event) {
         final Player player = event.getPlayer();
         MitwProtector.player = player.getName();
-        final SimpleConfig config = EzProtector.getInstance();
+        final Configuration config = EzProtector.getInstance();
         final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
         if (!player.hasPermission("ezprotector.bypass.command.version")) {

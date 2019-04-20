@@ -138,8 +138,8 @@ public class NewLanguageAPI {
 
 	public String translate(final Player p, final String from) {
 		final String lang = languageData.getLang(p);
-		if (savedMessages.containsKey(from))
-			return savedMessages.get(from).get(0);
+		if (savedMessages.containsKey(lang + "." + from))
+			return savedMessages.get(lang + "." + from).get(0);
 		else {
 
 			final FileConfiguration config = this.languageFileMap.get(lang);
@@ -156,7 +156,7 @@ public class NewLanguageAPI {
 				return "null";
 			} else {
 				to = ChatColor.translateAlternateColorCodes('&', to);
-				savedMessages.put(from, Arrays.asList(to));
+				savedMessages.put(lang + "." + from, Arrays.asList(to));
 			}
 
 			return to;
@@ -170,8 +170,8 @@ public class NewLanguageAPI {
 	@SuppressWarnings("unchecked")
 	public List<String> translateArrays(final Player p, final String from) {
 		final String lang = languageData.getLang(p);
-		if (savedMessages.containsKey(from))
-			return savedMessages.get(from);
+		if (savedMessages.containsKey(lang + "." + from))
+			return savedMessages.get(lang + "." + from);
 		else {
 			final FileConfiguration config = this.languageFileMap.get(lang);
 
@@ -192,7 +192,7 @@ public class NewLanguageAPI {
 				for (int i = 0; i < to.size(); i++) {
 					to.set(i, ChatColor.translateAlternateColorCodes('&', to.get(i)));
 				}
-				savedMessages.put(from, to);
+				savedMessages.put(lang + "." + from, to);
 			}
 			return to;
 		}

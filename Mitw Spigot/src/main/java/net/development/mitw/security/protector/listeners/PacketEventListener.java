@@ -14,11 +14,11 @@ import static net.development.mitw.security.protector.utils.MessageUtil.color;
 
 import java.util.List;
 
+import net.development.mitw.config.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import net.development.mitw.config.EzProtector;
-import net.development.mitw.config.SimpleConfig;
 import net.development.mitw.packetlistener.PacketEvent;
 import net.development.mitw.packetlistener.PacketHandler;
 import net.development.mitw.packetlistener.PacketListener;
@@ -28,7 +28,7 @@ import net.development.mitw.security.protector.utils.ExecutionUtil;
 public class PacketEventListener {
 
 	public static void protocolLibHook() {
-		final SimpleConfig config = EzProtector.getInstance();
+		final Configuration config = EzProtector.getInstance();
 		final List<String> blocked = config.getStringList("tab-completion.blacklisted");
 
 

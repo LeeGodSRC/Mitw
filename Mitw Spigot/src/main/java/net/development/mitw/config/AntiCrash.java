@@ -2,7 +2,7 @@ package net.development.mitw.config;
 
 import java.util.List;
 
-public class AntiCrash extends SimpleConfig {
+public class AntiCrash extends Configuration {
 
 	public static List<String> ACTIONS;
 
@@ -12,7 +12,7 @@ public class AntiCrash extends SimpleConfig {
 	}
 
 	public static void init() {
-		new AntiCrash("anticrash.yml");
+		new AntiCrash("anticrash");
 	}
 
 }

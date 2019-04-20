@@ -16,62 +16,56 @@ import net.development.mitw.config.Configuration;
 @Data
 public class TimerManager implements Listener, Runnable {
 
-	@Getter
-	private final Set<Timer> timers = new LinkedHashSet<>();
-	private final List<TimerCooldown> timerCooldowns = new ArrayList<>();
+    @Getter
+    private final Set<Timer> timers = new LinkedHashSet<>();
+    private final List<TimerCooldown> timerCooldowns = new ArrayList<>();
 
-	private Configuration configuration;
-	private final JavaPlugin plugin;
+    private Configuration configuration;
+    private final JavaPlugin plugin;
 
-	public TimerManager(final JavaPlugin plugin) {
-		this.plugin = plugin;
-		plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, this, 4L, 4L);
-	}
+    public TimerManager(final JavaPlugin plugin) {
+        this.plugin = plugin;
+        plugin.getServer().getScheduler().runTaskTimer(plugin, this, 4L, 4L);
+    }
 
-	public void registerTimer(final Timer timer) {
-		this.timers.add(timer);
-		if (timer instanceof Listener) {
-			this.plugin.getServer().getPluginManager().registerEvents((Listener) timer, this.plugin);
-		}
-	}
+    public void registerTimer(final Timer timer) {
+        this.timers.add(timer);
+        if (timer instanceof Listener) {
+            this.plugin.getServer().getPluginManager().registerEvents((Listener) timer, this.plugin);
+        }
+    }
 
-	public void unregisterTimer(final Timer timer) {
-		this.timers.remove(timer);
-	}
+    public void unregisterTimer(final Timer timer) {
+        this.timers.remove(timer);
+    }
 
-	@SuppressWarnings("unchecked")
-	public <T extends Timer> T getTimer(final Class<T> timerClass) {
-		for (final Timer timer : this.timers) {
-			if (timer.getClass().equals(timerClass))
-				return (T) timer;
-		}
+    @SuppressWarnings("unchecked")
+    public <T extends Timer> T getTimer(final Class<T> timerClass) {
+        for (final Timer timer : this.timers) {
+            if (timer.getClass().equals(timerClass))
+                return (T) timer;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public void saveTimerData() {
-		for (final Timer timer : timers) {
-			timer.save(configuration);
-		}
-		configuration.save();
-	}
+    public void saveTimerData() {
+        for (final Timer timer : timers) {
+            timer.save(configuration);
+        }
+        configuration.save();
+    }
 
-	public void loadTimerData() {
-		configuration = new Configuration("timers");
-		for (final Timer timer : timers) {
-			timer.load(configuration);
-		}
-	}
+    public void loadTimerData() {
+        configuration = new Configuration("timers");
+        for (final Timer timer : timers) {
+            timer.load(configuration);
+        }
+    }
 
-	@Override
-	public void run() {
-		final long now = System.currentTimeMillis();
-		final Iterator<TimerCooldown> iterator = timerCooldowns.iterator();
-		while (iterator.hasNext()) {
-			final TimerCooldown timer = iterator.next();
-			if (timer.check(now)) {
-				iterator.remove();
-			}
-		}
-	}
+    @Override
+    public void run() {
+        final long now = System.currentTimeMillis();
+        timerCooldowns.removeIf(timer -> timer.check(now));
+    }
 }

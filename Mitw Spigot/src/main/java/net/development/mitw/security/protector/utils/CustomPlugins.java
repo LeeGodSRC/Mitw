@@ -12,6 +12,7 @@ package net.development.mitw.security.protector.utils;
 
 import static net.development.mitw.security.protector.utils.MessageUtil.color;
 
+import net.development.mitw.config.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -19,7 +20,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import net.development.mitw.config.EzProtector;
-import net.development.mitw.config.SimpleConfig;
 import net.development.mitw.security.protector.MitwProtector;
 
 public class CustomPlugins {
@@ -61,7 +61,7 @@ public class CustomPlugins {
      * @param event The command event from which other information is gathered.
      */
     public static void executeBlock(PlayerCommandPreprocessEvent event) {
-    	final SimpleConfig config = EzProtector.getInstance();
+    	final Configuration config = EzProtector.getInstance();
         final Player player = event.getPlayer();
         MitwProtector.player = player.getName();
         final ConsoleCommandSender console = Bukkit.getConsoleSender();

@@ -20,6 +20,7 @@ import mitw.bungee.managers.CommandManager;
 import mitw.bungee.config.impl.General;
 import mitw.bungee.language.impl.Lang;
 import lombok.Getter;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -111,7 +112,7 @@ public class Mitw extends Plugin {
 		).forEach(listener -> getProxy().getPluginManager().registerListener(this, listener));
 	}
 
-	public void broadcast(String translate, String connect, String serverName, String... replaceOrder) {
+	public void alert(String connect, String serverName, String replaceOrder) {
 		ImmutableList<ProxiedPlayer> players = ImmutableList.copyOf(getProxy().getPlayers());
 		final int size = players.size();
 		final int diff = (int) Math.ceil(players.size() / 20D);
@@ -139,9 +140,9 @@ public class Mitw extends Plugin {
 						if (components.containsKey(language)) {
 							text = components.get(language);
 						} else {
-							text = components.put(language, new ComponentBuilder(Strings
-									.replaceWithOrder(getLanguage().translate(player, translate), serverName, replaceOrder))
-							.append(Broadcast.genJSONMsg(connect, player)).create());
+							text = new ComponentBuilder(Strings
+									.replaceWithOrder(getLanguage().translate(player, "alert"), getLanguage().translate(player, serverName), replaceOrder))
+									.append(Broadcast.genJSONMsg(connect, player)).create();
 							components.put(language, text);
 						}
 						player.sendMessage(text);
@@ -152,7 +153,7 @@ public class Mitw extends Plugin {
 		}
 	}
 
-	public void broadcastOnlySpecificServers(String translate, String connect, String serverName, String... replaceOrder) {
+	public void alertOnlySpecificServers(String connect, String serverName, String replaceOrder) {
 		List<ProxiedPlayer> players = servers.stream().map(getProxy()::getServerInfo).map(ServerInfo::getPlayers)
 				.flatMap(Collection::stream).collect(Collectors.toList());
 		final int size = players.size();
@@ -181,9 +182,9 @@ public class Mitw extends Plugin {
 						if (components.containsKey(language)) {
 							text = components.get(language);
 						} else {
-							text = components.put(language, new ComponentBuilder(Strings
-									.replaceWithOrder(getLanguage().translate(player, translate), serverName, replaceOrder))
-									.append(Broadcast.genJSONMsg(connect, player)).create());
+							text = new ComponentBuilder(Strings
+									.replaceWithOrder(getLanguage().translate(player, "alert"), getLanguage().translate(player, serverName), replaceOrder))
+									.append(Broadcast.genJSONMsg(connect, player)).create();
 							components.put(language, text);
 						}
 						player.sendMessage(text);

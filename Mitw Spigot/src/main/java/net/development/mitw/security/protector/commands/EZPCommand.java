@@ -38,7 +38,7 @@ public class EZPCommand extends BukkitCommand {
             sender.sendMessage(color("&6/protector reload - Reloads the plugin configuration."));
             return true;
         } else if (args[0].equalsIgnoreCase("reload")) {
-            EzProtector.getInstance().reloadConfig();
+            EzProtector.getInstance().reload();
             sender.sendMessage(color(EzProtector.getInstance().getString("prefix")) + " The config was reloaded!");
             return true;
         }

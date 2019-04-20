@@ -2,7 +2,7 @@ package net.development.mitw.config;
 
 import java.util.List;
 
-public class Security extends SimpleConfig {
+public class Security extends Configuration {
 
 	public Security(String fileName) {
 		super(fileName);
@@ -14,7 +14,7 @@ public class Security extends SimpleConfig {
 	}
 
 	public static void init() {
-		final Security sql = new Security("Security.yml");
+		final Security sql = new Security("Security");
 		sql.loadVar();
 	}
 
