@@ -46,7 +46,7 @@ public class Broadcast extends Command {
     }
 
     private void meetupAlert(final CommandSender sender, final String serverName, final boolean team) {
-        Mitw.INSTANCE.alertOnlySpecificServers("/meetup" + serverName, "meetup", "§7(" + (team ? "§bTeam" : "§eSolo") + "§7)");
+        Mitw.INSTANCE.alertOnlySpecificServers("/meetup " + serverName, "meetup", "§7(" + (team ? "§bTeam" : "§eSolo") + "§7)");
     }
 
     public void UHCAlert() {

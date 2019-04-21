@@ -33,6 +33,13 @@ import taboolib.mysql.builder.hikari.HikariHandler;
 @Getter
 public class Mitw extends Plugin {
 
+	/**
+	 *
+	 * Mitw Bungeecord 計畫
+	 * - Ignore sql saving plus ignore specfic players
+	 *
+	 */
+
 	public static Mitw INSTANCE;
 	public static Map<UUID, UUID> replys = new HashMap<>();
 	public static String Prefix;
