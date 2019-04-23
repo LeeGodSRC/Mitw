@@ -101,6 +101,12 @@ public class Mitw extends Plugin {
 		).forEach(command -> getProxy().getPluginManager().registerCommand(this, command));
 	}
 
+	public void registerCommand(Command... commands) {
+	    for (Command command : commands) {
+	        getProxy().getPluginManager().registerCommand(this, command);
+        }
+    }
+
 	private void registerListeners() {
 		Arrays.asList(
 				new MotdDisplay(this),

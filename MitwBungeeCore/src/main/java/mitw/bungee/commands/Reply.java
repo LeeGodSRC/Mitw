@@ -25,11 +25,11 @@ public class Reply extends Command {
 					target = ProxyServer.getInstance().getPlayer(Mitw.replys.get(p.getUniqueId()));
 				}
 				if (target == null) {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&6&l私訊系統&8]&c 你並沒有可回復的對象!"));
+					sender.sendMessage(Mitw.INSTANCE.getLanguage().translate(p, "noReply"));
 					return;
 				}
-				if (General.Ignores.contains(target.getUniqueId()) && !p.hasPermission("mitw.admin")) {
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c" + target.getName() + "目前不接受任何人的訊息"));
+				if (Mitw.INSTANCE.getIgnoreManager().isIgnored(target.getUniqueId(), p.getName()) && !p.hasPermission("mitw.admin")) {
+					p.sendMessage(Mitw.INSTANCE.getLanguage().translate(p, "cannot_send"));
 					return;
 				}
 				final StringBuilder sb = new StringBuilder("");
@@ -38,9 +38,9 @@ public class Reply extends Command {
 				}
 				final String msg = sb.toString();
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&',
-						"&8(&7私訊給&e " + target.getName() + "&7: &f" + msg + " &7)"));
+						"&8(&b-> &e" + target.getName() + "&7: &f" + msg + " &7)"));
 				target.sendMessage(ChatColor.translateAlternateColorCodes('&',
-						"&8(&7來自&e " + p.getName() + "&7 的私訊:&f " + msg + " &7)"));
+						"&8(&e" + p.getName() + " &a-> :&f " + msg + " &7)"));
 
 			}
 		}

@@ -41,6 +41,9 @@ public class Lang {
 	public String zh_tw_targetNotExists = "§c目標不存在!";
 	public String en_us_targetNotExists = "§cTarget not exists!";
 
+	public String zh_tw_noReply = "§c你沒有任何可以回復的對象!";
+	public String en_us_noReply = "§cYou don't have anyone to reply!";
+
 	public String zh_tw_cannot_send_self = "&c你不能傳訊息給自己!";
 	public String en_us_cannot_send_self = "&cYou cannot send message to your self!";
 
