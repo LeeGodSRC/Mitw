@@ -1,6 +1,8 @@
 package mitw.bungee.commands;
 
+import mitw.bungee.Mitw;
 import mitw.bungee.config.impl.General;
+import mitw.bungee.util.RV;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -12,16 +14,26 @@ public class Ignore extends Command {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public void execute(final CommandSender sender, final String[] args) {
 		if (sender instanceof ProxiedPlayer) {
-			final ProxiedPlayer p = (ProxiedPlayer) sender;
-			if (General.Ignores.contains(p.getUniqueId())) {
-				General.Ignores.remove(p.getUniqueId());
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&6&l私訊系統&7]&a 從現在開始你將允許他人向您傳送訊息!"));
+			final ProxiedPlayer player = (ProxiedPlayer) sender;
+			if (args.length == 0) {
+				if (Mitw.INSTANCE.getIgnoreManager().isIgnoreAll(player.getUniqueId())) {
+					Mitw.INSTANCE.getIgnoreManager().removeIgnore(player.getUniqueId(), "*");
+					player.sendMessage(Mitw.INSTANCE.getLanguage().translate(player, "deIgnoredAll"));
+				} else {
+					Mitw.INSTANCE.getIgnoreManager().addIgnore(player.getUniqueId(), "*");
+					player.sendMessage(Mitw.INSTANCE.getLanguage().translate(player, "ignoredAll"));
+				}
 			} else {
-				General.Ignores.add(p.getUniqueId());
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&6&l私訊系統&7]&c 從現在開始你將不允許他人向您傳送訊息!"));
+				String target = args[0];
+				if (Mitw.INSTANCE.getIgnoreManager().isIgnored(player.getUniqueId(), target)) {
+					Mitw.INSTANCE.getIgnoreManager().removeIgnore(player.getUniqueId(), target);
+					player.sendMessage(Mitw.INSTANCE.getLanguage().translate(player, "deIgnored", RV.o("{0}", target)));
+				} else {
+					Mitw.INSTANCE.getIgnoreManager().addIgnore(player.getUniqueId(), target);
+					player.sendMessage(Mitw.INSTANCE.getLanguage().translate(player, "ignored", RV.o("{0}", target)));
+				}
 			}
 		}
 

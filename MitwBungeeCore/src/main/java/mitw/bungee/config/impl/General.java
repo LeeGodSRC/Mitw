@@ -29,16 +29,12 @@ public class General extends Config {
 		this.main = main;
 	}
 
-	public static List<UUID> Ignores = new ArrayList<>();
 	public static List<String> motd = new ArrayList<>();
 
 	public static int JEDIS_PORT;
 	public static String JEDIS_ADDRESS, JEDIS_PASSWORD;
 
 	public void setup() {
-		for (final String str : getStringList("ignore")) {
-			Ignores.add(UUID.fromString(str));
-		}
 
 		for (final String str : getStringList("motd")) {
 			motd.add(str);

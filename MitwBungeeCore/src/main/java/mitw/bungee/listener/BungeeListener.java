@@ -22,7 +22,7 @@ public class BungeeListener implements Listener {
 
 	@EventHandler
 	public void onKick(final ServerKickEvent ev) {
-		ServerInfo kickedFrom = null;
+		ServerInfo kickedFrom;
 		if (ev.getPlayer().getServer() != null) {
 			kickedFrom = ev.getPlayer().getServer().getInfo();
 		} else if (Mitw.INSTANCE.getProxy().getReconnectHandler() != null) {

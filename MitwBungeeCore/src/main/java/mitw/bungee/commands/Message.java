@@ -26,14 +26,14 @@ public class Message extends Command implements TabExecutor {
 				final ProxiedPlayer p = (ProxiedPlayer) sender;
 				final ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
 				if (target == null) {
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&6&l私訊系統&7]&c 指定玩家並不存在!"));
+					p.sendMessage(Mitw.INSTANCE.getLanguage().translate(p, "targetNotExists"));
 					return;
 				}
 				if (target.equals(p)) {
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&6&l私訊系統&7]&c 你不能夠私訊你自己!"));
+					p.sendMessage(Mitw.INSTANCE.getLanguage().translate(p, "cannot_send_self"));
 				}
-				if (General.Ignores.contains(target.getUniqueId()) && !p.hasPermission("mitw.admin")) {
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c" + target.getName() + "目前不接受任何人的訊息"));
+				if (Mitw.INSTANCE.getIgnoreManager().isIgnored(target.getUniqueId(), p.getName()) && !p.hasPermission("mitw.admin")) {
+					p.sendMessage(Mitw.INSTANCE.getLanguage().translate(p, "cannot_send"));
 					return;
 				}
 				final StringBuilder sb = new StringBuilder("");
@@ -42,14 +42,14 @@ public class Message extends Command implements TabExecutor {
 				}
 				final String msg = sb.toString();
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&',
-						"&8(&7私訊給&e " + target.getName() + "&7: &f" + msg + " &7)"));
+						"&8(&b-> &e" + target.getName() + "&7: &f" + msg + " &7)"));
 				target.sendMessage(ChatColor.translateAlternateColorCodes('&',
-						"&8(&7來自&e " + p.getName() + "&7 的私訊:&f " + msg + " &7)"));
+						"&8(&e" + p.getName() + " &a-> :&f " + msg + " &7)"));
 				Mitw.replys.put(p.getUniqueId(), target.getUniqueId());
 				Mitw.replys.put(target.getUniqueId(), p.getUniqueId());
 			}
 		} else {
-			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&6&l私訊系統&7]&f 使用方法: /msg <玩家名稱> <訊息>"));
+			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c/msg <player 玩家名稱> <message 訊息>"));
 		}
 
 	}

@@ -17,11 +17,15 @@ public class Config extends YamlConfiguration {
     private final File file;
 
     public Config(final String name) {
+        this(name, Mitw.INSTANCE.getDataFolder().getAbsolutePath());
+    }
+
+    public Config(final String name, String path) {
         this.fileName = name;
 
         final Mitw plugin = Mitw.INSTANCE;
 
-        file = new File(plugin.getDataFolder(), name + ".yml");
+        file = new File(path, name + ".yml");
 
         if (!plugin.getDataFolder().exists()) {
             plugin.getDataFolder().mkdirs();
