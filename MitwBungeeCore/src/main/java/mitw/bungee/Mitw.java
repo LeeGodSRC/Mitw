@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableList;
 import com.ilummc.tlib.util.Strings;
 import mitw.bungee.commands.*;
+import mitw.bungee.config.Configuration;
 import mitw.bungee.config.impl.Config;
 import mitw.bungee.config.impl.MySQL;
 import mitw.bungee.database.PlayerFlatFileData;
@@ -80,9 +81,9 @@ public class Mitw extends Plugin {
 	public void onDisable() {
 		for (ProxiedPlayer player : getProxy().getPlayers()) {
 			PlayerFlatFileData flatFileData = new PlayerFlatFileData(player.getUniqueId());
-			Config config = flatFileData.load();
+			Configuration config = flatFileData.load();
 			this.getIgnoreManager().saveAndClear(player.getUniqueId(), config);
-			config.save();
+			flatFileData.save();
 		}
 	}
 
