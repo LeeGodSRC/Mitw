@@ -1,6 +1,7 @@
 package mitw.bungee.ignore;
 
 import com.google.common.collect.HashMultimap;
+import mitw.bungee.config.Configuration;
 import mitw.bungee.config.impl.Config;
 
 import java.util.Set;
@@ -37,13 +38,13 @@ public class IgnoreManager {
         return ignored.containsEntry(uuid, "*");
     }
 
-    public void load(UUID uuid, Config config) {
+    public void load(UUID uuid, Configuration config) {
         for (String ignore : config.getStringList("ignores")) {
             ignored.put(uuid, ignore);
         }
     }
 
-    public void saveAndClear(UUID uuid, Config config) {
+    public void saveAndClear(UUID uuid, Configuration config) {
         Set<String> ignores = this.clear(uuid);
         config.set("ignores", ignores);
     }

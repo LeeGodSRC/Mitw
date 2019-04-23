@@ -1,6 +1,7 @@
 package mitw.bungee.ignore;
 
 import mitw.bungee.Mitw;
+import mitw.bungee.config.Configuration;
 import mitw.bungee.config.impl.Config;
 import mitw.bungee.database.PlayerFlatFileData;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -23,7 +24,7 @@ public class IgnoreListener implements Listener {
         ProxiedPlayer player = event.getPlayer();
         plugin.getProxy().getScheduler().runAsync(plugin, () -> {
             PlayerFlatFileData flatFileData = new PlayerFlatFileData(player.getUniqueId());
-            Config config = flatFileData.load();
+            Configuration config = flatFileData.load();
             plugin.getIgnoreManager().load(player.getUniqueId(), config);
         });
     }
@@ -33,9 +34,9 @@ public class IgnoreListener implements Listener {
         ProxiedPlayer player = event.getPlayer();
         plugin.getProxy().getScheduler().runAsync(plugin, () -> {
             PlayerFlatFileData flatFileData = new PlayerFlatFileData(player.getUniqueId());
-            Config config = flatFileData.load();
+            Configuration config = flatFileData.load();
             plugin.getIgnoreManager().saveAndClear(player.getUniqueId(), config);
-            config.save();
+            flatFileData.save();
         });
     }
 
