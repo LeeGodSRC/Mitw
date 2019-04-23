@@ -22,7 +22,11 @@ public class PlayerFlatFileData {
     }
 
     public Configuration load() {
-        file = new File(Mitw.INSTANCE.getDataFolder().getAbsolutePath() + "/playerdata", FastUUID.toString(uuid) + ".yml");
+        File folder = new File(Mitw.INSTANCE.getDataFolder(), "playerdata");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        file = new File(Mitw.INSTANCE.getDataFolder(), "playerdata" + File.separator + FastUUID.toString(uuid) + ".yml");
         if (!file.exists()) {
             try {
                 file.createNewFile();

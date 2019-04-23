@@ -35,8 +35,8 @@ public class Lang {
 	public String zh_tw_ignored = "§c從現在開始你將拒絕 {0} 傳送給予您私人訊息!";
 	public String en_us_ignored = "§cFrom now on you will not allow {0} send private message to you!";
 
-	public String zh_tw_deIgnored = "§c從現在開始你將接受 {0} 傳送給予您私人訊息!";
-	public String en_us_deIgnored = "§cFrom now on you will allow {0} send private message to you!";
+	public String zh_tw_deIgnored = "§a從現在開始你將接受 {0} 傳送給予您私人訊息!";
+	public String en_us_deIgnored = "§aFrom now on you will allow {0} send private message to you!";
 
 	public String zh_tw_targetNotExists = "§c目標不存在!";
 	public String en_us_targetNotExists = "§cTarget not exists!";
