@@ -31,6 +31,7 @@ public class Message extends Command implements TabExecutor {
 				}
 				if (target.equals(p)) {
 					p.sendMessage(Mitw.INSTANCE.getLanguage().translate(p, "cannot_send_self"));
+					return;
 				}
 				if (Mitw.INSTANCE.getIgnoreManager().isIgnored(target.getUniqueId(), p.getName()) && !p.hasPermission("mitw.admin")) {
 					p.sendMessage(Mitw.INSTANCE.getLanguage().translate(p, "cannot_send"));
@@ -44,7 +45,7 @@ public class Message extends Command implements TabExecutor {
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&',
 						"&8(&b-> &e" + target.getName() + "&7: &f" + msg + " &7)"));
 				target.sendMessage(ChatColor.translateAlternateColorCodes('&',
-						"&8(&e" + p.getName() + " &a-> :&f " + msg + " &7)"));
+						"&8(&e" + p.getName() + " &a->&7:&f " + msg + " &7)"));
 				Mitw.replys.put(p.getUniqueId(), target.getUniqueId());
 				Mitw.replys.put(target.getUniqueId(), p.getUniqueId());
 			}

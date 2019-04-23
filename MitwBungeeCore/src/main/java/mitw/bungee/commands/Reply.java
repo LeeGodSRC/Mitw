@@ -40,7 +40,7 @@ public class Reply extends Command {
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&',
 						"&8(&b-> &e" + target.getName() + "&7: &f" + msg + " &7)"));
 				target.sendMessage(ChatColor.translateAlternateColorCodes('&',
-						"&8(&e" + p.getName() + " &a-> :&f " + msg + " &7)"));
+						"&8(&e" + p.getName() + " &a->&7:&f " + msg + " &7)"));
 
 			}
 		}
