@@ -8,10 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import net.development.mitw.Mitw;
 import net.development.mitw.menu.pagination.PaginatedMenu;
@@ -93,28 +89,6 @@ public class ButtonListener implements Listener {
 				return;
 		}
 
-		player.setMetadata("scanglitch", new FixedMetadataValue(Mitw.getInstance(), true));
-	}
-
-	@EventHandler
-	public void onPlayerMove(final PlayerMoveEvent event) {
-		final Player player = event.getPlayer();
-
-		if (player.hasMetadata("scanglitch")) {
-			player.removeMetadata("scanglitch", Mitw.getInstance());
-
-			for (final ItemStack it : player.getInventory().getContents()) {
-				if (it != null) {
-					final ItemMeta meta = it.getItemMeta();
-					if (meta != null && meta.hasDisplayName()) {
-
-						if (meta.getDisplayName().contains("§b§c§d§e")) {
-							player.getInventory().remove(it);
-						}
-					}
-				}
-			}
-		}
 	}
 
 }

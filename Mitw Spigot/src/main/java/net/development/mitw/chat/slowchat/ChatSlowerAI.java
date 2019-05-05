@@ -2,6 +2,7 @@ package net.development.mitw.chat.slowchat;
 
 import java.util.concurrent.TimeUnit;
 
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,6 +22,10 @@ public class ChatSlowerAI extends BukkitRunnable {
 
 	private final Mitw plugin;
 
+	@Getter
+	@Setter
+	private boolean aiEnable = false;
+
 	private long lastMessage = -1;
 	private double warningLevel = 0.0D;
 	@Getter
@@ -30,10 +35,16 @@ public class ChatSlowerAI extends BukkitRunnable {
 
 	public ChatSlowerAI(final Mitw plugin) {
 		this.plugin = plugin;
+		if (!aiEnable) {
+			return;
+		}
 		this.runTaskTimerAsynchronously(plugin, 20L, 20L);
 	}
 
 	public void detectChatSpammer(final Player player, final String chat) {
+		if (!aiEnable) {
+			return;
+		}
 		final int length = chat.length();
 		if (length < 2) {
 			if (Mitw.getRandom().nextFloat() > 0.8)

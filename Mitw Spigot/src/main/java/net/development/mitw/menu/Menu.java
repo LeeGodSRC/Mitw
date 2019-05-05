@@ -22,8 +22,10 @@ public abstract class Menu {
 	private Map<Integer, Button> buttons = new HashMap<>();
 	private boolean autoUpdate = true;
 	private boolean updateAfterClick = true;
+	private boolean autoClose = true;
 	private boolean closedByMenu = false;
 	private boolean placeholder = false;
+	private long openMillis;
 	private Button placeholderButton = Button.placeholder(Material.STAINED_GLASS_PANE, (byte) 15, " ");
 
 	private ItemStack createItemStack(final Player player, final Button button) {
@@ -32,6 +34,7 @@ public abstract class Menu {
 
 	public void openMenu(final Player player) {
 		this.openMenu(player, false);
+		openMillis = System.currentTimeMillis();
 	}
 
 	public void openMenu(final Player player, boolean update) {

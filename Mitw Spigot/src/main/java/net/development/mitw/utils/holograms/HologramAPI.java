@@ -1,11 +1,11 @@
 package net.development.mitw.utils.holograms;
 
-import java.lang.reflect.Method;
 import java.util.*;
 
 import javax.annotation.Nonnull;
 
 import net.development.mitw.Mitw;
+import net.development.mitw.profiler.MitwProfiler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -31,6 +31,7 @@ public abstract class HologramAPI {
 
 	public static void tickingRange() {
 		Bukkit.getScheduler().runTaskTimerAsynchronously(Mitw.getInstance(), () -> {
+			MitwProfiler.startSection("hologram-range");
 			for (DefaultHologram hologram : holograms) {
 				if (!hologram.isSpawned()) {
 					continue;
@@ -45,6 +46,7 @@ public abstract class HologramAPI {
 					}
 				}
 			}
+			MitwProfiler.stopSection("hologram-range");
 		}, 30L, 30L);
 	}
 

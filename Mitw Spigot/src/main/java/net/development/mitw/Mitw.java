@@ -9,6 +9,7 @@ import net.development.mitw.config.*;
 import net.development.mitw.jedis.JedisSettings;
 import net.development.mitw.jedis.MitwJedis;
 import net.development.mitw.language.ILanguageData;
+import net.development.mitw.reboost.ReboostTask;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -57,6 +58,7 @@ public class Mitw extends JavaPlugin {
 	private NameMC nameMC;
 	private LanguageAPI coreLanguage;
 	private MitwJedis mitwJedis;
+	private ReboostTask reboostTask;
 	private Set<ChatHandler> chatHandlers;
 	private Set<HelpHandler> helpHandlers;
 
@@ -77,6 +79,7 @@ public class Mitw extends JavaPlugin {
 		nameMC = new NameMC(this);
 		timerManager = new TimerManager(this);
 		timerManager.loadTimerData();
+		reboostTask = new ReboostTask();
 		chatHandlers = new HashSet<>();
 		helpHandlers = new HashSet<>();
 
@@ -95,7 +98,8 @@ public class Mitw extends JavaPlugin {
 		registerListeners();
 		registerCommands();
 
-		HologramAPI.tickingRange();
+		//Maybe cause lag
+//		HologramAPI.tickingRange();
 
 		new UpdateDataTask().runTaskTimerAsynchronously(this, 20 * 60 * 20L, 20 * 60 * 20L);
 
