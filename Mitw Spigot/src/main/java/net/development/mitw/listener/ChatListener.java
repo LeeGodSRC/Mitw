@@ -111,9 +111,4 @@ public class ChatListener implements org.bukkit.event.Listener {
 
 	}
 
-	@EventHandler
-	public void onQuit(final PlayerQuitEvent e) {
-		plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> ChatManager.getPlayerCaches(e.getPlayer().getUniqueId()).save());
-	}
-
 }
