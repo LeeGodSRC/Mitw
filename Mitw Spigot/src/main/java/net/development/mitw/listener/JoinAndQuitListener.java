@@ -1,6 +1,7 @@
 package net.development.mitw.listener;
 
 import net.development.mitw.Mitw;
+import net.development.mitw.player.MitwPlayer;
 import net.development.mitw.utils.PlayerUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +17,10 @@ public class JoinAndQuitListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event) {
+
+//		MitwPlayer player = new MitwPlayer(event.getUniqueId(), event.getName());
+//		player.load();
+
 		if (Mitw.getInstance().getMitwJedis().isActive()) {
 			UUIDCache.update(event.getName(), event.getUniqueId());
 		}
@@ -29,7 +34,10 @@ public class JoinAndQuitListener implements Listener {
 
 	@EventHandler
 	public void onPlayerQuit(final PlayerQuitEvent e) {
+		Player player = e.getPlayer();
 
+//		MitwPlayer mitwPlayer = MitwPlayer.getByUuid(player.getUniqueId());
+//		mitwPlayer.save();
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.gson.Gson;
 import net.development.mitw.config.*;
 import net.development.mitw.jedis.JedisSettings;
 import net.development.mitw.jedis.MitwJedis;
@@ -26,7 +27,7 @@ import net.development.mitw.hooks.LuckPerms;
 import net.development.mitw.language.LanguageAPI;
 import net.development.mitw.language.LanguageAPI.LangType;
 import net.development.mitw.language.types.SQLLanguageData;
-import net.development.mitw.language.LanguageSQLConnection;
+import net.development.mitw.player.database.PlayerDatabase;
 import net.development.mitw.language.impl.LanguageMessages;
 import net.development.mitw.listener.ChatListener;
 import net.development.mitw.listener.JoinAndQuitListener;
@@ -52,12 +53,15 @@ public class Mitw extends JavaPlugin {
 	@Getter
 	private static final FastRandom random = new FastRandom();
 
+	private Gson gson = new Gson();
+
 	private ChatManager chatManager;
 	private ILanguageData languageData;
 	private TimerManager timerManager;
 	private NameMC nameMC;
 	private LanguageAPI coreLanguage;
 	private MitwJedis mitwJedis;
+	private PlayerDatabase playerDatabase;
 	private ReboostTask reboostTask;
 	private Set<ChatHandler> chatHandlers;
 	private Set<HelpHandler> helpHandlers;
@@ -88,8 +92,9 @@ public class Mitw extends JavaPlugin {
 		HikariHandler.init();
 		LuckPerms.hook();
 
-		final LanguageSQLConnection languageSQLConnection = new LanguageSQLConnection(MySQL.LANGUAGE_DATABASE);
-		languageData = new SQLLanguageData(this, languageSQLConnection);
+		playerDatabase = new PlayerDatabase(MySQL.LANGUAGE_DATABASE);
+		playerDatabase.connect();
+		languageData = new SQLLanguageData(this, playerDatabase);
 		coreLanguage = new LanguageAPI(LangType.CLASS, this, languageData, new LanguageMessages());
 		chatManager = new ChatManager(this);
 

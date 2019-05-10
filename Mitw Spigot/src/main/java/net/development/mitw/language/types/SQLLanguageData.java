@@ -3,20 +3,15 @@ package net.development.mitw.language.types;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import com.ngxdev.event.AsyncPlayerLoginEvent;
 import net.development.mitw.language.ILanguageData;
-import net.development.mitw.language.LanguageSQLConnection;
+import net.development.mitw.player.database.PlayerDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
@@ -35,13 +30,12 @@ public class SQLLanguageData implements Listener, ILanguageData {
     private Plugin plugin;
     @Getter
     @Setter
-    private LanguageSQLConnection conn;
+    private PlayerDatabase conn;
 
-    public SQLLanguageData(final Plugin plugin, final LanguageSQLConnection conn) {
+    public SQLLanguageData(final Plugin plugin, final PlayerDatabase conn) {
         this.plugin = plugin;
         this.conn = conn;
         Bukkit.getPluginManager().registerEvents(this, plugin);
-        conn.connect();
     }
 
     public String getLang(final Player p) {
