@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
 import lombok.Getter;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -159,7 +162,7 @@ public class DefaultHologram extends CraftHologram {
 
 			}
 
-			sendNamePackets(getLocation().getWorld().getPlayers());
+			sendNamePackets(getLocation().getWorld().getPlayers().stream().filter(player -> player.getLocation().distanceSquared(getLocation()) < 60).collect(Collectors.toList()));
 
 		}
 

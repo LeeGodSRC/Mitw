@@ -16,8 +16,10 @@ public class MitwProfiler {
     public static void stopSection(String section) {
         long time = profilers.remove(section);
 
-        if (System.currentTimeMillis() - time > 100L) {
-            Bukkit.broadcast("§csomething is taking too long to run! section: " + section, "mitw.admin");
+        long take = System.currentTimeMillis() - time;
+
+        if (take > 100L) {
+            Bukkit.broadcast("§csomething is taking too long to run! section: " + section + " time: " + take + "ms", "mitw.admin");
         }
     }
 
