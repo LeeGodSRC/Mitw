@@ -1,4 +1,4 @@
-package net.development.mitw.pass;
+package net.development.mitw.player.pass;
 
 public enum TierRewardType {
 

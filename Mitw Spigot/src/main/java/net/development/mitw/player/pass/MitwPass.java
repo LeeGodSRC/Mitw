@@ -1,8 +1,6 @@
-package net.development.mitw.pass;
+package net.development.mitw.player.pass;
 
 import net.development.mitw.config.Configuration;
-
-import java.util.List;
 
 public class MitwPass {
 

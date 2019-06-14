@@ -1,6 +1,5 @@
 package net.development.mitw.language.types;
 
-import com.ngxdev.event.AsyncPlayerLoginEvent;
 import lombok.Getter;
 import lombok.Setter;
 import net.development.mitw.jedis.MitwJedis;
@@ -11,14 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class RedisLanguageData implements Listener, ILanguageData {
 

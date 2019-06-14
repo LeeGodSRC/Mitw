@@ -55,7 +55,7 @@ public class CraftMassBlockUpdate implements MassBlockUpdate, Runnable {
 
 		blocksModified++;
 		int oldBlockId = world.getBlockTypeIdAt(x, y, z);
-		fastBlockUpdate.setBlockFast(world, x, y, z, blockId, data, false);
+		fastBlockUpdate.setBlockFast(world, x, y, z, blockId, data, true);
 
 		if (relightingStrategy != RelightingStrategy.NEVER) {
 //			if (fastBlockUpdate.getBlockLightBlocking(oldBlockId) != fastBlockUpdate.getBlockLightBlocking(blockId)

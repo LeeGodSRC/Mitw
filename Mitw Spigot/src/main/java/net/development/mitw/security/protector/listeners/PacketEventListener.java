@@ -1,13 +1,3 @@
-/*
- * eZProtector - Copyright (C) 2018 DoNotSpamPls
- *
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
 package net.development.mitw.security.protector.listeners;
 
 import static net.development.mitw.security.protector.utils.MessageUtil.color;
@@ -15,77 +5,78 @@ import static net.development.mitw.security.protector.utils.MessageUtil.color;
 import java.util.List;
 
 import net.development.mitw.config.Configuration;
+import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayInTabComplete;
+import net.minecraft.server.v1_8_R3.PlayerConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import net.development.mitw.config.EzProtector;
-import net.development.mitw.packetlistener.PacketEvent;
-import net.development.mitw.packetlistener.PacketHandler;
-import net.development.mitw.packetlistener.PacketListener;
 import net.development.mitw.security.protector.MitwProtector;
 import net.development.mitw.security.protector.utils.ExecutionUtil;
+import spg.lgdev.handler.PacketHandler;
+import spg.lgdev.iSpigot;
 
 public class PacketEventListener {
 
-	public static void protocolLibHook() {
-		final Configuration config = EzProtector.getInstance();
-		final List<String> blocked = config.getStringList("tab-completion.blacklisted");
+    public static void protocolLibHook() {
+        final Configuration config = EzProtector.getInstance();
+        final List<String> blocked = config.getStringList("tab-completion.blacklisted");
 
 
-		PacketHandler.getInstance().register(new PacketListener() {
-			@Override
-			public void out(final PacketEvent arg0) {}
+        iSpigot.INSTANCE.addPacketHandler(new PacketHandler() {
+            @Override
+            public boolean handleReceivedPacket(PlayerConnection playerConnection, Packet packet) {
+                if (packet instanceof PacketPlayInTabComplete) {
 
-			@Override
-			public void in(final PacketEvent packetEvent) {
-				if (packetEvent.getPacketName().equals("PacketPlayInTabComplate")) {
+                    final Player player = playerConnection.player.getBukkitEntity();
+                    MitwProtector.player = player.getName();
 
-					if (!packetEvent.hasPlayer())
-						return;
+                    final String packetValue = ((PacketPlayInTabComplete) packet).getA();
 
-					final Player player = packetEvent.getPlayer();
-					MitwProtector.player = player.getName();
+                    if (packetValue == null)
+                        return true;
 
-					final String packetValue = (String) packetEvent.getPacketValue("a");
+                    final String[] messages = packetValue.split(" ");
 
-					if (packetValue == null)
-						return;
+                    if (messages.length == 0)
+                        return true;
 
-					final String[] messages = packetValue.split(" ");
+                    final String message = messages[0].toLowerCase();
 
-					if (messages.length == 0)
-						return;
+                    for (final String command : blocked) {
+                        if (!player.hasPermission("mitw.admin")
+                                && (message.equals(command) || (message.startsWith("/") && !message.contains(" ")))) {
+                            if (config.getBoolean("tab-completion.warn.enabled")) {
+                                final String errorMessage = config.getString("tab-completion.warn.message");
+                                if (!errorMessage.trim().equals("")) {
+                                    player.sendMessage(MitwProtector.placeholders(color(errorMessage)));
+                                }
+                            }
 
-					final String message = messages[0].toLowerCase();
+                            if (EzProtector.getInstance().getBoolean("tab-completion.punish-player.enabled")) {
+                                final String punishCommand = config.getString("tab-completion.punish-player.command");
+                                MitwProtector.errorMessage = config.getString("tab-completion.warn.message");
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+                                        MitwProtector.placeholders(punishCommand));
+                            }
 
-					for (final String command : blocked) {
-						if (!player.hasPermission("mitw.admin")
-								&& (message.equals(command) || (message.startsWith("/") && !message.contains(" ")))) {
-							packetEvent.setCancelled(true);
-							if (config.getBoolean("tab-completion.warn.enabled")) {
-								final String errorMessage = config.getString("tab-completion.warn.message");
-								if (!errorMessage.trim().equals("")) {
-									player.sendMessage(MitwProtector.placeholders(color(errorMessage)));
-								}
-							}
+                            if (MitwProtector.getPlugin().getConfig()
+                                    .getBoolean("tab-completion.notify-admins.enabled")) {
+                                final String notifyMessage = config.getString("tab-completion.notify-admins.message");
+                                ExecutionUtil.notifyAdmins(notifyMessage, "ezprotector.notify.command.tabcomplete");
+                            }
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
 
-							if (EzProtector.getInstance().getBoolean("tab-completion.punish-player.enabled")) {
-								final String punishCommand = config.getString("tab-completion.punish-player.command");
-								MitwProtector.errorMessage = config.getString("tab-completion.warn.message");
-								Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-										MitwProtector.placeholders(punishCommand));
-							}
-
-							if (MitwProtector.getPlugin().getConfig()
-									.getBoolean("tab-completion.notify-admins.enabled")) {
-								final String notifyMessage = config.getString("tab-completion.notify-admins.message");
-								ExecutionUtil.notifyAdmins(notifyMessage, "ezprotector.notify.command.tabcomplete");
-							}
-							break;
-						}
-					}
-				}
-			}
-		});
-	}
+            @Override
+            public boolean handleSentPacket(PlayerConnection playerConnection, Packet packet) {
+                return true;
+            }
+        });
+    }
 }

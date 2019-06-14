@@ -11,6 +11,7 @@ import net.development.mitw.jedis.JedisSettings;
 import net.development.mitw.jedis.MitwJedis;
 import net.development.mitw.language.ILanguageData;
 import net.development.mitw.reboost.ReboostTask;
+import net.development.mitw.tablist.TablistManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -33,8 +34,6 @@ import net.development.mitw.listener.ChatListener;
 import net.development.mitw.listener.JoinAndQuitListener;
 import net.development.mitw.menu.ButtonListener;
 import net.development.mitw.namemc.NameMC;
-import net.development.mitw.packetlistener.PacketHandler;
-import net.development.mitw.packetlistener.Reflection;
 import net.development.mitw.security.anticrash.BlockCrashHandler;
 import net.development.mitw.security.protector.MitwProtector;
 import net.development.mitw.menu.task.MenuUpdateTask;
@@ -56,6 +55,7 @@ public class Mitw extends JavaPlugin {
 	private Gson gson = new Gson();
 
 	private ChatManager chatManager;
+	private TablistManager tablistManager;
 	private ILanguageData languageData;
 	private TimerManager timerManager;
 	private NameMC nameMC;
@@ -70,19 +70,16 @@ public class Mitw extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 
-		new PacketHandler();
-
 		MySQL.init();
 		AntiCrash.init();
 		EzProtector.init();
 		Security.init();
 
-		if (!Reflection.VERSION.contains("7")) {
-			new BlockCrashHandler();
-		}
 		nameMC = new NameMC(this);
 		timerManager = new TimerManager(this);
 		timerManager.loadTimerData();
+		tablistManager = new TablistManager();
+		tablistManager.enable(this);
 		reboostTask = new ReboostTask();
 		chatHandlers = new HashSet<>();
 		helpHandlers = new HashSet<>();
@@ -118,6 +115,7 @@ public class Mitw extends JavaPlugin {
 		super.onDisable();
 
 		timerManager.saveTimerData();
+		tablistManager.disable(this);
 
 		HologramAPI.getHolograms().forEach(Hologram::despawn);
 	}

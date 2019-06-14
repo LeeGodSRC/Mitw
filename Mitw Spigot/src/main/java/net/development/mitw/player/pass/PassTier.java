@@ -1,4 +1,4 @@
-package net.development.mitw.pass;
+package net.development.mitw.player.pass;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -9,7 +9,6 @@ import net.development.mitw.Mitw;
 import net.development.mitw.json.JsonChain;
 
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter

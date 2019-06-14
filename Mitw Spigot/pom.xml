@@ -79,9 +79,9 @@
 			<version>3.1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>top.potl</groupId>
-			<artifactId>nspigot</artifactId>
-			<version>2.0E</version>
+			<groupId>leegod.ispigot</groupId>
+			<artifactId>ispigot</artifactId>
+			<version>0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -102,13 +102,6 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>LATEST</version>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>mitw.spigot</groupId>
-			<artifactId>MitwSpigot</artifactId>
-			<version>1.7.10-R0.1-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/Paper1.7Forked.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>eFlame</groupId>
@@ -135,6 +128,10 @@
 		<repository>
 			<id>luck-repo</id>
 			<url>https://repo.lucko.me</url>
+		</repository>
+		<repository>
+			<id>dmulloy2-repo</id>
+			<url>http://repo.dmulloy2.net/nexus/repository/public/</url>
 		</repository>
 	</repositories>
 </project>

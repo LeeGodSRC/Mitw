@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.ngxdev.event.AsyncPlayerLoginEvent;
 import net.development.mitw.language.ILanguageData;
 import net.development.mitw.player.database.PlayerDatabase;
 import org.bukkit.Bukkit;
@@ -12,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
@@ -118,7 +118,7 @@ public class SQLLanguageData implements Listener, ILanguageData {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onLogin(final AsyncPlayerLoginEvent e) {
-        final Player p = e.getPlayer();
+        Player p = e.getPlayer();
         if (hasLang(p)) {
             playerLangs.put(p.getUniqueId(), getLang(p));
         } else {

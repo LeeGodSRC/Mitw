@@ -51,6 +51,10 @@
       <id>luck-repo</id>
       <url>https://repo.lucko.me</url>
     </repository>
+    <repository>
+      <id>dmulloy2-repo</id>
+      <url>http://repo.dmulloy2.net/nexus/repository/public/</url>
+    </repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -66,9 +70,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>top.potl</groupId>
-      <artifactId>nspigot</artifactId>
-      <version>2.0E</version>
+      <groupId>leegod.ispigot</groupId>
+      <artifactId>ispigot</artifactId>
+      <version>0.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -76,13 +80,6 @@
       <artifactId>luckperms-api</artifactId>
       <version>4.2</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>mitw.spigot</groupId>
-      <artifactId>MitwSpigot</artifactId>
-      <version>1.7.10-R0.1-SNAPSHOT</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/libs/Paper1.7Forked.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>eFlame</groupId>
