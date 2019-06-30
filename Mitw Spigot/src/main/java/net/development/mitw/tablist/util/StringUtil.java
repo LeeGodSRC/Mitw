@@ -1,5 +1,9 @@
 package net.development.mitw.tablist.util;
 
+import lombok.Getter;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
+
 import java.util.*;
 
 public class StringUtil
@@ -83,5 +87,30 @@ public class StringUtil
     static {
         StringUtil.teamSort = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
         StringUtil.colorCodes = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'k', 'l', 'm', 'n', 'o', 'r' };
+    }
+
+    public static Entry split(final String text) {
+        final Entry entry = new Entry();
+        if (text.length() <= 16) {
+            entry.left = text;
+            entry.right = "";
+        } else {
+            String prefix = text.substring(0, 16), suffix = "";
+            if (prefix.endsWith("\u00a7")) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+                suffix = "\u00a7" + suffix;
+            }
+            suffix = StringUtils.left(ChatColor.getLastColors(prefix) + suffix + text.substring(16), 16);
+            entry.left = prefix;
+            entry.right = suffix;
+        }
+        return entry;
+    }
+
+    public static class Entry {
+
+        @Getter
+        private String left = "", right = "";
+
     }
 }
