@@ -21,14 +21,18 @@ public class Configuration extends YamlConfiguration {
 	}
 
 	public Configuration(final String name, boolean autoYML) {
+		this(name, Mitw.getInstance().getDataFolder(), autoYML);
+	}
+
+	public Configuration(final String name, File dataFolder, boolean autoYML) {
 		this.fileName = name + (!autoYML ? "" : ".yml");
 
 		final Mitw plugin = Mitw.getInstance();
 
-		file = new File(plugin.getDataFolder(), fileName);
+		file = new File(dataFolder, fileName);
 
-		if (!plugin.getDataFolder().exists()) {
-			plugin.getDataFolder().mkdirs();
+		if (!dataFolder.exists()) {
+			dataFolder.mkdirs();
 		}
 
 		if (!file.exists()) {

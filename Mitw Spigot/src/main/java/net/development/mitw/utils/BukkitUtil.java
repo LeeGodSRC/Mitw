@@ -1,10 +1,9 @@
 package net.development.mitw.utils;
 
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-
-import spg.lgdev.protocol.viaversion.api.ViaVersion;
 
 public class BukkitUtil {
 
@@ -21,7 +20,7 @@ public class BukkitUtil {
 
 	// Mitw
 	public static int getVersion(final Player player) {
-		return ViaVersion.getInstance().getPlayerVersion(player);
+		return ((CraftPlayer) player).getHandle().playerConnection.networkManager.getVersion();
 	}
 
 }

@@ -3,7 +3,6 @@ package net.development.mitw.player;
 import lombok.Getter;
 import lombok.Setter;
 import net.development.mitw.Mitw;
-import net.development.mitw.language.types.SQLLanguageData;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;

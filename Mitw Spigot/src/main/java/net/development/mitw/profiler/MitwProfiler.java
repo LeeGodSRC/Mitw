@@ -4,10 +4,11 @@ import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MitwProfiler {
 
-    private static Map<String, Long> profilers = new HashMap<>();
+    private static Map<String, Long> profilers = new ConcurrentHashMap<>();
 
     public static void startSection(String section) {
         profilers.put(section, System.currentTimeMillis());

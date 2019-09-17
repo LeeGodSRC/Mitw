@@ -79,9 +79,9 @@
 			<version>3.1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>leegod.ispigot</groupId>
+			<groupId>spg.lgdev</groupId>
 			<artifactId>ispigot</artifactId>
-			<version>0.1</version>
+			<version>1.8.8-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

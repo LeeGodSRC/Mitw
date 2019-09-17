@@ -5,17 +5,16 @@ import static net.development.mitw.security.protector.utils.MessageUtil.color;
 import java.util.List;
 
 import net.development.mitw.config.Configuration;
-import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayInTabComplete;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import net.development.mitw.config.EzProtector;
 import net.development.mitw.security.protector.MitwProtector;
 import net.development.mitw.security.protector.utils.ExecutionUtil;
-import spg.lgdev.handler.PacketHandler;
-import spg.lgdev.iSpigot;
+import spg.lgdev.protocol.listener.PacketController;
+import spg.lgdev.protocol.listener.PacketDirection;
+import spg.lgdev.protocol.listener.ProtocolVersions;
 
 public class PacketEventListener {
 
@@ -23,24 +22,26 @@ public class PacketEventListener {
         final Configuration config = EzProtector.getInstance();
         final List<String> blocked = config.getStringList("tab-completion.blacklisted");
 
-
-        iSpigot.INSTANCE.addPacketHandler(new PacketHandler() {
+        new PacketController<PacketPlayInTabComplete>(ProtocolVersions.V1_7_TO_1_8) {
             @Override
-            public boolean handleReceivedPacket(PlayerConnection playerConnection, Packet packet) {
-                if (packet instanceof PacketPlayInTabComplete) {
+            public void init() {
+                listen(values -> {
+                    if (!values.isPlayer()) {
+                        return;
+                    }
 
-                    final Player player = playerConnection.player.getBukkitEntity();
+                    final Player player = values.getPlayer();
                     MitwProtector.player = player.getName();
 
-                    final String packetValue = ((PacketPlayInTabComplete) packet).getA();
+                    final String packetValue = values.getPacket().a();
 
                     if (packetValue == null)
-                        return true;
+                        return;
 
                     final String[] messages = packetValue.split(" ");
 
                     if (messages.length == 0)
-                        return true;
+                        return;
 
                     final String message = messages[0].toLowerCase();
 
@@ -66,17 +67,11 @@ public class PacketEventListener {
                                 final String notifyMessage = config.getString("tab-completion.notify-admins.message");
                                 ExecutionUtil.notifyAdmins(notifyMessage, "ezprotector.notify.command.tabcomplete");
                             }
-                            return false;
+                            values.setCancel(true);
                         }
                     }
-                }
-                return true;
+                });
             }
-
-            @Override
-            public boolean handleSentPacket(PlayerConnection playerConnection, Packet packet) {
-                return true;
-            }
-        });
+        }.start(PacketDirection.IN, PacketPlayInTabComplete.class);
     }
 }
