@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,6 +38,9 @@ public class ChatManager implements Listener {
 	private final ChatDatabase chatDB;
 	@Getter
 	private final ChatSlowerAI chatSlowerAI;
+	@Getter
+	@Setter
+	private boolean chatFormat = true;
 
 	public ChatManager(final Mitw plugin) {
 		this.plugin = plugin;

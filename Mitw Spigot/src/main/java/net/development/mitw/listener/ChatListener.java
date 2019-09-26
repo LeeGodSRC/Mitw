@@ -88,6 +88,14 @@ public class ChatListener implements org.bukkit.event.Listener {
 		}
 
 		message = message.replaceAll("<3", "\u2764").replaceAll("%", "%%");
+		e.setMessage(message);
+
+		plugin.getChatManager().getChatSlowerAI().detectChatSpammer(player, message);
+
+		if (!Mitw.getInstance().getChatManager().isChatFormat()) {
+			return;
+		}
+
 		final String prefix = plugin.getChatManager().getChatPrefix(player);
 		final String suffix = plugin.getChatManager().getSuffixPrefix(player);
 
@@ -96,7 +104,6 @@ public class ChatListener implements org.bukkit.event.Listener {
 			return;
 		}
 
-		e.setMessage(message);
 		if (((message.toLowerCase().equals("gg") || message.toLowerCase().equals("gf")) && e.getPlayer().hasPermission("mChat.goldgg"))) {
 			e.setFormat(prefix + e.getPlayer().getName() + suffix + "§f: " + ChatColor.GOLD + message);
 			return;

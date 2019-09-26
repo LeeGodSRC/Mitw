@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import lombok.Getter;
 import net.development.mitw.Mitw;
+import org.bukkit.plugin.Plugin;
 
 public class Configuration extends YamlConfiguration {
 
@@ -25,9 +26,11 @@ public class Configuration extends YamlConfiguration {
 	}
 
 	public Configuration(final String name, File dataFolder, boolean autoYML) {
-		this.fileName = name + (!autoYML ? "" : ".yml");
+		this(name, dataFolder, Mitw.getInstance(), false, autoYML);
+	}
 
-		final Mitw plugin = Mitw.getInstance();
+	public Configuration(final String name, File dataFolder, Plugin plugin, boolean createNew, boolean autoYML) {
+		this.fileName = name + (!autoYML ? "" : ".yml");
 
 		file = new File(dataFolder, fileName);
 
@@ -36,7 +39,16 @@ public class Configuration extends YamlConfiguration {
 		}
 
 		if (!file.exists()) {
-			plugin.saveResource(fileName, false);
+			if (createNew) {
+				try {
+					file.createNewFile();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					System.out.println("Cannot create file " + file.getName());
+				}
+			} else {
+				plugin.saveResource(fileName, false);
+			}
 		}
 
 		try {

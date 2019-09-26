@@ -24,7 +24,7 @@ public class ReboostTask implements Runnable {
     @Override
     public void run() {
         reboosting = true;
-        if (time - 1 == 0) {
+        if (time - 1 <= 0) {
 
             final ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("Connect");
