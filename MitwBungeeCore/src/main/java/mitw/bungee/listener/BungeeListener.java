@@ -1,23 +1,51 @@
 package mitw.bungee.listener;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import mitw.bungee.Mitw;
+import mitw.bungee.util.RV;
 import net.md_5.bungee.api.AbstractReconnectHandler;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.ServerConnectedEvent;
-import net.md_5.bungee.api.event.ServerDisconnectEvent;
-import net.md_5.bungee.api.event.ServerKickEvent;
+import net.md_5.bungee.api.event.*;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class BungeeListener implements Listener {
+
+	private static String[] LOBBIES = {"waiting", "lobby-2", "lobby-3"};
+	private Random random = new Random();
+
 	public BungeeListener() {
 	}
 
+	private List<UUID> locked = new ArrayList<>();
+
 	@EventHandler
-	public void onQuit(final ServerDisconnectEvent e) {
+	public void onQuit(final PlayerDisconnectEvent e) {
+		locked.remove(e.getPlayer().getUniqueId());
 		Mitw.replys.remove(e.getPlayer().getUniqueId());
+	}
+
+	@EventHandler
+	public void onConnecting(final ServerConnectEvent event) {
+		if (!locked.contains(event.getPlayer().getUniqueId()) && event.getTarget().getName().equals("waiting")) {
+			locked.add(event.getPlayer().getUniqueId());
+			List<String> aliveLobbies = Stream.of(LOBBIES).filter(Mitw.INSTANCE.getKeepAliveHandler()::isServerAlive).collect(Collectors.toList());
+			if (aliveLobbies.size() == 0) {
+				return;
+			}
+			String result = aliveLobbies.get(random.nextInt(aliveLobbies.size()));
+			event.setTarget(ProxyServer.getInstance().getServerInfo(result));
+		}
 	}
 
 	@EventHandler

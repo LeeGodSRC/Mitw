@@ -33,6 +33,15 @@ public class MitwSubscriptionHandler implements JedisSubscriptionHandler {
                 player.sendMessage(Mitw.INSTANCE.getLanguage().translate(player, "choose"));
 
                 break;
+
+            case "KEEP_ALIVE":
+
+                String server = object.get("server").getAsString();
+                long time = object.get("time").getAsLong();
+
+                Mitw.INSTANCE.getKeepAliveHandler().handleKeepAlive(server, time);
+
+                break;
         }
     }
 }

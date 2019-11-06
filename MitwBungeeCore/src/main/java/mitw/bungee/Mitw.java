@@ -15,6 +15,7 @@ import mitw.bungee.ignore.IgnoreListener;
 import mitw.bungee.ignore.IgnoreManager;
 import mitw.bungee.jedis.JedisSettings;
 import mitw.bungee.jedis.MitwJedis;
+import mitw.bungee.jedis.server.KeepAliveHandler;
 import mitw.bungee.language.ILanguageData;
 import mitw.bungee.language.LanguageAPI;
 import mitw.bungee.language.types.SQLLanguageData;
@@ -25,11 +26,8 @@ import mitw.bungee.managers.CommandManager;
 import mitw.bungee.config.impl.General;
 import mitw.bungee.language.impl.Lang;
 import lombok.Getter;
-import mitw.bungee.queue.module.QueueManager;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
@@ -53,6 +51,7 @@ public class Mitw extends Plugin {
 	private ILanguageData languageData;
 	private LanguageAPI language;
 	private MitwJedis mitwJedis;
+	private KeepAliveHandler keepAliveHandler;
 	private IgnoreManager ignoreManager;
 //	private QueueManager queueManager;
 	public static List<String> servers = Arrays.asList("waiting", "duel", "ffa");
@@ -75,6 +74,10 @@ public class Mitw extends Plugin {
 		ignoreManager = new IgnoreManager();
 
 		mitwJedis = new MitwJedis(new JedisSettings(General.JEDIS_ADDRESS, General.JEDIS_PORT, General.JEDIS_PASSWORD));
+
+		keepAliveHandler = new KeepAliveHandler();
+
+		this.getProxy().getScheduler().schedule(this, keepAliveHandler, 1000L, 30 * 1000L, TimeUnit.MILLISECONDS);
 
 		languageData = new SQLLanguageData(this, new LanguageSQLConnection(MySQL.LANGUAGE_DATABASE));
 		language = new LanguageAPI(LanguageAPI.LangType.CLASS, this, languageData, new Lang());
