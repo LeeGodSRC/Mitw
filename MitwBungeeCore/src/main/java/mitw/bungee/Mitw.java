@@ -25,6 +25,7 @@ import mitw.bungee.managers.CommandManager;
 import mitw.bungee.config.impl.General;
 import mitw.bungee.language.impl.Lang;
 import lombok.Getter;
+import mitw.bungee.queue.module.QueueManager;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -53,7 +54,14 @@ public class Mitw extends Plugin {
 	private LanguageAPI language;
 	private MitwJedis mitwJedis;
 	private IgnoreManager ignoreManager;
+//	private QueueManager queueManager;
 	public static List<String> servers = Arrays.asList("waiting", "duel", "ffa");
+
+	@Override
+	public void onLoad() {
+//		this.queueManager = new QueueManager();
+//		this.queueManager.onLoad();
+	}
 
 	@Override
 	public void onEnable() {
@@ -70,6 +78,8 @@ public class Mitw extends Plugin {
 
 		languageData = new SQLLanguageData(this, new LanguageSQLConnection(MySQL.LANGUAGE_DATABASE));
 		language = new LanguageAPI(LanguageAPI.LangType.CLASS, this, languageData, new Lang());
+
+//		this.queueManager.onEnable();
 
 		registerCommands();
 		registerListeners();
@@ -89,7 +99,7 @@ public class Mitw extends Plugin {
 
 	public void registerCommands() {
 		Arrays.asList(
-				new Lobby(this),
+//				new Lobby(this),
 				new Server(this),
 				new Message(),
 				new Reply(),

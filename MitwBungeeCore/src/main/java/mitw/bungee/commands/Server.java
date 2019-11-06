@@ -16,7 +16,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class Server extends Command {
 
 	public Server(final Mitw main) {
-		super("server");
+		super("server", "mitw.admin");
 	}
 
 	@Override

@@ -19,6 +19,11 @@ public class Settings extends Configuration {
 		addDefault("jedis.password", "");
 		JEDIS_PASSWORD = getString("jedis.password", "");
 
+		addDefault("keepAlive.enabled", false);
+		KEEP_ALIVE_PACKET = getBoolean("keepAlive.enabled", false);
+		addDefault("keepAlive.serverName", "lobby-1");
+		KEEP_ALIVE_SERVER_NAME = getString("keepAlive.serverName", "lobby-1");
+
 		IS_REPLACE_MODE = getBoolean("Replacemode.Enable");
 		IS_NO_SAME_MESSAGE = getBoolean("AntiSpam.NoSameMessage");
 
@@ -49,10 +54,10 @@ public class Settings extends Configuration {
 	}
 
 	public static boolean IS_REPLACE_MODE,IS_NO_SAME_MESSAGE;
-	public static boolean IS_BETTER_NICK;
+	public static boolean IS_BETTER_NICK, KEEP_ALIVE_PACKET;
 	public static int CHAT_COOLDOWN, MUTE_TIME, JEDIS_PORT;
 	public static List<String> CHECK_HIGH,CHECK_LOW,CHECK_SINGLE,CHECK_EXCEPTION;
 	public static List<String> REPLACE_LIST;
-	public static String JEDIS_ADDRESS, JEDIS_PASSWORD;
+	public static String JEDIS_ADDRESS, JEDIS_PASSWORD, KEEP_ALIVE_SERVER_NAME;
 
 }

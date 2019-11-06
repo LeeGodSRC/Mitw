@@ -50,6 +50,18 @@ public class Lang {
 	public String zh_tw_cannot_send = "&c你不能夠傳訊息給該玩家!";
 	public String en_us_cannot_send = "&cYou cannot send message to that player!";
 
+	public String zh_tw_queue_join = "&e你加入了 &6%server% &e的排列, 目前你的位置為 &6#%position%&e, 使用 &c/leavequeue&e 退出排對";
+	public String en_us_queue_join = "&eYou are position &6#%position% &ein the &6%server% &equeue, use &c/leavequeue&e to leave the queue";
+
+	public String zh_tw_queue_leave = "&e你退出了 &6%server% &e的排列";
+	public String en_us_queue_leave = "&eYou have left the &6%server% &equeue.";
+
+	public String zh_tw_queue_move_up = "&e你現在 &6%server%&e 的排對當中是第 &6#%position% &e位";
+	public String en_us_queue_move_up = "&eYou are position &6#%position% &eout of &6%outof% &ein the &6%server% &equeue.";
+
+	public String zh_tw_queue_move_down = "&e有一個 &6更高權限的人 &e加入了 &6%server% &e的對列. 你現在是第 &6#%position% &e位";
+	public String en_us_queue_move_down = "&eSomeone with &6higher priority &ehas joined the &6%server% &equeue. You are now position &6#%position% &e out of &6%outof% &ein the queue.";
+
 	public List<String> zh_tw_uhc = Arrays.asList("§6§lMitw§f§lUHC §c§l開放加入", "§f歡迎各位帶著好朋友們一起來參與這場§ePvP盛宴", "§c§l你準備好了嗎...?");
 	public List<String> en_us_uhc = Arrays.asList("§6§lMitw§f§lUHC §c§lOpen to everyone!", "§fEveryone are now able to join this §ePvP match", "§c§lAre you ready for this...?");
 

@@ -9,7 +9,7 @@ public class HelpCommand {
 
 	@Command(names = "help")
 	public static void help(final Player player) {
-		Mitw.getInstance().getHelpHandlers().forEach(helpHandler -> helpHandler.getHelp().forEach(player::sendMessage));
+		Mitw.getInstance().getHelpHandlers().forEach(helpHandler -> helpHandler.getHelp(player).forEach(player::sendMessage));
 	}
 
 }

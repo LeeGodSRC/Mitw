@@ -1,6 +1,7 @@
 package net.development.mitw.language;
 
 import net.development.mitw.Mitw;
+import net.development.mitw.jedis.JedisPackets;
 import net.development.mitw.json.JsonChain;
 import net.development.mitw.utils.FastUUID;
 import org.bukkit.entity.Player;
@@ -29,7 +30,7 @@ public interface ILanguageData {
     void setLangData(Player player, String language);
 
     default void sendLangRedis(Player player, String language) {
-        Mitw.getInstance().getMitwJedis().write("LANGUAGE_CHANGED", new JsonChain()
+        Mitw.getInstance().getMitwJedis().write(JedisPackets.LANGUAGE_CHANGED, new JsonChain()
                 .addProperty("uuid", FastUUID.toString(player.getUniqueId())).addProperty("language", language).get());
         setLangData(player, language);
     }

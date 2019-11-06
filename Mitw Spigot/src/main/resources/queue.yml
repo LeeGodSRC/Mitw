@@ -1,0 +1,35 @@
+# This is the sign players see when they aren't in the queue.
+queue-sign:
+  line1: "%server% Queue"
+  line2: "&a%online%&f/&a%limit%"
+  line3: "&dClick to join"
+  line4: "&dthe queue!"
+
+# This is the sign that shows how many of each rank is in the queue.
+info-sign:
+  line1: "Queue Info"
+  line2: "Rank1: %rank1%"
+  line3: "Rank2: %rank2%"
+  line4: "Rank3: %rank3%"
+
+# Lower the priority number, they get further to the front of the queue.
+# For example, if player One is already in the queue with 5 priority, then player Two joins the queue
+# with a priority of 1, player Two will be put in front of player One in the queue.
+#
+# --- COPY THIS SECTION EXACTLY TO YOUR EZQUEUEBUNGEE CONFIG ---
+ranks:
+  rank1:
+    permission: "ezq.rank1"
+    priority: 1
+  rank2:
+    permission: "ezq.rank2"
+    priority: 2
+  rank3:
+    permission: "ezq.rank3"
+    priority: 3
+
+# This is the message you will be shown if you right click an info sign
+info-sign-message: "&dYou can donate for higher queue priority at &ewww.yourshop.com&d!"
+
+queue-sign-locations: {}
+info-sign-locations: {}

@@ -103,6 +103,9 @@ public class LanguageMessages {
     public String zh_tw_currentPage = "目前所在的頁面";
     public String en_us_currentPage = "Current page";
 
+    public String zh_tw_sending_to = "§e正在將你傳到分流 {0}...";
+    public String en_us_sending_to = "§eSending you to server {0}...";
+
     public List<String> zh_tw_jumpToPage_lore = Arrays.asList("", "§e右鍵點擊", "§e跳到該頁面", "");
     public List<String> en_us_jumpToPage_lore = Arrays.asList("", "§eRight click to", "§ejump to a page", "");
 

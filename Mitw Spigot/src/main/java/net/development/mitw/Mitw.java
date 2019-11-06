@@ -7,9 +7,12 @@ import java.util.Set;
 
 import com.google.gson.Gson;
 import net.development.mitw.config.*;
+import net.development.mitw.depend.iSelectorDepend;
 import net.development.mitw.jedis.JedisSettings;
 import net.development.mitw.jedis.MitwJedis;
+import net.development.mitw.jedis.server.KeepAliveHandler;
 import net.development.mitw.language.ILanguageData;
+import net.development.mitw.queue.module.QueueManager;
 import net.development.mitw.reboost.ReboostTask;
 import net.development.mitw.tablist.TablistManager;
 import org.bukkit.Bukkit;
@@ -61,10 +64,18 @@ public class Mitw extends JavaPlugin {
 	private NameMC nameMC;
 	private LanguageAPI coreLanguage;
 	private MitwJedis mitwJedis;
+	private KeepAliveHandler keepAliveHandler;
 	private PlayerDatabase playerDatabase;
 	private ReboostTask reboostTask;
+//	private QueueManager queueManager;
 	private Set<ChatHandler> chatHandlers;
 	private Set<HelpHandler> helpHandlers;
+
+	@Override
+	public void onLoad() {
+//		this.queueManager = new QueueManager();
+//		this.queueManager.onLoad();
+	}
 
 	@Override
 	public void onEnable() {
@@ -84,16 +95,22 @@ public class Mitw extends JavaPlugin {
 		chatHandlers = new HashSet<>();
 		helpHandlers = new HashSet<>();
 
-		helpHandlers.add(() -> Arrays.asList("Help1", "Help2"));
+		helpHandlers.add(player -> Arrays.asList("Help1", "Help2"));
 
 		HikariHandler.init();
 		LuckPerms.hook();
+
+		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
+		iSelectorDepend.register(this);
 
 		playerDatabase = new PlayerDatabase(MySQL.LANGUAGE_DATABASE);
 		playerDatabase.connect();
 		languageData = new SQLLanguageData(this, playerDatabase);
 		coreLanguage = new LanguageAPI(LangType.CLASS, this, languageData, new LanguageMessages());
 		chatManager = new ChatManager(this);
+
+//		this.queueManager.onEnable();
 
 		Bukkit.getScheduler().runTaskTimerAsynchronously(this, new MenuUpdateTask(), 20L, 20 * 30L);
 
@@ -106,6 +123,9 @@ public class Mitw extends JavaPlugin {
 		new UpdateDataTask().runTaskTimerAsynchronously(this, 20 * 60 * 20L, 20 * 60 * 20L);
 
 		this.mitwJedis = new MitwJedis(new JedisSettings(Settings.JEDIS_ADDRESS, Settings.JEDIS_PORT, Settings.JEDIS_PASSWORD));
+		this.keepAliveHandler = new KeepAliveHandler();
+
+		this.getServer().getScheduler().runTaskTimerAsynchronously(this, this.keepAliveHandler, 20L, 30 * 20L);
 
 		new MitwProtector().onEnable();
 	}

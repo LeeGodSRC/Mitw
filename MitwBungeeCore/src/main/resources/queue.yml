@@ -1,0 +1,50 @@
+# Change the server names under 'servers' to the same names in your bungee config.
+# Only add servers below if you want them to have a queue to join.
+# The limit is the amount of players you want to allow on that server before they are put into a queue. You can set the limit to -1 for unlimited.
+# The send delay is the delay between sending players to the server in seconds (decimals are accepted)
+# Use '/play <server>' to be put into the queue if the server is full.
+
+servers:
+  test:
+    limit: 10
+    send-delay: 0
+  test2:
+    limit: 20
+    send-delay: 0
+
+# These are the servers with the EzQueueClient on them. This would usually be all your lobby servers
+lobbies:
+  - lobby
+  - lobby1
+
+# Lower the priority number, they get further to the front of the queue.
+# For example, if player One is already in the queue with 5 priority, then player Two joins the queue
+# with a priority of 1, player Two will be put in front of player One in the queue.
+#
+# --- COPY THIS SECTION EXACTLY TO ALL YOUR SPIGOT SERVERS WITH EZQUEUESPIGOT ---
+ranks:
+  rank1:
+    permission: "ezq.rank1"
+    priority: 1
+  rank2:
+    permission: "ezq.rank2"
+    priority: 2
+  rank3:
+    permission: "ezq.rank3"
+    priority: 3
+
+messages:
+  move-up-message: "&dYou are position &e#%position% &dout of &e%outof% &din the &e%server% &dqueue."
+  move-down-message: "&dSomeone with &ehigher priority &dhas joined the &e%server% &dqueue. You are now position &e#%position% &d out of &e%outof% &din the queue."
+  already-in-message: "&dYou are already in the &e%server% &dqueue! You are position &e#%position% &dout of &e%outof%&d."
+  available-queues-message: "&cAvailable servers: %servers%"
+  invalid-queue-message: "&cThat's not a valid server! Available servers: %servers%"
+  already-connected-message: "&cYou're already connected to that server!"
+  not-in-queue-message: "&cYou aren't in a queue!"
+  pause-queue-message: "&dQueue for &e%server% &dhas been paused!"
+  unpause-queue-message: "&dQueue for &e%server% &dhas been unpaused!"
+
+# The interval in seconds that all players in a queue will be updated on their queue position (decimals are accepted)
+send-position-message-interval: 10
+# Enabling this will update every player on their new position if they move up or down.
+send-position-move-message: false

@@ -2,6 +2,7 @@ package net.development.mitw.jedis.impl;
 
 import com.google.gson.JsonObject;
 import net.development.mitw.Mitw;
+import net.development.mitw.jedis.JedisPackets;
 import net.development.mitw.jedis.JedisSubscriptionHandler;
 import net.development.mitw.utils.FastUUID;
 import org.bukkit.Bukkit;
@@ -18,7 +19,7 @@ public class MitwSubscriptionHandler implements JedisSubscriptionHandler {
 
         switch (json.get("payload").getAsString()) {
 
-            case "LANGUAGE_CHANGED":
+            case JedisPackets.LANGUAGE_CHANGED:
 
                 UUID uuid = FastUUID.parseUUID(object.get("uuid").getAsString());
                 String language = object.get("language").getAsString();
@@ -30,6 +31,15 @@ public class MitwSubscriptionHandler implements JedisSubscriptionHandler {
                 }
 
                 Mitw.getInstance().getLanguageData().setLangWithoutSave(player, language, true);
+
+                break;
+
+            case JedisPackets.KEEP_ALIVE:
+
+                String server = object.get("server").getAsString();
+                long time = object.get("time").getAsLong();
+
+                Mitw.getInstance().getKeepAliveHandler().handleKeepAlive(server, time);
 
                 break;
 
