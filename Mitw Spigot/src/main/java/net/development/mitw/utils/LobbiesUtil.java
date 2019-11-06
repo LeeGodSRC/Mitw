@@ -4,9 +4,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.development.mitw.Mitw;
 import org.bukkit.entity.Player;
-import org.lgdev.iselector.iSelector;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,7 +26,7 @@ public class LobbiesUtil {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("Connect");
         out.writeUTF(result);
-        player.sendPluginMessage(iSelector.getInstance(), "BungeeCord", out.toByteArray());
+        player.sendPluginMessage(Mitw.getInstance(), "BungeeCord", out.toByteArray());
     }
 
 }

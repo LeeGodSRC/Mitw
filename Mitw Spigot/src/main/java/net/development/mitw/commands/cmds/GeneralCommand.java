@@ -5,10 +5,8 @@ import com.google.common.io.ByteStreams;
 import net.development.mitw.Mitw;
 import net.development.mitw.commands.Command;
 import net.development.mitw.commands.param.Parameter;
-import net.development.mitw.json.JsonChain;
 import net.development.mitw.utils.LobbiesUtil;
 import org.bukkit.entity.Player;
-import org.lgdev.iselector.iSelector;
 
 public class GeneralCommand {
 
@@ -17,7 +15,7 @@ public class GeneralCommand {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("Connect");
         out.writeUTF(server);
-        player.sendPluginMessage(iSelector.getInstance(), "BungeeCord", out.toByteArray());
+        player.sendPluginMessage(Mitw.getInstance(), "BungeeCord", out.toByteArray());
     }
 
     @Command(names = {"lobby", "hub", "sendToHub"})
