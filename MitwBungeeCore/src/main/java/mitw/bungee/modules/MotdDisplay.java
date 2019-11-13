@@ -3,6 +3,7 @@ package mitw.bungee.modules;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.imaginarycode.minecraft.redisbungee.RedisBungee;
 import mitw.bungee.Mitw;
 import mitw.bungee.config.impl.General;
 import net.md_5.bungee.api.ChatColor;
@@ -35,7 +36,7 @@ public class MotdDisplay implements Listener {
 		serverPing.setDescription(response);
 		e.setResponse(serverPing);
 
-		serverPing.getPlayers().setOnline(serverPing.getPlayers().getOnline());
+		serverPing.getPlayers().setOnline(RedisBungee.getApi().getPlayerCount());
 
 		final List<String> lines = new ArrayList();
 		lines.add("&7&m----------------------");
@@ -49,6 +50,8 @@ public class MotdDisplay implements Listener {
 			sample[i] = new PlayerInfo(ChatColor.translateAlternateColorCodes('&', lines.get(i)), "");
 		}
 		serverPing.getPlayers().setSample(sample);
+
+
 	}
 
 }

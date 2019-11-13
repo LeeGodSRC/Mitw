@@ -2,15 +2,14 @@ package net.development.mitw.listener;
 
 import java.util.UUID;
 
+import me.GoodestEnglish.QoolNick.QoolNickAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
-import de.domedd.betternick.api.BetterNickAPI;
 import net.development.mitw.Mitw;
 import net.development.mitw.chat.ChatManager;
 import net.development.mitw.chat.PlayerCache;
@@ -97,9 +96,9 @@ public class ChatListener implements org.bukkit.event.Listener {
 		}
 
 		final String prefix = plugin.getChatManager().getChatPrefix(player);
-		final String suffix = plugin.getChatManager().getSuffixPrefix(player);
+		final String suffix = plugin.getChatManager().getChatSuffix(player);
 
-		if (Settings.IS_BETTER_NICK && BetterNickAPI.getApi().isNicked(player)) {
+		if (Settings.IS_BETTER_NICK && QoolNickAPI.isNicked(player)) {
 			e.setFormat(prefix + player.getName() + "§f: " + message);
 			return;
 		}

@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import lombok.Setter;
+import me.GoodestEnglish.QoolNick.QoolNickAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +14,6 @@ import org.bukkit.event.Listener;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
-import de.domedd.betternick.api.BetterNickAPI;
 import lombok.Getter;
 import net.development.mitw.Mitw;
 import net.development.mitw.chat.check.CheckType;
@@ -59,8 +59,8 @@ public class ChatManager implements Listener {
 
 	public String getChatPrefix(final Player player) {
 		final String luckpermsPrefix;
-		if (Settings.IS_BETTER_NICK && BetterNickAPI.getApi().isNicked(player)) {
-			luckpermsPrefix = "&7";
+		if (Settings.IS_BETTER_NICK && QoolNickAPI.isNicked(player)) {
+			luckpermsPrefix = QoolNickAPI.getNickedPrefix(player).equals("") ? "&7" : QoolNickAPI.getNickedPrefix(player);
 		} else {
 			luckpermsPrefix = LuckPerms.getPrefix(player);
 		}
@@ -81,13 +81,7 @@ public class ChatManager implements Listener {
 		return Common.colored(builder.toString());
 	}
 
-	public String getSuffixPrefix(final Player player) {
-		final String luckpermsPrefix;
-		if (Settings.IS_BETTER_NICK && BetterNickAPI.getApi().isNicked(player)) {
-			luckpermsPrefix = "&7";
-		} else {
-			luckpermsPrefix = LuckPerms.getSuffix(player);
-		}
+	public String getChatSuffix(final Player player) {
 		final StringBuilder builder = new StringBuilder();
 
 		for (final ChatHandler chatHandler : plugin.getChatHandlers()) {
@@ -97,7 +91,6 @@ public class ChatManager implements Listener {
 			}
 			builder.append(chatHandler.getSuffix(player));
 		}
-		builder.append(luckpermsPrefix);
 		return Common.colored(builder.toString());
 	}
 

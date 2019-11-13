@@ -67,15 +67,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>de.demomedd.betternick</groupId>
-			<artifactId>BetterNick</artifactId>
-			<version>1.0.0</version>
+			<groupId>org.lgdev.iselector</groupId>
+			<artifactId>iSelector</artifactId>
+			<version>1.0-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.lgdev.iselector</groupId>
-			<artifactId>iSelector</artifactId>
+			<groupId>me.GoodestEnglish</groupId>
+			<artifactId>QoolNick</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>

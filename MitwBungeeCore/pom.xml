@@ -54,9 +54,21 @@
 			</resource>
 		</resources>
 	</build>
-	
+
+	<repositories>
+		<repository>
+			<id>md_5-snapshots</id>
+			<url>http://repo.md-5.net/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
-	
+		<dependency>
+			<groupId>com.imaginarycode.minecraft</groupId>
+			<artifactId>RedisBungee</artifactId>
+			<version>0.3.6-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>net.md_5.bungee</groupId>
 			<artifactId>bungee</artifactId>

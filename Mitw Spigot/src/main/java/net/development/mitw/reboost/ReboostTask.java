@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import lombok.Getter;
 import lombok.Setter;
 import net.development.mitw.Mitw;
+import net.development.mitw.utils.LobbiesUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -26,10 +27,6 @@ public class ReboostTask implements Runnable {
         reboosting = true;
         if (time - 1 <= 0) {
 
-            final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("Connect");
-            out.writeUTF("waiting");
-
             new BukkitRunnable() {
                 Iterator<? extends Player> playerIterator;
 
@@ -45,7 +42,7 @@ public class ReboostTask implements Runnable {
                     }
                     Player player = playerIterator.next();
                     if (player.isOnline()) {
-                        player.sendPluginMessage(Mitw.getInstance(), "BungeeCord", out.toByteArray());
+                        LobbiesUtil.sendToLobby(player);
                     }
                 }
             }.runTaskTimer(Mitw.getInstance(), 300L, 3L);

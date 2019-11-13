@@ -104,8 +104,8 @@ public class Mitw extends Plugin {
 		Arrays.asList(
 //				new Lobby(this),
 				new Server(this),
-				new Message(),
-				new Reply(),
+//				new Message(),
+//				new Reply(),
 				new Report(),
 				new AC(),
 				new Ignore(),
