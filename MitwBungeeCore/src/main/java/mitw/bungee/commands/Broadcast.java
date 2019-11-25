@@ -2,20 +2,11 @@ package mitw.bungee.commands;
 
 import com.google.common.collect.ImmutableList;
 import mitw.bungee.Mitw;
+import mitw.bungee.json.JsonChain;
 import mitw.bungee.util.Common;
 
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ClickEvent.Action;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class Broadcast extends Command {
 
@@ -23,87 +14,40 @@ public class Broadcast extends Command {
         super("broadcast", "mitw.admin", "ba");
     }
 
+    private String[] broadcasts = {"meetup", "uhc", "sg", "castlewars", "events"};
+
     @Override
     public void execute(final CommandSender sender, final String[] args) {
-        if (args.length == 0)
-            return;
-        final String serverName = args[0].toLowerCase();
-        if (serverName.equals("uhc")) {
-            UHCAlert();
+        if (args.length == 0) {
             return;
         }
-        if (serverName.contains("sg")) {
-            sgAlert(sender, serverName);
+
+        String server = args[0];
+
+        boolean found = false;
+
+        for (String serverContain : broadcasts) {
+            if (server.contains(serverContain)) {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            Common.tell(sender, "§cTarget server isn't found!");
             return;
         }
-        if (serverName.contains("meetup") && isBoolean(args[1])) {
-            meetupAlert(sender, serverName, Boolean.parseBoolean(args[1]));
-            return;
-        }
-        Mitw.INSTANCE.alertOnlySpecificServers("/" + serverName, serverName.toLowerCase(), "");
-        Common.tell(sender, "§a成功發送公告");
-        return;
-    }
 
-    private void meetupAlert(final CommandSender sender, final String serverName, final boolean team) {
-        Mitw.INSTANCE.alertOnlySpecificServers("/meetup " + serverName, "meetup", "§7(" + (team ? "§bTeam" : "§eSolo") + "§7)");
-    }
-
-    public void UHCAlert() {
-        ImmutableList<ProxiedPlayer> players = ImmutableList.copyOf(Mitw.INSTANCE.getProxy().getPlayers());
-        final int size = players.size();
-        final int diff = (int) Math.ceil(players.size() / 20D);
-
-        Map<String, List<Object>> components = new HashMap<>();
-
-        for (int i = 0, j = 0; i < size; i += diff) {
-
-            if (i >= size)
+        if (args.length == 2) {
+            if (!isBoolean(args[1])) {
+                Common.tell(sender, "§cSecond arg should be boolean");
                 return;
-
-            // Some shit for the task
-            final int start = i;
-            final int end = i + diff;
-            Mitw.INSTANCE.getProxy().getScheduler().schedule(Mitw.INSTANCE, () -> {
-                for (int i1 = start; i1 < end; ++i1) {
-                    // Overshot
-                    if (i1 >= players.size())
-                        return;
-
-                    ProxiedPlayer player = players.get(i1);
-                    if (player.isConnected()) {
-                        String language = Mitw.INSTANCE.getLanguageData().getLang(player);
-                        List<Object> text;
-                        if (components.containsKey(language)) {
-                            text = components.get(language);
-                        } else {
-                            text = Arrays.asList(
-                                    Mitw.INSTANCE.getLanguage().translateArrays(player, "uhc"),
-                                    genJSONMsg("/uhc", player)
-                            );
-                            components.put(language, text);
-                        }
-                        Common.tell(player,"§7§m------------------------------------");
-                        for (String string : ((List<String>)text.get(0))) {
-                            Common.tell(player, string);
-                        }
-                        Common.tell(player, ((TextComponent)text.get(1)));
-                        Common.tell(player,"§7§m------------------------------------");
-                    }
-                }
-            }, ++j * 50, TimeUnit.MILLISECONDS);
-
+            }
+            Mitw.INSTANCE.getMitwJedis().write("BROADCAST_GAME", new JsonChain().addProperty("server", server).addProperty("extra", Boolean.parseBoolean(args[1])).get());
+        } else {
+            Mitw.INSTANCE.getMitwJedis().write("BROADCAST_GAME", new JsonChain().addProperty("server", server).get());
         }
-    }
-
-    public void sgAlert(final CommandSender sender, final String server) {
-        Mitw.INSTANCE.alertOnlySpecificServers("/sg " + server, "sg", "");
-    }
-
-    public static TextComponent genJSONMsg(final String cmd, final ProxiedPlayer player) {
-        final TextComponent msg = new TextComponent(Mitw.INSTANCE.getLanguage().translate(player, "clickjoin"));
-        msg.setClickEvent(new ClickEvent(Action.RUN_COMMAND, cmd));
-        return msg;
+        Common.tell(sender, "§a成功發送公告");
     }
 
     public boolean isBoolean(final String string) {

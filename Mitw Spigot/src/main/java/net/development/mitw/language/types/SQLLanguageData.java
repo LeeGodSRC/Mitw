@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import net.development.mitw.events.LanguageLoadedEvent;
 import net.development.mitw.language.ILanguageData;
 import net.development.mitw.player.database.PlayerDatabase;
 import org.bukkit.Bukkit;
@@ -120,11 +121,14 @@ public class SQLLanguageData implements Listener, ILanguageData {
     public void onLogin(final PlayerLoginEvent e) {
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             Player p = e.getPlayer();
+            String language;
             if (hasLang(p)) {
-                playerLangs.put(p.getUniqueId(), getLang(p));
+                language = playerLangs.put(p.getUniqueId(), getLang(p));
             } else {
+                language = DEFAULT_LANGUAGE;
                 setLang(p, DEFAULT_LANGUAGE, true, true);
             }
+            Bukkit.getPluginManager().callEvent(new LanguageLoadedEvent(p, language));
         });
     }
 

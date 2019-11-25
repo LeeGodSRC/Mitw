@@ -36,8 +36,6 @@ public class MotdDisplay implements Listener {
 		serverPing.setDescription(response);
 		e.setResponse(serverPing);
 
-		serverPing.getPlayers().setOnline(RedisBungee.getApi().getPlayerCount());
-
 		final List<String> lines = new ArrayList();
 		lines.add("&7&m----------------------");
 		lines.add("&6&lMitw&f&l Network");

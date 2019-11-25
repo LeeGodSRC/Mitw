@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 import com.ilummc.tlib.util.Strings;
+import com.imaginarycode.minecraft.redisbungee.RedisBungee;
 import mitw.bungee.commands.*;
 import mitw.bungee.config.Configuration;
 import mitw.bungee.config.impl.Config;
@@ -27,7 +28,9 @@ import mitw.bungee.config.impl.General;
 import mitw.bungee.language.impl.Lang;
 import lombok.Getter;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
@@ -54,7 +57,7 @@ public class Mitw extends Plugin {
 	private KeepAliveHandler keepAliveHandler;
 	private IgnoreManager ignoreManager;
 //	private QueueManager queueManager;
-	public static List<String> servers = Arrays.asList("waiting", "duel", "ffa");
+	public static List<String> servers = Arrays.asList("waiting", "lobby-2", "lobby-3", "duel", "ffa");
 
 	@Override
 	public void onLoad() {
@@ -84,6 +87,8 @@ public class Mitw extends Plugin {
 
 //		this.queueManager.onEnable();
 
+		RedisBungee.getApi().registerPubSubChannels("alert");
+
 		registerCommands();
 		registerListeners();
 		new CommandManager(this);
@@ -106,6 +111,7 @@ public class Mitw extends Plugin {
 				new Server(this),
 //				new Message(),
 //				new Reply(),
+				new Alert(),
 				new Report(),
 				new AC(),
 				new Ignore(),
@@ -158,7 +164,7 @@ public class Mitw extends Plugin {
 						} else {
 							text = new ComponentBuilder(Strings
 									.replaceWithOrder(getLanguage().translate(player, "alert"), getLanguage().translate(player, serverName), replaceOrder))
-									.append(Broadcast.genJSONMsg(connect, player)).create();
+									.append(getJson(connect, player)).create();
 							components.put(language, text);
 						}
 						player.sendMessage(text);
@@ -167,5 +173,11 @@ public class Mitw extends Plugin {
 			}, ++j * 50, TimeUnit.MILLISECONDS);
 
 		}
+	}
+
+	public static TextComponent getJson(final String cmd, final ProxiedPlayer player) {
+		final TextComponent msg = new TextComponent(Mitw.INSTANCE.getLanguage().translate(player, "clickjoin"));
+		msg.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, cmd));
+		return msg;
 	}
 }
