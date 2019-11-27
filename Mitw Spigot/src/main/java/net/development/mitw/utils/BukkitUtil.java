@@ -1,5 +1,6 @@
 package net.development.mitw.utils;
 
+import net.development.mitw.events.listener.FunctionListener;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -32,7 +33,23 @@ public class BukkitUtil {
 
 		while (classes.hasNext()) {
 			Class<?> clazz = classes.next();
-			if (clazz.isAssignableFrom(Listener.class)) {
+			if (clazz.isAssignableFrom(FunctionListener.class)) {
+				try {
+					try {
+						clazz.getConstructor(plugin.getClass()).newInstance(plugin);
+					} catch (NoSuchMethodException ex) {
+						try {
+							clazz.newInstance();
+						} catch (Exception ex2) {
+							ex2.printStackTrace();
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			} else if (clazz.isAssignableFrom(Listener.class)) {
 				try {
 					Listener listener = (Listener) clazz.getConstructor(plugin.getClass()).newInstance(plugin);
 					plugin.getServer().getPluginManager().registerEvents(listener, plugin);
