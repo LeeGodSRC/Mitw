@@ -33,7 +33,7 @@ public class BukkitUtil {
 
 		while (classes.hasNext()) {
 			Class<?> clazz = classes.next();
-			if (clazz.isAssignableFrom(FunctionListener.class)) {
+			if (FunctionListener.class.isAssignableFrom(clazz)) {
 				try {
 					try {
 						clazz.getConstructor(plugin.getClass()).newInstance(plugin);
@@ -49,7 +49,7 @@ public class BukkitUtil {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-			} else if (clazz.isAssignableFrom(Listener.class)) {
+			} else if (Listener.class.isAssignableFrom(clazz)) {
 				try {
 					Listener listener = (Listener) clazz.getConstructor(plugin.getClass()).newInstance(plugin);
 					plugin.getServer().getPluginManager().registerEvents(listener, plugin);
