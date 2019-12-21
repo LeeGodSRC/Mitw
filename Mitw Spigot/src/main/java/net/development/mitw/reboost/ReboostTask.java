@@ -1,7 +1,5 @@
 package net.development.mitw.reboost;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import lombok.Getter;
 import lombok.Setter;
 import net.development.mitw.Mitw;
@@ -45,7 +43,9 @@ public class ReboostTask implements Runnable {
                         LobbiesUtil.sendToLobby(player);
                     }
                 }
-            }.runTaskTimer(Mitw.getInstance(), 300L, 3L);
+            }.runTaskTimer(Mitw.getInstance(), 3L, 3L);
+            this.stop();
+            return;
 
         }
 
@@ -65,7 +65,7 @@ public class ReboostTask implements Runnable {
     public void stop() {
         Bukkit.getScheduler().cancelTask(taskId);
         taskId = -1;
-        setTime(300);
+        setTime(301);
         reboosting = false;
     }
 }

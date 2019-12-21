@@ -1,12 +1,10 @@
 package net.development.mitw.jedis.server;
 
 import net.development.mitw.Mitw;
+import net.development.mitw.common.JedisPackets;
 import net.development.mitw.config.Settings;
-import net.development.mitw.jedis.JedisPackets;
 import net.development.mitw.json.JsonChain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

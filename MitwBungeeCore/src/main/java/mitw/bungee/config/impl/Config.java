@@ -59,7 +59,7 @@ public class Config extends YamlConfiguration {
             super.load(file);
             System.out.println("file " + fileName + ".yml has been reloaded.");
         } catch (final Exception e) {
-            System.out.println("an error happend on reloading file " + fileName + ".yml");
+            System.out.println("an error happened on reloading file " + fileName + ".yml");
             e.printStackTrace();
         }
     }

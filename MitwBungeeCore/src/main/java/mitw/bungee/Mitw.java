@@ -4,12 +4,9 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import com.google.common.collect.ImmutableList;
 import com.ilummc.tlib.util.Strings;
-import com.imaginarycode.minecraft.redisbungee.RedisBungee;
 import mitw.bungee.commands.*;
 import mitw.bungee.config.Configuration;
-import mitw.bungee.config.impl.Config;
 import mitw.bungee.config.impl.MySQL;
 import mitw.bungee.database.PlayerFlatFileData;
 import mitw.bungee.ignore.IgnoreListener;
@@ -87,8 +84,6 @@ public class Mitw extends Plugin {
 
 //		this.queueManager.onEnable();
 
-		RedisBungee.getApi().registerPubSubChannels("alert");
-
 		registerCommands();
 		registerListeners();
 		new CommandManager(this);
@@ -109,8 +104,8 @@ public class Mitw extends Plugin {
 		Arrays.asList(
 //				new Lobby(this),
 				new Server(this),
-//				new Message(),
-//				new Reply(),
+				new Message(),
+				new Reply(),
 				new Alert(),
 				new Report(),
 				new AC(),

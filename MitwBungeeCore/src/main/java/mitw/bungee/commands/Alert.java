@@ -1,8 +1,9 @@
 package mitw.bungee.commands;
 
-import com.imaginarycode.minecraft.redisbungee.RedisBungee;
 import mitw.bungee.Mitw;
+import mitw.bungee.config.impl.General;
 import mitw.bungee.json.JsonChain;
+import mitw.bungee.util.BroadcastUtil;
 import mitw.bungee.util.Common;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
@@ -34,6 +35,10 @@ public class Alert extends Command {
             }
         }
 
-        Mitw.INSTANCE.getMitwJedis().write("BUNGEE_ALERT", new JsonChain().addProperty("message", builder.toString()).get());
+        if (General.REDIS_BUNGEE) {
+            Mitw.INSTANCE.getMitwJedis().write("BUNGEE_ALERT", new JsonChain().addProperty("message", builder.toString()).get());
+        } else {
+            BroadcastUtil.alert(builder.toString());
+        }
     }
 }

@@ -1,21 +1,10 @@
 package mitw.bungee.config.impl;
 
-import java.awt.geom.GeneralPath;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import lombok.Getter;
 import mitw.bungee.Mitw;
-import mitw.bungee.config.FileConfiguration;
-import mitw.bungee.config.YamlConfiguration;
-import com.google.common.io.ByteStreams;
-import mitw.bungee.config.impl.Config;
 
 public class General extends Config {
 
@@ -31,6 +20,7 @@ public class General extends Config {
 
 	public static List<String> motd = new ArrayList<>();
 
+	public static boolean REDIS_BUNGEE;
 	public static int JEDIS_PORT;
 	public static String JEDIS_ADDRESS, JEDIS_PASSWORD;
 
@@ -40,6 +30,8 @@ public class General extends Config {
 			motd.add(str);
 		}
 
+		addDefault("jedis.redisBungee", false);
+		REDIS_BUNGEE = getBoolean("jedis.redisBungee", false);
 		addDefault("jedis.address", "127.0.0.1");
 		JEDIS_ADDRESS = getString("jedis.address", "127.0.0.1");
 		addDefault("jedis.port", 6379);

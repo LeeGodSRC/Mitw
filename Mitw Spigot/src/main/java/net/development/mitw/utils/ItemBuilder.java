@@ -40,18 +40,6 @@ public class ItemBuilder implements Listener {
 		return this;
 	}
 
-	public ItemBuilder lore(final String name) {
-		final ItemMeta meta = is.getItemMeta();
-		List<String> lore = meta.getLore();
-		if (lore == null) {
-			lore = new ArrayList<>();
-		}
-		lore.add(name);
-		meta.setLore(lore);
-		is.setItemMeta(meta);
-		return this;
-	}
-
 	public ItemBuilder lore(final List<String> lore) {
 		final ItemMeta meta = is.getItemMeta();
 

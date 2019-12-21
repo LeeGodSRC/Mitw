@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>mitw-parent</artifactId>
+    <groupId>net.development.mitw</groupId>
+    <version>1.0.0</version>
+  </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.development.mitw</groupId>
   <artifactId>Mitw</artifactId>
-  <version>1.0.0</version>
   <build>
     <defaultGoal>clean package</defaultGoal>
     <resources>
@@ -64,10 +67,28 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>de.demomedd.betternick</groupId>
-      <artifactId>BetterNick</artifactId>
-      <version>1.0.0</version>
+      <groupId>litebans</groupId>
+      <artifactId>api</artifactId>
+      <version>0.3.1</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.lgdev.iselector</groupId>
+      <artifactId>iSelector</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>me.GoodestEnglish</groupId>
+      <artifactId>QoolNick</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-io</artifactId>
+          <groupId>commons-io</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>spg.lgdev</groupId>

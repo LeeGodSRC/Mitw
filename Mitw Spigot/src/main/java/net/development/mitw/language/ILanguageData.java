@@ -1,11 +1,10 @@
 package net.development.mitw.language;
 
 import net.development.mitw.Mitw;
-import net.development.mitw.jedis.JedisPackets;
+import net.development.mitw.common.JedisPackets;
 import net.development.mitw.json.JsonChain;
 import net.development.mitw.utils.FastUUID;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 

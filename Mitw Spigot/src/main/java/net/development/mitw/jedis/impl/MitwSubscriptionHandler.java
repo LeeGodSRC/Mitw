@@ -2,7 +2,7 @@ package net.development.mitw.jedis.impl;
 
 import com.google.gson.JsonObject;
 import net.development.mitw.Mitw;
-import net.development.mitw.jedis.JedisPackets;
+import net.development.mitw.common.JedisPackets;
 import net.development.mitw.jedis.JedisSubscriptionHandler;
 import net.development.mitw.utils.FastUUID;
 import org.bukkit.Bukkit;

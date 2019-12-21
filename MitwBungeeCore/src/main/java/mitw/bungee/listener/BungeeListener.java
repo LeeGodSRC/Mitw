@@ -1,9 +1,7 @@
 package mitw.bungee.listener;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import mitw.bungee.Mitw;
-import mitw.bungee.util.RV;
+import mitw.bungee.events.PlayerEntryAddEvent;
 import net.md_5.bungee.api.AbstractReconnectHandler;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
@@ -77,10 +75,18 @@ public class BungeeListener implements Listener {
 		final ProxiedPlayer p = e.getPlayer();
 		if (!p.hasPermission("mitw.admin"))
 			return;
-		for (final ProxiedPlayer to : ProxyServer.getInstance().getPlayers())
+		for (final ProxiedPlayer to : ProxyServer.getInstance().getPlayers()) {
 			if (to.hasPermission("mitw.admin") && p.getServer() != null) {
 				to.sendMessage("§7[§6§lStaff§7]§7 Staff §e" + p.getName() + " §7連結到 §b" + e.getServer().getInfo().getName() + " §7從 §c"
 						+ p.getServer().getInfo().getName() + "§7 !");
 			}
+		}
+	}
+
+	@EventHandler
+	public void onPlayerBanned(PlayerEntryAddEvent event) {
+		ProxiedPlayer player = event.getPlayer();
+
+		player.disconnect("§cYou have been kicked from the server!");
 	}
 }

@@ -1,8 +1,9 @@
 package mitw.bungee.commands;
 
-import com.google.common.collect.ImmutableList;
 import mitw.bungee.Mitw;
+import mitw.bungee.config.impl.General;
 import mitw.bungee.json.JsonChain;
+import mitw.bungee.util.BroadcastUtil;
 import mitw.bungee.util.Common;
 
 import net.md_5.bungee.api.CommandSender;
@@ -43,9 +44,17 @@ public class Broadcast extends Command {
                 Common.tell(sender, "§cSecond arg should be boolean");
                 return;
             }
-            Mitw.INSTANCE.getMitwJedis().write("BROADCAST_GAME", new JsonChain().addProperty("server", server).addProperty("extra", Boolean.parseBoolean(args[1])).get());
+            if (General.REDIS_BUNGEE) {
+                Mitw.INSTANCE.getMitwJedis().write("BROADCAST_GAME", new JsonChain().addProperty("server", server).addProperty("extra", Boolean.parseBoolean(args[1])).get());
+            } else {
+                BroadcastUtil.broadcast(server, Boolean.parseBoolean(args[1]));
+            }
         } else {
-            Mitw.INSTANCE.getMitwJedis().write("BROADCAST_GAME", new JsonChain().addProperty("server", server).get());
+            if (General.REDIS_BUNGEE) {
+                Mitw.INSTANCE.getMitwJedis().write("BROADCAST_GAME", new JsonChain().addProperty("server", server).get());
+            } else {
+                BroadcastUtil.broadcast(server, false);
+            }
         }
         Common.tell(sender, "§a成功發送公告");
     }

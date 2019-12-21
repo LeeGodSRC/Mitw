@@ -12,6 +12,8 @@ import net.development.mitw.jedis.JedisSettings;
 import net.development.mitw.jedis.MitwJedis;
 import net.development.mitw.jedis.server.KeepAliveHandler;
 import net.development.mitw.language.ILanguageData;
+import net.development.mitw.listener.CallEventListener;
+import net.development.mitw.listener.LiteBansListener;
 import net.development.mitw.queue.module.QueueManager;
 import net.development.mitw.reboost.ReboostTask;
 import net.development.mitw.tablist.TablistManager;
@@ -152,8 +154,12 @@ public class Mitw extends JavaPlugin {
 				new ChatListener(this),
 				new JoinAndQuitListener(),
 				new HologramListeners(),
+				new CallEventListener(this),
 				new ButtonListener())
 		.forEach(listener -> getServer().getPluginManager().registerEvents(listener, instance));
+		if (this.getServer().getPluginManager().getPlugin("LiteBans") != null) {
+			LiteBansListener.register(this);
+		}
 	}
 
 	public void addChatHandler(final ChatHandler chatHandler) {

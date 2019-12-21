@@ -3,7 +3,6 @@ package mitw.bungee.modules;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.imaginarycode.minecraft.redisbungee.RedisBungee;
 import mitw.bungee.Mitw;
 import mitw.bungee.config.impl.General;
 import net.md_5.bungee.api.ChatColor;

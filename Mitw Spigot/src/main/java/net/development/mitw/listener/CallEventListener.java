@@ -2,6 +2,7 @@ package net.development.mitw.listener;
 
 import lombok.AllArgsConstructor;
 import net.development.mitw.Mitw;
+import net.development.mitw.events.player.EntityDamageByPlayerEvent;
 import net.development.mitw.events.player.PlayerDamageByEntityEvent;
 import net.development.mitw.events.player.PlayerDamageByPlayerEvent;
 import net.development.mitw.events.player.PlayerDamageEvent;
@@ -27,6 +28,10 @@ public class CallEventListener implements Listener {
                     return;
                 }
                 plugin.getServer().getPluginManager().callEvent(new PlayerDamageByEntityEvent(player, damageByEntityEvent));
+                return;
+            } else if (damageByEntityEvent.getDamager() instanceof Player) {
+                Player player = (Player) damageByEntityEvent.getDamager();
+                plugin.getServer().getPluginManager().callEvent(new EntityDamageByPlayerEvent(player, damageByEntityEvent));
             }
             return;
         }
