@@ -83,6 +83,7 @@ public class Mitw extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 
+		Mongo.init();
 		MySQL.init();
 		AntiCrash.init();
 		EzProtector.init();

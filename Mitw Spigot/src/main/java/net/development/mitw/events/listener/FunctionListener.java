@@ -1,6 +1,8 @@
 package net.development.mitw.events.listener;
 
 import co.aikar.timings.TimedEventExecutor;
+import lombok.Getter;
+import net.development.mitw.utils.Entry;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventException;
 import org.bukkit.event.HandlerList;
@@ -15,8 +17,9 @@ import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class FunctionListener<T extends Plugin> implements Listener {
+public class FunctionListener<T extends Plugin, V> implements Listener {
 
+    @Getter
     private FunctionEventChecker checker;
     public T plugin;
 
@@ -51,8 +54,18 @@ public class FunctionListener<T extends Plugin> implements Listener {
                 continue;
             }
             final Class<?> checkClass;
-            if (method.getParameterTypes().length != 1 || !Event.class.isAssignableFrom(checkClass = method.getParameterTypes()[0])) {
-                plugin.getLogger().severe(plugin.getDescription().getFullName() + " attempted to register an invalid EventHandler method signature \"" + method.toGenericString() + "\" in " + this.getClass());
+            int count = method.getParameterTypes().length;
+            if (count >= 1) {
+                if (!Event.class.isAssignableFrom(checkClass = method.getParameterTypes()[0])) {
+                    plugin.getLogger().severe(plugin.getDescription().getFullName() + " attempted to register an invalid EventHandler method signature \"" + method.toGenericString() + "\" in " + this.getClass());
+                    continue;
+                }
+                if (count > 1) {
+                    if (!Entry.class.isAssignableFrom(method.getParameterTypes()[1])) {
+                        continue;
+                    }
+                }
+            } else {
                 continue;
             }
             final Class<? extends Event> eventClass = checkClass.asSubclass(Event.class);
@@ -70,10 +83,15 @@ public class FunctionListener<T extends Plugin> implements Listener {
                         if (!eventClass.isAssignableFrom(event.getClass())) {
                             return;
                         }
-                        if (!eventHandler.ignoreFunctionCheck() && !checker.check(event)) {
+                        Entry<Boolean, ?> returnEntry = checker.check(event);
+                        if (!eventHandler.ignoreFunctionCheck() && !returnEntry.getKey()) {
                             return;
                         }
-                        method.invoke(listener, event);
+                        if (count > 1) {
+                            method.invoke(listener, event, (Entry<Boolean, V>) returnEntry);
+                        } else {
+                            method.invoke(listener, event);
+                        }
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

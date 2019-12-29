@@ -1,5 +1,6 @@
 package net.development.mitw.events.listener;
 
+import net.development.mitw.utils.Entry;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerEvent;
@@ -14,16 +15,16 @@ import java.util.function.Supplier;
 
 public class FunctionEventChecker {
 
-    private Supplier<Boolean> nonPlayerChecker;
-    private Function<Player, Boolean> playerChecker;
+    private Supplier<Entry<Boolean, ?>> nonPlayerChecker;
+    private Function<Player, Entry<Boolean, ?>> playerChecker;
     private Map<Class<? extends Event>, Function<Event, Player>> specialGetPlayer = new HashMap<>();
 
-    public FunctionEventChecker playerOnly(Function<Player, Boolean> function) {
+    public FunctionEventChecker playerOnly(Function<Player, Entry<Boolean, ?>> function) {
         this.playerChecker = function;
         return this;
     }
 
-    public FunctionEventChecker nonPlayerOnly(Supplier<Boolean> function) {
+    public FunctionEventChecker nonPlayerOnly(Supplier<Entry<Boolean, ?>> function) {
         this.nonPlayerChecker = function;
         return this;
     }
@@ -33,7 +34,7 @@ public class FunctionEventChecker {
         return this;
     }
 
-    public boolean check(Event event) {
+    public Entry<Boolean, ?> check(Event event) {
         Player player = getPlayerFromEvent(event);
         if (player != null && playerChecker != null) {
             return playerChecker.apply(player);
@@ -41,7 +42,7 @@ public class FunctionEventChecker {
         if (nonPlayerChecker != null) {
             return nonPlayerChecker.get();
         }
-        return true;
+        return new Entry<>(true, null);
     }
 
     private Player getPlayerFromEvent(Event event) {
