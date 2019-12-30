@@ -12,8 +12,10 @@ import net.development.mitw.jedis.JedisSettings;
 import net.development.mitw.jedis.MitwJedis;
 import net.development.mitw.jedis.server.KeepAliveHandler;
 import net.development.mitw.language.ILanguageData;
+import net.development.mitw.language.types.MongoLanguageData;
 import net.development.mitw.listener.CallEventListener;
 import net.development.mitw.listener.LiteBansListener;
+import net.development.mitw.player.database.PlayerMongo;
 import net.development.mitw.queue.module.QueueManager;
 import net.development.mitw.reboost.ReboostTask;
 import net.development.mitw.tablist.TablistManager;
@@ -66,18 +68,11 @@ public class Mitw extends JavaPlugin {
 	private NameMC nameMC;
 	private LanguageAPI coreLanguage;
 	private MitwJedis mitwJedis;
+	private PlayerMongo playerMongo;
 	private KeepAliveHandler keepAliveHandler;
-	private PlayerDatabase playerDatabase;
 	private ReboostTask reboostTask;
-//	private QueueManager queueManager;
 	private Set<ChatHandler> chatHandlers;
 	private Set<HelpHandler> helpHandlers;
-
-	@Override
-	public void onLoad() {
-//		this.queueManager = new QueueManager();
-//		this.queueManager.onLoad();
-	}
 
 	@Override
 	public void onEnable() {
@@ -107,9 +102,8 @@ public class Mitw extends JavaPlugin {
 
 		iSelectorDepend.register(this);
 
-		playerDatabase = new PlayerDatabase(MySQL.LANGUAGE_DATABASE);
-		playerDatabase.connect();
-		languageData = new SQLLanguageData(this, playerDatabase);
+		playerMongo = new PlayerMongo();
+		languageData = new MongoLanguageData(this);
 		coreLanguage = new LanguageAPI(LangType.CLASS, this, languageData, new LanguageMessages());
 		chatManager = new ChatManager(this);
 

@@ -20,8 +20,6 @@ public interface ILanguageData {
 
     String getLang(UUID uuid);
 
-    boolean hasLang(Player p);
-
     void setLang(Player p, String lang, boolean first);
 
     void setLangWithoutSave(Player p, String lang, boolean first);
