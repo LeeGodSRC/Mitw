@@ -1,6 +1,5 @@
 package mitw.bungee.jedis.server;
 
-import com.sun.scenario.Settings;
 import mitw.bungee.Mitw;
 
 import java.util.Map;

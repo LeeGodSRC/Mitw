@@ -21,7 +21,8 @@ public class MitwPlayer extends PlayerInfo {
         return playerDatas.get(uuid);
     }
 
-    private String language;
+    private boolean loaded = false;
+    private String language = DEFAULT_LANGUAGE;
     private int coins = 0;
     private int mitwpass_level = 1;
     private int mitwpass_exp = 0;
@@ -31,15 +32,10 @@ public class MitwPlayer extends PlayerInfo {
         playerDatas.put(uuid, this);
     }
 
-    public void load(Runnable callback) {
-        Bukkit.getScheduler().runTaskAsynchronously(Mitw.getInstance(), () -> {
-            Document document = Mitw.getInstance().getPlayerMongo().getPlayer(this.getUuid());
+    public void load() {
+        Document document = Mitw.getInstance().getPlayerMongo().getPlayer(this.getUuid());
 
-            if (document == null) {
-                language = DEFAULT_LANGUAGE;
-                return;
-            }
-
+        if (document != null) {
             language = document.getString("language");
             coins = document.getInteger("coins");
 
@@ -49,9 +45,9 @@ public class MitwPlayer extends PlayerInfo {
                 mitwpass_level = mitwPass.getInteger("level");
                 mitwpass_exp = mitwPass.getInteger("exp");
             }
+        }
 
-            callback.run();
-        });
+        this.setLoaded(true);
     }
 
     public void save() {

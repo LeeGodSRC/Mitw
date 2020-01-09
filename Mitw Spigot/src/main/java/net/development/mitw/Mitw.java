@@ -14,9 +14,7 @@ import net.development.mitw.jedis.server.KeepAliveHandler;
 import net.development.mitw.language.ILanguageData;
 import net.development.mitw.language.types.MongoLanguageData;
 import net.development.mitw.listener.CallEventListener;
-import net.development.mitw.listener.LiteBansListener;
 import net.development.mitw.player.database.PlayerMongo;
-import net.development.mitw.queue.module.QueueManager;
 import net.development.mitw.reboost.ReboostTask;
 import net.development.mitw.tablist.TablistManager;
 import org.bukkit.Bukkit;
@@ -34,14 +32,11 @@ import net.development.mitw.helpmessage.HelpHandler;
 import net.development.mitw.hooks.LuckPerms;
 import net.development.mitw.language.LanguageAPI;
 import net.development.mitw.language.LanguageAPI.LangType;
-import net.development.mitw.language.types.SQLLanguageData;
-import net.development.mitw.player.database.PlayerDatabase;
 import net.development.mitw.language.impl.LanguageMessages;
 import net.development.mitw.listener.ChatListener;
 import net.development.mitw.listener.JoinAndQuitListener;
 import net.development.mitw.menu.ButtonListener;
 import net.development.mitw.namemc.NameMC;
-import net.development.mitw.security.anticrash.BlockCrashHandler;
 import net.development.mitw.security.protector.MitwProtector;
 import net.development.mitw.menu.task.MenuUpdateTask;
 import net.development.mitw.utils.FastRandom;
@@ -147,14 +142,11 @@ public class Mitw extends JavaPlugin {
 	public void registerListeners() {
 		Arrays.asList(
 				new ChatListener(this),
-				new JoinAndQuitListener(),
+				new JoinAndQuitListener(this),
 				new HologramListeners(),
 				new CallEventListener(this),
 				new ButtonListener())
 		.forEach(listener -> getServer().getPluginManager().registerEvents(listener, instance));
-		if (this.getServer().getPluginManager().getPlugin("LiteBans") != null) {
-			LiteBansListener.register(this);
-		}
 	}
 
 	public void addChatHandler(final ChatHandler chatHandler) {

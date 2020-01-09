@@ -9,25 +9,32 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerLoginEvent;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 import net.development.mitw.uuid.UUIDCache;
 
 public class JoinAndQuitListener implements Listener {
 
+	private Mitw plugin;
+
+	public JoinAndQuitListener(Mitw plugin) {
+		this.plugin = plugin;
+	}
+
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPlayerPreLogin(AsyncPlayerLoginEvent event) {
-
-		Player bukkitPlayer = event.getPlayer();
-		MitwPlayer player = new MitwPlayer(bukkitPlayer.getUniqueId(), bukkitPlayer.getName());
-		player.load(() -> Bukkit.getPluginManager().callEvent(new LanguageLoadedEvent(bukkitPlayer, player.getLanguage())));
-
+	public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event) {
 		if (Mitw.getInstance().getMitwJedis().isActive()) {
-			UUIDCache.update(bukkitPlayer.getName(), bukkitPlayer.getUniqueId());
+			UUIDCache.update(event.getName(), event.getUniqueId());
 		}
+	}
+
+	@EventHandler
+	public void onPlayerLogin(PlayerLoginEvent event) {
+		plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
+			Player bukkitPlayer = event.getPlayer();
+			MitwPlayer mitwPlayer = new MitwPlayer(bukkitPlayer.getUniqueId(), bukkitPlayer.getName());
+			mitwPlayer.load();
+		});
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -42,6 +49,7 @@ public class JoinAndQuitListener implements Listener {
 
 		MitwPlayer mitwPlayer = MitwPlayer.getByUuid(player.getUniqueId());
 		mitwPlayer.save();
+		mitwPlayer.unhandle();
 	}
 
 }

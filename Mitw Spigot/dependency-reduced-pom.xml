@@ -6,7 +6,7 @@
     <version>1.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>Mitw</artifactId>
+  <artifactId>mitw</artifactId>
   <build>
     <defaultGoal>clean package</defaultGoal>
     <resources>
@@ -67,28 +67,10 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>litebans</groupId>
-      <artifactId>api</artifactId>
-      <version>0.3.1</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>org.lgdev.iselector</groupId>
       <artifactId>iSelector</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>me.GoodestEnglish</groupId>
-      <artifactId>QoolNick</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>commons-io</artifactId>
-          <groupId>commons-io</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>spg.lgdev</groupId>
