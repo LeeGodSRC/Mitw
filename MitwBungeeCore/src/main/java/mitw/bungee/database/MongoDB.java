@@ -1,4 +1,4 @@
-package net.development.mitw.database;
+package mitw.bungee.database;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
@@ -6,7 +6,7 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
 import lombok.Getter;
-import net.development.mitw.config.Mongo;
+import mitw.bungee.config.impl.Mongo;
 
 import java.util.Collections;
 

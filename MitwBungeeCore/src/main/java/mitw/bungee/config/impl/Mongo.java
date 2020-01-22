@@ -1,6 +1,6 @@
-package net.development.mitw.config;
+package mitw.bungee.config.impl;
 
-public class Mongo extends Configuration {
+public class Mongo extends Config {
 
     public static String IP, DATABASE, AUTH_USERNAME, AUTH_PASSWORD, AUTH_DATABASE;
     public static int PORT;

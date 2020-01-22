@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.ilummc.tlib.util.Strings;
 import mitw.bungee.commands.*;
 import mitw.bungee.config.Configuration;
+import mitw.bungee.config.impl.Mongo;
 import mitw.bungee.config.impl.MySQL;
 import mitw.bungee.database.PlayerFlatFileData;
 import mitw.bungee.ignore.IgnoreListener;
@@ -14,16 +15,15 @@ import mitw.bungee.ignore.IgnoreManager;
 import mitw.bungee.jedis.JedisSettings;
 import mitw.bungee.jedis.MitwJedis;
 import mitw.bungee.jedis.server.KeepAliveHandler;
-import mitw.bungee.language.ILanguageData;
 import mitw.bungee.language.LanguageAPI;
-import mitw.bungee.language.types.SQLLanguageData;
-import mitw.bungee.language.LanguageSQLConnection;
+import mitw.bungee.language.types.RedisLanguageData;
 import mitw.bungee.modules.MotdDisplay;
 import mitw.bungee.listener.BungeeListener;
 import mitw.bungee.managers.CommandManager;
 import mitw.bungee.config.impl.General;
 import mitw.bungee.language.impl.Lang;
 import lombok.Getter;
+import mitw.bungee.player.database.PlayerMongo;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -48,8 +48,9 @@ public class Mitw extends Plugin {
 	public static Map<UUID, UUID> replys = new HashMap<>();
 	public static String Prefix = "§7[§6Mitw§7] §f";
 	public static String CPrefix = "§7[§6Mitw§f控制台§7] §f";
-	private ILanguageData languageData;
+	private RedisLanguageData languageData;
 	private LanguageAPI language;
+	private PlayerMongo mongo;
 	private MitwJedis mitwJedis;
 	private KeepAliveHandler keepAliveHandler;
 	private IgnoreManager ignoreManager;
@@ -68,18 +69,20 @@ public class Mitw extends Plugin {
 
 		MySQL.init();
 		HikariHandler.init();
+		Mongo.init();
 		final General General = new General(this);
 		General.setup();
 
 		ignoreManager = new IgnoreManager();
 
+		mongo = new PlayerMongo();
 		mitwJedis = new MitwJedis(new JedisSettings(General.JEDIS_ADDRESS, General.JEDIS_PORT, General.JEDIS_PASSWORD));
 
 		keepAliveHandler = new KeepAliveHandler();
 
 		this.getProxy().getScheduler().schedule(this, keepAliveHandler, 1000L, 30 * 1000L, TimeUnit.MILLISECONDS);
 
-		languageData = new SQLLanguageData(this, new LanguageSQLConnection(MySQL.LANGUAGE_DATABASE));
+		languageData = new RedisLanguageData(this);
 		language = new LanguageAPI(LanguageAPI.LangType.CLASS, this, languageData, new Lang());
 
 //		this.queueManager.onEnable();

@@ -12,7 +12,7 @@ import net.development.mitw.jedis.JedisSettings;
 import net.development.mitw.jedis.MitwJedis;
 import net.development.mitw.jedis.server.KeepAliveHandler;
 import net.development.mitw.language.ILanguageData;
-import net.development.mitw.language.types.MongoLanguageData;
+import net.development.mitw.language.types.RedisLanguageData;
 import net.development.mitw.listener.CallEventListener;
 import net.development.mitw.player.database.PlayerMongo;
 import net.development.mitw.reboost.ReboostTask;
@@ -98,7 +98,7 @@ public class Mitw extends JavaPlugin {
 		iSelectorDepend.register(this);
 
 		playerMongo = new PlayerMongo();
-		languageData = new MongoLanguageData(this);
+		languageData = new RedisLanguageData(this);
 		coreLanguage = new LanguageAPI(LangType.CLASS, this, languageData, new LanguageMessages());
 		chatManager = new ChatManager(this);
 

@@ -1,9 +1,8 @@
-package net.development.mitw.player.database;
+package mitw.bungee.player.database;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.ReplaceOptions;
-import net.development.mitw.database.MongoDB;
+import mitw.bungee.database.MongoDB;
 import org.bson.Document;
 
 import java.util.UUID;
@@ -14,7 +13,7 @@ public class PlayerMongo extends MongoDB {
 
     public PlayerMongo() {
         super("core");
-        this.players = this.getDatabase().getCollection("players");
+        this.players = this.getDatabase().getCollection("player_languages");
     }
 
     public Document getPlayer(UUID uuid) {

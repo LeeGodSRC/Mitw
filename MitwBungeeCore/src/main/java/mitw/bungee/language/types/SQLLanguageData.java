@@ -49,7 +49,6 @@ public class SQLLanguageData implements Listener, ILanguageData {
 				}).run("", "");
 	}
 
-	@Override
 	public boolean hasLang(final ProxiedPlayer p) {
 		if (playerLangs.containsKey(p.getUniqueId()))
 			return true;

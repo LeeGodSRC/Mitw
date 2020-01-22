@@ -15,8 +15,6 @@ public interface ILanguageData {
 
     String getLang(UUID uuid);
 
-    boolean hasLang(ProxiedPlayer p);
-
     void setLang(ProxiedPlayer p, String lang, boolean first);
 
     void setLangWithoutSave(ProxiedPlayer proxiedPlayer, String lang, boolean first);

@@ -32,11 +32,12 @@ public class MitwPlayer extends PlayerInfo {
         playerDatas.put(uuid, this);
     }
 
-    public void load() {
+    public boolean load() {
         Document document = Mitw.getInstance().getPlayerMongo().getPlayer(this.getUuid());
 
+        boolean first = false;
+
         if (document != null) {
-            language = document.getString("language");
             coins = document.getInteger("coins");
 
             Document mitwPass = (Document) document.get("mitwpass");
@@ -45,16 +46,20 @@ public class MitwPlayer extends PlayerInfo {
                 mitwpass_level = mitwPass.getInteger("level");
                 mitwpass_exp = mitwPass.getInteger("exp");
             }
+        } else {
+            first = true;
         }
 
+        language = Mitw.getInstance().getLanguageData().getLang(this.getUuid());
+
         this.setLoaded(true);
+        return first;
     }
 
     public void save() {
         Bukkit.getScheduler().runTaskAsynchronously(Mitw.getInstance(), () -> {
             Document document = new Document();
 
-            document.put("language", this.language);
             document.put("coins", this.coins);
 
             if (false) {

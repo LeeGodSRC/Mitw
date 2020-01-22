@@ -1,0 +1,9 @@
+mongo:
+  ip: 34.92.45.179
+  port: 27017
+  database: ''
+  authentication:
+    enabled: false
+    username: ''
+    password: ''
+    database: ''

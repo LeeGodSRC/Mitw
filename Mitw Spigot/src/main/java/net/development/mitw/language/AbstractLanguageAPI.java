@@ -11,6 +11,22 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractLanguageAPI {
 
+    public void send(final Player p, final String translateMessage) {
+        p.sendMessage(StringUtil.replace(translate(p, translateMessage)));
+    }
+
+    public void send(final String translateMessage) {
+        Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(StringUtil.replace(translate(p, translateMessage))));
+    }
+
+    public void send(final Collection<Player> player, final String translateMessage) {
+        player.forEach(p -> p.sendMessage(StringUtil.replace(translate(p, translateMessage))));
+    }
+
+    public void send2(final Collection<UUID> player, final String translateMessage) {
+        send(player.stream().map(Bukkit::getPlayer).filter(Objects::nonNull).collect(Collectors.toSet()), translateMessage);
+    }
+
     public void send(final Player p, final String translateMessage, final RV... replaceValue) {
         p.sendMessage(StringUtil.replace(translate(p, translateMessage), replaceValue));
     }
@@ -25,6 +41,14 @@ public abstract class AbstractLanguageAPI {
 
     public void send2(final Collection<UUID> player, final String translateMessage, final RV... replaceValue) {
         send(player.stream().map(Bukkit::getPlayer).filter(Objects::nonNull).collect(Collectors.toSet()), translateMessage, replaceValue);
+    }
+
+    public String translate(Player player, String format) {
+        return StringUtil.replace(this.translate(MitwPlayer.getByUuid(player.getUniqueId()), format));
+    }
+
+    public List<String> translateArrays(Player player, String format) {
+        return this.translateArrays(MitwPlayer.getByUuid(player.getUniqueId()), format);
     }
 
     public String translate(Player player, String format, RV... rvs) {

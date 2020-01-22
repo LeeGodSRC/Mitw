@@ -45,8 +45,18 @@
 								<relocation>
 									<pattern>redis.clients.jedis</pattern>
 									<shadedPattern>net.development.mitw.shaded.redis.clients.jedis</shadedPattern>
+								</relocation>
+								<relocation>
 									<pattern>org.apache.commons</pattern>
 									<shadedPattern>net.development.mitw.shaded.org.apache.commons</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>redis.clients.jedis</pattern>
+									<shadedPattern>net.development.mitw.shaded.redis.clients.jedis</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>com.mongodb</pattern>
+									<shadedPattern>net.development.mitw.shaded.mongodb</shadedPattern>
 								</relocation>
 							</relocations>
 						</configuration>

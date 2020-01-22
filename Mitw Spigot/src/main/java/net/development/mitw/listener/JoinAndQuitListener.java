@@ -2,6 +2,7 @@ package net.development.mitw.listener;
 
 import net.development.mitw.Mitw;
 import net.development.mitw.events.LanguageLoadedEvent;
+import net.development.mitw.events.player.PlayerFirstJoinEvent;
 import net.development.mitw.player.MitwPlayer;
 import net.development.mitw.utils.PlayerUtil;
 import org.bukkit.Bukkit;
@@ -30,10 +31,17 @@ public class JoinAndQuitListener implements Listener {
 
 	@EventHandler
 	public void onPlayerLogin(PlayerLoginEvent event) {
+		Player player = event.getPlayer();
 		plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-			Player bukkitPlayer = event.getPlayer();
-			MitwPlayer mitwPlayer = new MitwPlayer(bukkitPlayer.getUniqueId(), bukkitPlayer.getName());
-			mitwPlayer.load();
+			MitwPlayer mitwPlayer = new MitwPlayer(player.getUniqueId(), player.getName());
+			boolean first = mitwPlayer.load();
+
+			plugin.getServer().getScheduler().runTask(plugin, () -> {
+				if (first) {
+					plugin.getServer().getPluginManager().callEvent(new PlayerFirstJoinEvent(player));
+				}
+				plugin.getServer().getPluginManager().callEvent(new LanguageLoadedEvent(player, mitwPlayer.getLanguage()));
+			});
 		});
 	}
 
