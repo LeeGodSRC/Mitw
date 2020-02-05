@@ -12,7 +12,7 @@ import net.development.mitw.jedis.JedisSettings;
 import net.development.mitw.jedis.MitwJedis;
 import net.development.mitw.jedis.server.KeepAliveHandler;
 import net.development.mitw.language.ILanguageData;
-import net.development.mitw.language.types.RedisLanguageData;
+import net.development.mitw.language.types.MongoLanguageData;
 import net.development.mitw.listener.CallEventListener;
 import net.development.mitw.player.database.PlayerMongo;
 import net.development.mitw.reboost.ReboostTask;
@@ -29,7 +29,7 @@ import net.development.mitw.chat.ChatManager;
 import net.development.mitw.chat.UpdateDataTask;
 import net.development.mitw.commands.CommandHandler;
 import net.development.mitw.helpmessage.HelpHandler;
-import net.development.mitw.hooks.LuckPerms;
+import net.development.mitw.hooks.LuckpermsHook;
 import net.development.mitw.language.LanguageAPI;
 import net.development.mitw.language.LanguageAPI.LangType;
 import net.development.mitw.language.impl.LanguageMessages;
@@ -91,14 +91,14 @@ public class Mitw extends JavaPlugin {
 		helpHandlers.add(player -> Arrays.asList("Help1", "Help2"));
 
 		HikariHandler.init();
-		LuckPerms.hook();
+		LuckpermsHook.hook();
 
 		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
 		iSelectorDepend.register(this);
 
 		playerMongo = new PlayerMongo();
-		languageData = new RedisLanguageData(this);
+		languageData = new MongoLanguageData(this);
 		coreLanguage = new LanguageAPI(LangType.CLASS, this, languageData, new LanguageMessages());
 		chatManager = new ChatManager(this);
 

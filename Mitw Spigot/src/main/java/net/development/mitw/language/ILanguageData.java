@@ -13,6 +13,7 @@ import java.util.UUID;
 public interface ILanguageData {
 
     String DEFAULT_LANGUAGE = "zh_tw";
+    String[] LANGUAGES = {"zh_tw", "en_us"};
 
     public default String getLang(Player p) {
         return this.getLang(p.getUniqueId());

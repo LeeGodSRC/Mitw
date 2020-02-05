@@ -4,21 +4,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
-import net.development.mitw.language.types.SQLLanguageData;
 import net.development.mitw.player.MitwPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import lombok.Getter;
 import lombok.Setter;
 import net.development.mitw.Mitw;
-import net.development.mitw.utils.RV;
 import net.development.mitw.utils.StringUtil;
 
 public abstract class SimpleLanguageAPI extends AbstractLanguageAPI {

@@ -16,7 +16,7 @@ import mitw.bungee.jedis.JedisSettings;
 import mitw.bungee.jedis.MitwJedis;
 import mitw.bungee.jedis.server.KeepAliveHandler;
 import mitw.bungee.language.LanguageAPI;
-import mitw.bungee.language.types.RedisLanguageData;
+import mitw.bungee.language.types.MongoLanguageData;
 import mitw.bungee.modules.MotdDisplay;
 import mitw.bungee.listener.BungeeListener;
 import mitw.bungee.managers.CommandManager;
@@ -48,20 +48,13 @@ public class Mitw extends Plugin {
 	public static Map<UUID, UUID> replys = new HashMap<>();
 	public static String Prefix = "§7[§6Mitw§7] §f";
 	public static String CPrefix = "§7[§6Mitw§f控制台§7] §f";
-	private RedisLanguageData languageData;
+	private MongoLanguageData languageData;
 	private LanguageAPI language;
 	private PlayerMongo mongo;
 	private MitwJedis mitwJedis;
 	private KeepAliveHandler keepAliveHandler;
 	private IgnoreManager ignoreManager;
-//	private QueueManager queueManager;
 	public static List<String> servers = Arrays.asList("waiting", "lobby-2", "lobby-3", "duel", "ffa");
-
-	@Override
-	public void onLoad() {
-//		this.queueManager = new QueueManager();
-//		this.queueManager.onLoad();
-	}
 
 	@Override
 	public void onEnable() {
@@ -82,10 +75,8 @@ public class Mitw extends Plugin {
 
 		this.getProxy().getScheduler().schedule(this, keepAliveHandler, 1000L, 30 * 1000L, TimeUnit.MILLISECONDS);
 
-		languageData = new RedisLanguageData(this);
+		languageData = new MongoLanguageData(this);
 		language = new LanguageAPI(LanguageAPI.LangType.CLASS, this, languageData, new Lang());
-
-//		this.queueManager.onEnable();
 
 		registerCommands();
 		registerListeners();
@@ -105,7 +96,6 @@ public class Mitw extends Plugin {
 
 	public void registerCommands() {
 		Arrays.asList(
-//				new Lobby(this),
 				new Server(this),
 				new Message(),
 				new Reply(),

@@ -12,7 +12,7 @@ public interface FrameAdapter {
 	default List<String> getLines(Player player) {
 		MitwPlayer mitwPlayer = MitwPlayer.getByUuid(player.getUniqueId());
 
-		if (!mitwPlayer.isLoaded()) {
+		if (mitwPlayer == null || !mitwPlayer.isLoaded()) {
 			return null;
 		}
 

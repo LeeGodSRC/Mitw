@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 @Getter
 @Setter
@@ -23,6 +24,7 @@ public class MitwPlayer extends PlayerInfo {
 
     private boolean loaded = false;
     private String language = DEFAULT_LANGUAGE;
+    private Consumer<String> nextInput = null;
     private int coins = 0;
     private int mitwpass_level = 1;
     private int mitwpass_exp = 0;
@@ -60,6 +62,7 @@ public class MitwPlayer extends PlayerInfo {
         Bukkit.getScheduler().runTaskAsynchronously(Mitw.getInstance(), () -> {
             Document document = new Document();
 
+            document.put("uuid", this.getUuid().toString());
             document.put("coins", this.coins);
 
             if (false) {

@@ -10,12 +10,11 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.*;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+import org.apache.commons.lang3.ArrayUtils;
 import org.bson.Document;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,38 +29,11 @@ public class BungeeListener implements Listener {
 	private List<UUID> locked = new ArrayList<>();
 
 	@EventHandler
-	public void onPostLogin(PostLoginEvent event) {
-
-		ProxiedPlayer player = event.getPlayer();
-
-		Document document = Mitw.INSTANCE.getMongo().getPlayer(player.getUniqueId());
-
-		String language = ILanguageData.DEFAULT_LANGUAGE;
-
-		if (document != null) {
-			language = document.getString("language");
-		}
-
-		Mitw.INSTANCE.getLanguageData().setLangData(player, language);
-
-	}
-
-	@EventHandler
 	public void onQuit(final PlayerDisconnectEvent event) {
 		ProxiedPlayer player = event.getPlayer();
 
 		locked.remove(player.getUniqueId());
 		Mitw.replys.remove(player.getUniqueId());
-
-		String language = Mitw.INSTANCE.getLanguageData().getLang(player);
-
-		Document document = new Document();
-
-		document.put("uuid", player.getUniqueId().toString());
-		document.put("language", language);
-
-		Mitw.INSTANCE.getMongo().replacePlayer(player.getUniqueId(), document);
-		Mitw.INSTANCE.getMitwJedis().runCommand(jedis -> jedis.hdel("languages", player.getUniqueId().toString()));
 	}
 
 	@EventHandler

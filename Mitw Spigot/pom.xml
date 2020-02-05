@@ -144,9 +144,9 @@
 			<systemPath>${project.basedir}/libs/eFlame.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>me.lucko.luckperms</groupId>
-			<artifactId>luckperms-api</artifactId>
-			<version>4.2</version>
+			<groupId>net.luckperms</groupId>
+			<artifactId>api</artifactId>
+			<version>5.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -154,6 +154,11 @@
 			<artifactId>cglib-nodep</artifactId>
 			<version>3.2.5</version>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.esotericsoftware</groupId>
+			<artifactId>reflectasm</artifactId>
+			<version>1.11.9</version>
 		</dependency>
 	</dependencies>
 

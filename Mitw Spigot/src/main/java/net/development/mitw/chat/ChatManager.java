@@ -23,7 +23,7 @@ import net.development.mitw.chat.check.SingleCheck;
 import net.development.mitw.chat.slowchat.ChatSlowerAI;
 import net.development.mitw.config.Settings;
 import net.development.mitw.events.ConfigurationReloadEvent;
-import net.development.mitw.hooks.LuckPerms;
+import net.development.mitw.hooks.LuckpermsHook;
 import net.development.mitw.utils.Common;
 
 public class ChatManager implements Listener {
@@ -62,7 +62,7 @@ public class ChatManager implements Listener {
 		if (Settings.IS_BETTER_NICK && QoolNickAPI.isNicked(player)) {
 			luckpermsPrefix = QoolNickAPI.getNickedPrefix(player).equals("") ? "&7" : QoolNickAPI.getNickedPrefix(player);
 		} else {
-			luckpermsPrefix = LuckPerms.getPrefix(player);
+			luckpermsPrefix = LuckpermsHook.getPrefix(player);
 		}
 
 		final StringBuilder builder = new StringBuilder();

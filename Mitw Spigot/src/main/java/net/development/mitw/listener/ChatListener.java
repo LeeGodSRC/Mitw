@@ -3,6 +3,7 @@ package net.development.mitw.listener;
 import java.util.UUID;
 
 import me.GoodestEnglish.QoolNick.QoolNickAPI;
+import net.development.mitw.player.MitwPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -26,24 +27,32 @@ public class ChatListener implements org.bukkit.event.Listener {
 	}
 
 	@EventHandler
-	public void onChat(final AsyncPlayerChatEvent e) {
+	public void onChat(final AsyncPlayerChatEvent event) {
 
-		final Player player = e.getPlayer();
+		final Player player = event.getPlayer();
+		final MitwPlayer mitwPlayer = MitwPlayer.getByUuid(player.getUniqueId());
 		final UUID uuid = player.getUniqueId();
 		final PlayerCache cache = ChatManager.getPlayerCaches(uuid);
-		String message = e.getMessage();
+		String message = event.getMessage();
+
+		if (mitwPlayer.getNextInput() != null) {
+			mitwPlayer.getNextInput().accept(message);
+			mitwPlayer.setNextInput(null);
+			event.setCancelled(true);
+			return;
+		}
 
 		final int cooldownTime = (int) ((System.currentTimeMillis() - cache.getLastTalkTime()) / 1000);
 
 		if (!plugin.getChatManager().getChatSlowerAI().isChatEnabled()) {
-			e.setCancelled(true);
+			event.setCancelled(true);
 			player.sendMessage("§cChat is disband by §eMitwAI");
 			return;
 		}
 
 		final int cooldown = plugin.getChatManager().getChatSlowerAI().getChatCooldown();
 		if (cooldownTime < cooldown) {
-			e.setCancelled(true);
+			event.setCancelled(true);
 			Common.tell(player, Mitw.getInstance().getCoreLanguage().translate(player, "cooldownChat").replaceAll("<sec>",
 					cooldown - cooldownTime + ""));
 			return;
@@ -51,7 +60,7 @@ public class ChatListener implements org.bukkit.event.Listener {
 
 		if (Settings.IS_NO_SAME_MESSAGE && message.equalsIgnoreCase(cache.getLastMessage())) {
 
-			e.setCancelled(true);
+			event.setCancelled(true);
 			Common.tell(player, Mitw.getInstance().getCoreLanguage().translate(player, "noSpam"));
 			return;
 
@@ -68,7 +77,7 @@ public class ChatListener implements org.bukkit.event.Listener {
 			if (Settings.IS_REPLACE_MODE) {
 				message = plugin.getChatManager().getRandomMessages();
 			} else {
-				e.setCancelled(true);
+				event.setCancelled(true);
 				final ConsoleCommandSender sender = Bukkit.getConsoleSender();
 				switch (c.getName().toLowerCase()) {
 				case "high":
@@ -87,7 +96,7 @@ public class ChatListener implements org.bukkit.event.Listener {
 		}
 
 		message = message.replaceAll("<3", "\u2764").replaceAll("%", "%%");
-		e.setMessage(message);
+		event.setMessage(message);
 
 		plugin.getChatManager().getChatSlowerAI().detectChatSpammer(player, message);
 
@@ -99,18 +108,18 @@ public class ChatListener implements org.bukkit.event.Listener {
 		final String suffix = plugin.getChatManager().getChatSuffix(player);
 
 		if (Settings.IS_BETTER_NICK && QoolNickAPI.isNicked(player)) {
-			e.setFormat(prefix + player.getName() + "§f: " + message);
+			event.setFormat(prefix + player.getName() + "§f: " + message);
 			return;
 		}
 
-		if (((message.toLowerCase().equals("gg") || message.toLowerCase().equals("gf")) && e.getPlayer().hasPermission("mChat.goldgg"))) {
-			e.setFormat(prefix + e.getPlayer().getName() + suffix + "§f: " + ChatColor.GOLD + message);
+		if (((message.toLowerCase().equals("gg") || message.toLowerCase().equals("gf")) && event.getPlayer().hasPermission("mChat.goldgg"))) {
+			event.setFormat(prefix + event.getPlayer().getName() + suffix + "§f: " + ChatColor.GOLD + message);
 			return;
 		}
-		if (e.getPlayer().hasPermission("mChat.color")) {
-			e.setFormat(ChatColor.translateAlternateColorCodes('&', prefix + e.getPlayer().getName() + suffix + "&f: " + message));
+		if (event.getPlayer().hasPermission("mChat.color")) {
+			event.setFormat(ChatColor.translateAlternateColorCodes('&', prefix + event.getPlayer().getName() + suffix + "&f: " + message));
 		} else {
-			e.setFormat(prefix + e.getPlayer().getName() + suffix + "§f: " + message);
+			event.setFormat(prefix + event.getPlayer().getName() + suffix + "§f: " + message);
 		}
 
 		plugin.getChatManager().getChatSlowerAI().detectChatSpammer(player, message);

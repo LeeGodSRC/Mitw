@@ -1,19 +1,22 @@
 package mitw.bungee.language.types;
 
+import com.mongodb.client.MongoCollection;
 import lombok.Getter;
 import lombok.Setter;
 import mitw.bungee.Mitw;
 import mitw.bungee.language.ILanguageData;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
+import org.apache.commons.lang3.ArrayUtils;
+import org.bson.Document;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class RedisLanguageData implements Listener, ILanguageData {
+public class MongoLanguageData implements Listener, ILanguageData {
 
     @Getter
     @Setter
@@ -21,7 +24,7 @@ public class RedisLanguageData implements Listener, ILanguageData {
 
     private static Map<UUID, String> playerLangs = new HashMap<>();
 
-    public RedisLanguageData(final Plugin plugin) {
+    public MongoLanguageData(final Plugin plugin) {
         this.plugin = plugin;
     }
 
@@ -34,7 +37,24 @@ public class RedisLanguageData implements Listener, ILanguageData {
             return playerLangs.get(uuid);
         }
 
-        return Mitw.INSTANCE.getMitwJedis().runCommand(jedis -> jedis.hget("language", uuid.toString()));
+        Document document = Mitw.INSTANCE.getMongo().getPlayer(uuid);
+
+        String language;
+
+        if (document == null) {
+            language = DEFAULT_LANGUAGE;
+        } else {
+
+            language = document.getString("language");
+
+            if (language == null || language.isEmpty() || !ArrayUtils.contains(LANGUAGES, language)) {
+                language = DEFAULT_LANGUAGE;
+            }
+        }
+
+        playerLangs.put(uuid, language);
+
+        return language;
     }
 
     @Override
@@ -57,7 +77,18 @@ public class RedisLanguageData implements Listener, ILanguageData {
     }
 
     public void setLangData(ProxiedPlayer player, String language) {
-        Mitw.INSTANCE.getMitwJedis().runCommand(jedis -> jedis.hset("language", player.getUniqueId().toString(), language));
+
+        if (language == null || language.isEmpty() || !ArrayUtils.contains(LANGUAGES, language)) {
+            language = DEFAULT_LANGUAGE;
+        }
+
+        Document document = new Document();
+        document.put("uuid", player.getUniqueId().toString());
+        document.put("language", language);
+
+        Mitw.INSTANCE.getMongo().replacePlayer(player.getUniqueId(), document);
+
+        playerLangs.put(player.getUniqueId(), language);
     }
 
 }

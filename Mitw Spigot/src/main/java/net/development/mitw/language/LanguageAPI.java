@@ -1,171 +1,125 @@
 package net.development.mitw.language;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.esotericsoftware.reflectasm.FieldAccess;
 import net.development.mitw.player.MitwPlayer;
+import net.development.mitw.utils.StringUtil;
+import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.ChatColor;
 
+@Getter
+@Setter
 public class LanguageAPI extends AbstractLanguageAPI {
 
-	public static enum LangType {
+	public enum LangType {
 		CONFIG, CLASS
 	};
 
-	@Getter
-	@Setter
-	private Map<String, List<String>> savedMessages = new HashMap<>();
 
-	@Getter
-	@Setter
+	private Map<String, String> savedMessages = new HashMap<>();
+	private Map<String, List<String>> savedMessageLists = new HashMap<>();
+
 	private Plugin plugin;
-	@Getter
-	@Setter
 	private LangType type;
-	@Getter
-	@Setter
-	private YamlConfiguration config;
-	@Getter
-	@Setter
 	private Object clazz;
-	@Getter
+	private FieldAccess fieldAccess;
 	private final ILanguageData languageData;
-
-	public LanguageAPI(final LangType type, final Plugin plugin, final ILanguageData languageData, final YamlConfiguration config) {
-		this.type = type;
-		this.config = config;
-		this.plugin = plugin;
-		this.languageData = languageData;
-	}
 
 	public LanguageAPI(final LangType type, final Plugin plugin, final ILanguageData languageData, final Object clazz) {
 		this.type = type;
 		this.clazz = clazz;
+		this.fieldAccess = FieldAccess.get(clazz.getClass());
 		this.languageData = languageData;
 	}
 
-	public LanguageAPI(final LangType type, final Plugin plugin, final ILanguageData languageData, final Class<?> clazz, final Class<?>... methods) {
-		this.type = type;
-		this.plugin = plugin;
-		this.languageData = languageData;
-		try {
-			this.clazz = clazz.getConstructor(methods).newInstance();
-		} catch (final Exception e) {
-			e.printStackTrace();
+	public String translate(MitwPlayer mitwPlayer, String format) {
+
+		if (mitwPlayer == null) {
+			return "";
 		}
-	}
 
-	public LanguageAPI(final LangType type, final Plugin plugin, final ILanguageData languageData, final YamlConfiguration config,
-			final Class<?> clazz, final Class<?>... methods) {
-		this.type = type;
-		this.config = config;
-		this.plugin = plugin;
-		this.languageData = languageData;
-		try {
-			this.clazz = clazz.getConstructor(methods).newInstance();
-		} catch (final Exception e) {
-			e.printStackTrace();
+		format = StringUtil.replace(format, ".", "_");
+
+		String language = mitwPlayer.getLanguage();
+
+		if (language == null || language.isEmpty() || !ArrayUtils.contains(ILanguageData.LANGUAGES, language)) {
+			language = ILanguageData.DEFAULT_LANGUAGE;
 		}
-	}
 
-	public String translate(MitwPlayer p, final String ofrom) {
-		final String lang = p.getLanguage();
-		final String from = lang + "." + ofrom;
-		if (savedMessages.containsKey(from)) {
-			return savedMessages.get(from).get(0);
+		String format_2 = language + "_" + format;
+
+		if (savedMessages.containsKey(format_2)) {
+			return savedMessages.get(format_2);
 		} else {
-			String to = null;
+			String to;
 			boolean found = false;
-			switch (type) {
-			case CLASS:
-				try {
-					Field field = clazz.getClass().getDeclaredField(from.replace(".", "_"));
-					Object object = field.get(clazz);
-					if (object == null) {
-						field = clazz.getClass().getDeclaredField((languageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
-						field.setAccessible(true);
-						object = field.get(clazz);
-					} else {
-						found = true;
-					}
-					to = (String) object;
-				} catch (final Exception e) {
-					Bukkit.getConsoleSender().sendMessage("§cCant get string field " + from.replace(".", "_") + " from " + clazz.getClass().getName()
-							+ " from player " + p.getName() + " !");
-					return "null";
-				}
-				break;
-			case CONFIG:
-				String notsure = config.getString(from);
-				if (notsure == null) {
-					notsure = config.getString(languageData.DEFAULT_LANGUAGE + "." + ofrom);
+			try {
+				Object object = fieldAccess.get(clazz, format_2);
+				if (object == null) {
+					object = fieldAccess.get(clazz, languageData.DEFAULT_LANGUAGE + "_" + format);
 				} else {
 					found = true;
 				}
-				to = notsure;
-				break;
+				to = (String) object;
+			} catch (final Exception e) {
+				Bukkit.getConsoleSender().sendMessage("§cCant get string field " + format_2.replace(".", "_") + " from " + clazz.getClass().getName()
+						+ " from player " + mitwPlayer.getName() + " !");
+				return "null";
 			}
 			if (found) {
 				to = ChatColor.translateAlternateColorCodes('&', to);
-				savedMessages.put(from, Arrays.asList(to));
+				savedMessages.put(format_2, to);
 			}
 			return to;
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<String> translateArrays(final MitwPlayer p, final String ofrom) {
-		final String lang = p.getLanguage();
-		final String from = lang + "." + ofrom;
-		if (savedMessages.containsKey(from))
-			return savedMessages.get(from);
+
+	public List<String> translateArrays(final MitwPlayer mitwPlayer, String format) {
+
+		if (mitwPlayer == null) {
+			return Collections.singletonList("");
+		}
+
+		format = StringUtil.replace(format, ".", "_");
+		String language = mitwPlayer.getLanguage();
+
+		if (language == null || language.isEmpty() || !ArrayUtils.contains(ILanguageData.LANGUAGES, language)) {
+			language = ILanguageData.DEFAULT_LANGUAGE;
+		}
+
+		String format_2 = language + "_" + format;
+
+		if (savedMessageLists.containsKey(format_2))
+			return savedMessageLists.get(format_2);
 		else {
-			List<String> to = null;
+			List<String> to;
 			boolean found = false;
-			switch (type) {
-			case CLASS:
-				try {
-					Field field = clazz.getClass().getDeclaredField(from.replace(".", "_"));
-					Object object = field.get(clazz);
-					if (object == null) {
-						field = clazz.getClass().getDeclaredField((languageData.DEFAULT_LANGUAGE + "_" + ofrom).replace(".", "_"));
-						field.setAccessible(true);
-						object = field.get(clazz);
-					} else {
-						found = true;
-					}
-					to = (List<String>) object;
-				} catch (final Exception e) {
-					Bukkit.getConsoleSender().sendMessage("§cCant get string field " + from.replace(".", "_") + " from " + clazz.getClass().getName()
-							+ " from player " + p.getName() + " !");
-					return Arrays.asList("null");
-				}
-				break;
-			case CONFIG:
-				List<String> notsure = config.getStringList(from);
-				if (notsure == null) {
-					notsure = config.getStringList(languageData.DEFAULT_LANGUAGE + "." + ofrom);
+			try {
+				Object object = fieldAccess.get(clazz, format_2);
+				if (object == null) {
+					object = fieldAccess.get(clazz, languageData.DEFAULT_LANGUAGE + "_" + format);
 				} else {
 					found = true;
 				}
-				to = notsure;
-				break;
+				to = (List<String>) object;
+			} catch (final Exception e) {
+				Bukkit.getConsoleSender().sendMessage("§cCant get string field " + format_2.replace(".", "_") + " from " + clazz.getClass().getName()
+						+ " from player " + mitwPlayer.getName() + " !");
+				return Collections.singletonList("null");
 			}
 			if (found) {
 				for (int i = 0; i < to.size(); i++) {
 					to.set(i, ChatColor.translateAlternateColorCodes('&', to.get(i)));
 				}
-				savedMessages.put(from, to);
+				savedMessageLists.put(format_2, to);
 			}
 			return to;
 		}
